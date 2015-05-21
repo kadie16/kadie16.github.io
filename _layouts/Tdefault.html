@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+{% include Thead.html %}
+
+<body>
+
+    {% include Tloader.html %}
+
+    <main id="sb-site">
+
+        <div class="container">
+            <div class="wrapper">
+                {{ content }}
+            </div>
+
+            {% include Tpagination.html %}
+
+            {% include Tnext.html %}
+
+        </div>
+
+    </main>
+
+    {% include Tsidebar.html %}
+
+    {% include Tjs.html %}
+
+</body>
+
+</html>
