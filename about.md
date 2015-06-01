@@ -21,15 +21,3 @@ My point is, there were several reasons I thought might keep me from fulfilling 
 
 Hopefully by sharing this, I can convey how possible it is to make your own adventure happen :)
 
-
-
-![Post](https://dl.dropboxusercontent.com/u/18322837/GitHub/Travelogue/Post.png)
-
-## About Me 
-The theme provides a complete Jekyll setup. Download it and start the Jekyll server.
-
-    git clone https://github.com/SalGnt/Travelogue.git
-    cd Travelogue
-    jekyll serve
-
-Visit the [Jekyll website](http://jekyllrb.com/) for more information.
