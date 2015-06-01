@@ -21,9 +21,9 @@ Then I found out about an opportunity to participate in a research internship in
 <img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/backstory/gilman-scholarship-logo.png" style="float:right;width:200px; height:200px;">
 I found out there were a lot of scholarships available to help students study abroad. I worked hard on my scholarship applications, and I ended up recieveing the Benjamin A. Gilman International Scholarship, the University of California Education Abroad Program Promise award, the Singapore International Pre Graduate Award, and two others. Now my trip is almost fully funded. 
 
-My point is, there were several reasons I thought might keep me from fulfilling my dream to study abroad. But I ended up finding a program that was ideal for me, and a lot of resources to help me make it happen. 
+My point is, there were several things that I thought might keep me from fulfilling my dream to study abroad. But I ended up finding a program that was ideal for me, and a bunch of resources to help me make it happen. 
 
-Hopefully by sharing this, I can convey how possible it is to make your own adventure happen :)
+Hopefully by sharing this, I can show you that it is possible to embark on your own adventure :smile_cat:
 
 <img src = "https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/backstory/calFriends.jpg" alt = "me and my friends at Cal"> 
 
