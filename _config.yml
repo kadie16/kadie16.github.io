@@ -4,6 +4,10 @@ title: Kd in SG
 baseurl: '' # the subpath of your site, e.g. /blog
 url: 'http://kadie16.github.io' # the base hostname & protocol for your site
 
+# emojii
+gems:
+  - jemoji
+
 # Build settings
 markdown:            kramdown
 relative_permalinks: false
