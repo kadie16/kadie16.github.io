@@ -18,7 +18,7 @@ Still, I had doubts about pulling it off. As an engineering transfer student, I 
 
 Then I found out about an opportunity to participate in a research internship in Singapore. I realized I didn't have to choose between gaining professional experience and travelling! This was really exciting, but I still had to figure out how to pay for it. 
 
-<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/backstory/gilman-scholarship-logo.gif" style="float:right;width:200px; height:200px;">
+<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/backstory/gilman-scholarship-logo.png" style="float:right;width:200px; height:200px;">
 I found out there were a lot of scholarships available to help students study abroad. I worked hard on my scholarship applications, and I ended up recieveing the Benjamin A. Gilman International Scholarship, the University of California Education Abroad Program Promise award, the Singapore International Pre Graduate Award, and two others. Now my trip is almost fully funded. 
 
 My point is, there were several reasons I thought might keep me from fulfilling my dream to study abroad. But I ended up finding a program that was ideal for me, and a lot of resources to help me make it happen. 
