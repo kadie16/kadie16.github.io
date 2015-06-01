@@ -3,12 +3,12 @@
    ========================================================================== */
 
 #sb-site {
-    background-color: transparent;
+    background-color: rgb(204, 234, 245);
     padding: ($spacing-unit * 2) 0;
 }
 
 .container {
-    background: $background-color;
+    background: $background-color; /* background color of text box*/
     padding: 0;
     position: relative;
     margin: 0 auto;
