@@ -4,11 +4,11 @@ twitter: true
 googleplus: true
 linkedin: false
 reddit: true
-hackernews: true
-pinterest: false
+hackernews: false
+pinterest: true
 tumblr: false
 pocket: true
-email: false
+email: true
 
 # Disqus
-disqus_shortname: 'example'
+disqus_shortname: 'kadie16githubio'
