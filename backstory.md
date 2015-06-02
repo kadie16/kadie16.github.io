@@ -30,7 +30,7 @@ I went to workshops and got feedback on my scholarship applications, and I ended
 
 My point is, there were several things that I thought might keep me from fulfilling my dream to study abroad. But I ended up finding a program that was ideal for me, and a bunch of resources to help me make it happen. 
 
- I feel insanely fortuate to experience this life changing trip. Hopefully by sharing this, I can show others that it is possible to embark on their own adventure :smile_cat: 
+ I feel insanely fortuate to experience this life changing trip. Hopefully by sharing this, I can show others that it is possible to embark on their own adventure :two_hearts: 
 <br><br>
 
 
