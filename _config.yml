@@ -1,13 +1,13 @@
 # Site settings
-title: Kd in SG
+title: kd goes 2 SG
 
 baseurl: '' # the subpath of your site, e.g. /blog
 url: 'http://kadie16.github.io' # the base hostname & protocol for your site
 
 # emojii
-# must comment these out for jekyll for now, can fix later
-#gems:
-#  - jemoji
+# must comment these out for jekyll for now, can fix later by updating github pages 
+gems:
+  - jemoji
 
 # Build settings
 markdown:            kramdown
