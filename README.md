@@ -1,8 +1,7 @@
 Kd goes 2 SG 
 ==========
 
-[sample]:(https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/Sample%20ScreenShot%20.png);
-
+<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/Sample%20ScreenShot%20.png"><br>
 [See Live](https://kadie16.github.io/);
 
 # Author
