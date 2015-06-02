@@ -19,7 +19,13 @@ Still, I had doubts about pulling it off. As an engineering transfer student, I 
 Then I found out about an opportunity to participate in a research internship in Singapore. I realized I didn't have to choose between the gaining professional experience I'm seeking and travelling! I ended up being given a project specifically so I can learn about computer graphics, which is what I think I want to do in my career. This was really exciting, but I still had to figure out how to pay for it. 
 
 <img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/backstory/gilman-scholarship-logo.png" style="float:right;width:200px; height:200px;">
-I found out there were a lot of scholarships available to help students study abroad, especially for students who are considered to be underrepresented in study abroad programs (engineering majors, transfers, disabled students, and students who recieve the pell grant were some of the categories I fit into). Also, students participating in programs that are considered to be in "non traditonal" locations (mostly anywhere that isn't in europe). I went to workshops and got feedback on my scholarship applications, and I ended up recieveing the Benjamin A. Gilman International Scholarship, the University of California Education Abroad Program Promise award, the Singapore International Pre Graduate Award, and a UCEAP scholarship. The best advice I got when I was applying was to "make them an offer they can't refuse", or otherwise be explicit about how participating in my program is important to my career and worldview. Now my trip is almost fully funded. 
+I found out there were a lot of scholarships available to help students study abroad, especially for students who are considered to be underrepresented in study abroad programs. Some of the categories were: 
+* engineering majors
+* transfer students
+* disabled students
+* students who recieve the pell grant.
+* students participating in programs that are considered to be in "non traditonal" locations (mostly anywhere that isn't in europe). 
+I went to workshops and got feedback on my scholarship applications, and I ended up recieveing the Benjamin A. Gilman International Scholarship, the University of California Education Abroad Program Promise award, the Singapore International Pre Graduate Award, and a UCEAP scholarship. The best advice I got when I was applying was to "make them an offer they can't refuse", or otherwise be explicit about how participating in my program is important to my career and worldview. Now my trip is almost fully funded. 
 
 My point is, there were several things that I thought might keep me from fulfilling my dream to study abroad. But I ended up finding a program that was ideal for me, and a bunch of resources to help me make it happen. 
 
