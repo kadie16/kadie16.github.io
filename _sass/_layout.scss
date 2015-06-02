@@ -3,7 +3,7 @@
    ========================================================================== */
 
 #sb-site {
-    background-color: rgb(204, 234, 245);
+    background-color: transparent; /* background of outside box #rgb(204, 234, 245) */ 
     padding: ($spacing-unit * 2) 0;
 }
 
