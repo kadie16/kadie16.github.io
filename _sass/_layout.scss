@@ -3,7 +3,9 @@
    ========================================================================== */
 
 #sb-site {
-    background-color: transparent; /* background of outside box #rgb(204, 234, 245) */ 
+    background-color: transparent; /* background of outside box
+                                    * keep transparent to enable background setting on posts 
+                                    * #rgb(204, 234, 245) */ 
     padding: ($spacing-unit * 2) 0;
 }
 
