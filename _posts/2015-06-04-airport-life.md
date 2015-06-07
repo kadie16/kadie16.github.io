@@ -4,8 +4,10 @@ title: "Airports For Days"
 date: 2015-04-06
 backgrounds:
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/airport-life/SG1.JPG
+    - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/airport-life/SG3.JPG
+    -https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/airport-life/SG4.JPG
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/airport-life/KBV.JPG
-thumb: https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/airport-life/SG3.JPG
+thumb: https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/airport-life/SG4.JPG
 categories: Singapore Japan
 tags: airport
 ---
