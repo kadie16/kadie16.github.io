@@ -5,7 +5,7 @@ date: 2015-04-06
 backgrounds:
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/airport-life/SG1.JPG
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/airport-life/SG3.JPG
-    -https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/airport-life/SG4.JPG
+    - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/airport-life/SG4.JPG
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/airport-life/KBV.JPG
 thumb: https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/airport-life/SG4.JPG
 categories: Singapore Japan
@@ -24,5 +24,9 @@ The Singapore Changi Airport is really beautiful. There are gardens and art inst
 
 At this airport, you don't have to go through security until you reach your gate. It was nice because there were only three people in front of me in the line. 
 
+<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/airport-life/SG4.JPG"> _<center> Leaving Singapore </center>_
+
 When I get to Krabi, I am taking a bus to a resturaunt travel agency thing, then a shuttle to the dock, and then a ferry to koh phi phi, where Sarah and Ryan will be waiting for me :)  
+
+<img src= "https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/airport-life/KBV.JPG" > _<center> Landing in Krabi, Thailand </center>_
 
