@@ -4,7 +4,7 @@ title: "Koh Phi Phi"
 date: 2015-07-06
 backgrounds:
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/bungalowView.JPG
-    - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/sunset.JPG
+    - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/kayak.JPG
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/mayaBay.JPG
 thumb: https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/waterSelfie.JPG
 categories: Thailand
@@ -43,7 +43,7 @@ The first two days on Phi Phi were amazing, but my last full day was by far my f
 
 <img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/thaiPancake.JPG">_<center> Nom Nom Thai Pancake </center>_ <br> 
 
-After breakfast we went to get massages. Sarah and I got one hour Thai massages with oil for 300 baht (a little under $9) and Ryan got a regular Thai massage. I really liked the oil. The thai massage was sometimes like a regular massage, and sometimes felt like the ladies were helping us stretch. I thought our massuses were really funny. They really liked Ryan. They kept saying "handsome boy, not handsome man" because he is 20. They were making some other lewd comments which I found hilarious but I think they started making Sarah and Ryan feel a little uncomfortable hahaha. At the end, I felt so good and so relaxed! 
+After breakfast we went to get massages. Sarah and I got one hour Thai massages with oil for 300 baht (a little under $9) and Ryan got a regular Thai massage. I really liked the oil. The thai massage was sometimes like a regular massage, and sometimes felt like the ladies were helping us stretch. I thought our massuses were really funny. They really liked Ryan. They kept saying "handsome boy, not handsome man" because he is 20. They were making some other lewd comments which I found hilarious but I think they started making Sarah and Ryan feel a little uncomfortable :P. At the end, I felt so good and so relaxed! 
 
 After some shopping, we went back to the room to get ready for our cliff jumping and snorkeling tour! We had booked it the previous day for 600 baht (~ $18). This was by far the highlight of phi phi. I can't think of any better way to spend $18. 
 
@@ -64,20 +64,28 @@ Michael suggested we run through the forest and into the ocean because they do t
 
 After a short hour at Maya bay, we got back on the boat and went to snorkel on the other side where we had walked to. There were hundreds of coloful fish swimming around the reef, and we were still surrounded by the beautiful mountains. There were parrot fish, and a lot of other fish that I can't remember the name of but I have only seen in aquariums. The water was the most beautiful, crystal clear emerald-teal shade, and it felt like a heated pool. 
 
-<img src=""> _<center> Snorkeling behind Maya Bay </center>_
+<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/snorkel.JPG">
+<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/snorkel2.JPG">
+
+ _<center> Snorkeling behind Maya Bay </center>_
 
 At the end of the tour, we wathced the sunset and then jumped in the water one last time to drink some beers and swim with the green glowing plankton. Afterward, we made a plan with all of the friends we made to meet at banana bar at 9:30. We were super late because we were having dinner with Ooh, (who was still working!) but fortunately so was everyone else. We spent the rest of the night dancing and drinking and watching fire dancers at some bars on the beach. It was the best day ever :) 
 
 <img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/emmaAndMe.JPG">_<center>My New Friend Emma</center>_
 
 The next morning I had one last breakfast with Ooh before running off to catch my ferry and flight to Sydney. I could write so much more but I only have so much time and so do you! I loved Koh Phi Phi so much, and I hope I will make it back there at least once this summer! 
+<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/byePhi.JPG">
+
+<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/ferryFriend.JPG">
+
+<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/byeFerry.JPG">
 
 <img src=""> _<center>Bye By Phi Phi!</center>_
 
 
 *** 
 
-** P.S. !! ** If you're reading this, I would love for you to comment below!! <3<3<3
+** P.S. !! ** What's your favorite picture?? Comment! (you dont need an account :) ! )
 
 
 
