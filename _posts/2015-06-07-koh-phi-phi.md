@@ -74,7 +74,7 @@ At the end of the tour, we wathced the sunset and then jumped in the water one l
 <img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/emmaAndMe.JPG">_<center>My New Friend Emma</center>_
 
 The next morning I had one last breakfast with Ooh before running off to catch my ferry and flight to Sydney. I could write so much more but I only have so much time and so do you! I loved Koh Phi Phi so much, and I hope I will make it back there at least once this summer! 
-<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/byePhi.JPG">
+<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/leavingPhi.JPG">
 
 <img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/ferryFriend.JPG">
 
