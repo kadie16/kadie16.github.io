@@ -64,8 +64,8 @@ Michael suggested we run through the forest and into the ocean because they do t
 
 After a short hour at Maya bay, we got back on the boat and went to snorkel on the other side where we had walked to. There were hundreds of coloful fish swimming around the reef, and we were still surrounded by the beautiful mountains. There were parrot fish, and a lot of other fish that I can't remember the name of but I have only seen in aquariums. The water was the most beautiful, crystal clear emerald-teal shade, and it felt like a heated pool. 
 
-<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/snorkel.JPG">
-<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/snorkel2.JPG">
+<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/snorkel.jpg">
+<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/snorkel2.jpg">
 
  _<center> Snorkeling behind Maya Bay </center>_
 
@@ -74,9 +74,9 @@ At the end of the tour, we wathced the sunset and then jumped in the water one l
 <img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/emmaAndMe.JPG">_<center>My New Friend Emma</center>_
 
 The next morning I had one last breakfast with Ooh before running off to catch my ferry and flight to Sydney. I could write so much more but I only have so much time and so do you! I loved Koh Phi Phi so much, and I hope I will make it back there at least once this summer! 
-<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/leavingPhi.JPG">
+<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/leavingPhi.jpg">
 
-<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/ferryFriend.JPG">
+<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/ferryFriend.jpg">
 
 <img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/byeFerry.jpg">
 
