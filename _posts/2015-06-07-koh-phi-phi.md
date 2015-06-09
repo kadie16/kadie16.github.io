@@ -4,8 +4,8 @@ title: "Koh Phi Phi"
 date: 2015-06-07
 backgrounds:
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/bungalowView.JPG
-    - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/kayak.JPG
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/mayaBay.JPG
+    - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/byeFerry.jpg
 thumb: https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/waterSelfie.JPG
 categories: Thailand
 tags: KohPhiPhi
@@ -78,7 +78,7 @@ The next morning I had one last breakfast with Ooh before running off to catch m
 
 <img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/ferryFriend.JPG">
 
-<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/byeFerry.JPG">
+<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/byeFerry.jpg">
 
 <img src=""> _<center>Bye By Phi Phi!</center>_
 
