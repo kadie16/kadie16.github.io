@@ -5,7 +5,7 @@ date: 2015-07-06
 backgrounds:
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/bungalowView.JPG
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/sunset.JPG
-    - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/bungalowView.JPG
+    - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/mayaBay.JPG
 thumb: https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/waterSelfie.JPG
 categories: Thailand
 tags: KohPhiPhi
@@ -68,7 +68,7 @@ After a short hour at Maya bay, we got back on the boat and went to snorkel on t
 
 At the end of the tour, we wathced the sunset and then jumped in the water one last time to drink some beers and swim with the green glowing plankton. Afterward, we made a plan with all of the friends we made to meet at banana bar at 9:30. We were super late because we were having dinner with Ooh, (who was still working!) but fortunately so was everyone else. We spent the rest of the night dancing and drinking and watching fire dancers at some bars on the beach. It was the best day ever :) 
 
-<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/emmeAndMe.JPG">_<center>My New Friend Emma</center>_
+<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/phi-phi/emmaAndMe.JPG">_<center>My New Friend Emma</center>_
 
 The next morning I had one last breakfast with Ooh before running off to catch my ferry and flight to Sydney. I could write so much more but I only have so much time and so do you! I loved Koh Phi Phi so much, and I hope I will make it back there at least once this summer! 
 
