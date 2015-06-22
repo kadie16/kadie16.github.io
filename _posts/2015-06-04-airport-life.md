@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Airports For Days"
+title: "Airports Forever"
 date: 2015-06-05
 backgrounds:
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/airport-life/SG1.JPG
