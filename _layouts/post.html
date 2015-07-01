@@ -25,6 +25,9 @@ layout: default
         {{ content }}
     </article>
 
+    {% include disqus.html %}
+     {% include share.html %}
+
     <footer class="post-meta">
         {% if page.date %}
         <div class="meta">
@@ -60,9 +63,7 @@ layout: default
         {% endif %}
     </footer>
 
-    {% include share.html %}
-
-    {% include disqus.html %}
+   
 
 </div>
 
