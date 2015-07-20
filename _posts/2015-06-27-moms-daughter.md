@@ -26,18 +26,18 @@ I actually wasn't very aware of my sometimes competitive nature until recently. 
 ##Like Mother Like Daughter
 On the fourth day my mom was here, we discovered that she had left her passport in the cab when I picked her up from the airport. Hahaha. If you know me, you know that I have also been known to lose important things (for instance, my passport). The apple doesn't fall far from the tree, does it? After she accepted the fact that I hadn't mistaken her passport for mine and buried it in my things, she started taking measures to get a new one. First, she called the police to see if anyone might have turned it in. 
 
-> *Mom Looking For Her Passport*
+> **Mom Looking For Her Passport**
 > * _ring ring_ * <br>
-> Mom : “Hello, is this the Tanglin Police Department?” <br>
+> **Mom** : “Hello, is this the Tanglin Police Department?” <br>
     “Uhhhhhhhhh ……………….” <br>
-Mom : "I'm from the United States, I've lost my passport" <br>
+**Mom** : "I'm from the United States, I've lost my passport" <br>
     "...." <br>
     "Ummmm" <br>
     "...." <br>
     “you’ve reached a hospital …..”<br>
-Mom: “Oh ... is this 555,1242?”<br>
+**Mom**: “Oh ... is this 555,1242?”<br>
     “Uh I don’t really know the number that you called in on ….”<br>
-“Oh well, this number is listed as the Tanglin Police Department … I’ve lost my passport  … can you please give me the number to the Singapore Police? ” <br>
+**Mom**“Oh well, this number is listed as the Tanglin Police Department … I’ve lost my passport  … can you please give me the number to the Singapore Police? ” <br>
     “Ummmm” * _long pause_ * “I'm in Nebraska…"<br>
 
 After she sorted everything out and got a temporary passport from the embassy, we laughed about this conversation until we cried. I'm giggling just writing about it. Hopefully I did an okay job describing it and you're also giggling.
