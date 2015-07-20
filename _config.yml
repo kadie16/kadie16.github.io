@@ -1,5 +1,5 @@
 # Site settings
-title: KD at S.E.A.
+title: "KD at S.E.A."
 
 baseurl: '' # the subpath of your site, e.g. /blog
 url: 'http://kadie16.github.io' # the base hostname & protocol for your site
