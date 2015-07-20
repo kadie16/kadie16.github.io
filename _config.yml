@@ -6,7 +6,7 @@ url: 'http://kadie16.github.io' # the base hostname & protocol for your site
 
 # emojii
 # must comment these out for jekyll for now, can fix later by updating github pages 
- gems:
+gems:
  - jemoji
 
 # Build settings
@@ -35,3 +35,4 @@ defaults:
         # Social
         share_buttons: true
         disqus: true
+
