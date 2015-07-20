@@ -26,7 +26,7 @@ I actually wasn't very aware of my sometimes competitive nature until recently. 
 ##Like Mother Like Daughter
 On the fourth day my mom was here, we discovered that she had left her passport in the cab when I picked her up from the airport. Hahaha. If you know me, you know that I have also been known to lose important things (for instance, my passport). The apple doesn't fall far from the tree, does it? After she accepted the fact that I hadn't mistaken her passport for mine and buried it in my things, she started taking measures to get a new one. First, she called the police to see if anyone might have turned it in. 
 
-> **Mom Looking For Her Passport**
+> **Mom Looking For Her Passport** <br>
 > * _ring ring_ * <br>
 > **Mom** : “Hello, is this the Tanglin Police Department?” <br>
     “Uhhhhhhhhh ……………….” <br>
