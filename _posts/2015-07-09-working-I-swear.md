@@ -16,7 +16,7 @@ I am building a program that will allow users to load 3D models (.obj file forma
 
 I was first inspired to learn about computer graphics when my (amazing) materials science professor told me about his son who works on lighting movies at Pixar. I have always loved developing my technical background, but I also love painting and drawing and creating visual things. Until I learned about the opportunity to work in computer graphics, it never occurred to me that I could excercise both of my interests at the same time. 
 
-I have virtually no experience with C++, definitely none with OpenGL and I hadn't even heard of QT until Like told me about it. It is also my first time building a GUI (Graphical User Interface ... the window and buttons). Initially, I was feeling a little lost and intimidated while trying to familiarize myself with all three new things simultaneously. So I completeley understand if this is too much computer science jargon. I won't be offended if you just look at the pictures. But hopefully some of you will find this interesting :)
+I have virtually no experience with C++, definitely none with OpenGL and I hadn't even heard of QT until my supervisor told me about it. It is also my first time building a GUI (Graphical User Interface ... the window and buttons). Initially, I was feeling a little lost and intimidated while trying to familiarize myself with all three new things simultaneously. So I completeley understand if this is too much computer science jargon. I won't be offended if you just look at the pictures. But hopefully some of you will find this interesting :)
 
 After a lot confusion (days), my supervisor helped me organize my learning strategy and I finally got a program running. 
 
