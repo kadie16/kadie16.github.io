@@ -69,7 +69,7 @@ glEnd();
 
 ![Robe1](https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/1robe.png) _<center>Yeah, pink and cyan. I'll change to neutral colors later, OK?</center>_
 
-Yay!! I've rendered a model! But it isn't very exciting looking. It's supposed to look 3D, but it looks flat because it hasn't been lit yet. If you draw a sphere on a piece of paper, and paint it all one color, it looks like a circle. You need to add lighting and shading to make it look like a sphere, right? This is the same idea. Cool, I'll enable lighting. 
+Yay!! I've rendered a model! But it isn't very exciting looking. It's supposed to look 3D. It looks flat because it hasn't been lit yet. If you draw a sphere on a piece of paper, and paint it all one color, it looks like a circle. You need to add lighting and shading to make it look like a sphere, right? Same idea. Cool, I'll enable lighting. 
 
 {% highlight c++ %}
     glEnable(GL_LIGHTING);
