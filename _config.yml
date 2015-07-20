@@ -6,8 +6,8 @@ url: 'http://kadie16.github.io' # the base hostname & protocol for your site
 
 # emojii
 # must comment these out for jekyll for now, can fix later by updating github pages 
-# gems:
-# - jemoji
+ gems:
+ - jemoji
 
 # Build settings
 markdown:            kramdown
