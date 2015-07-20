@@ -29,16 +29,16 @@ On the fourth day my mom was here, we discovered that she had left her passport 
 > **Mom Looking For Her Passport** <br>
 > * _ring ring_ * <br>
 > **Mom** : “Hello, is this the Tanglin Police Department?” <br>
-**Other Lady** “Uhhhhhhhhh ……………….” <br>
+**Other Lady** :“Uhhhhhhhhh ……………….” <br>
 **Mom** : "I'm from the United States, I've lost my passport" <br>
-**Other Lady** "...." <br>
+**Other Lady** : "...." <br>
     "Ummmm" <br>
     "...." <br>
     “you’ve reached a hospital …..”<br>
-**Mom**: “Oh ... is this 555,1242?”<br>
-**Other Lady**     “Uh I don’t really know the number that you called in on ….”<br>
-**Mom**“Oh well, this number is listed as the Tanglin Police Department … I’ve lost my passport  … can you please give me the number to the Singapore Police? ” <br>
-**Other Lady**     “Ummmm” * _long pause_ * “I'm in Nebraska…"<br>
+**Mom** : “Oh ... is this 555,1242?”<br>
+**Other Lady** :    “Uh I don’t really know the number that you called in on ….”<br>
+**Mom** : “Oh well, this number is listed as the Tanglin Police Department … I’ve lost my passport  … can you please give me the number to the Singapore Police? ” <br>
+**Other Lady** :    “Ummmm” * _long pause_ * “I'm in Nebraska…"<br>
 
 After she sorted everything out and got a temporary passport from the embassy, we laughed about this conversation until we cried. I'm giggling just writing about it. Hopefully I did an okay job describing it and you're also giggling.
 
