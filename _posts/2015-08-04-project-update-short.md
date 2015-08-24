@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Work in Progress"
-date: 2015-07-15
+date: 2015-08-01
 backgrounds: 
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/background3.png  
 thumb: https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/posts/progress/angel8.png
