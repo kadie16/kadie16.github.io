@@ -1,13 +1,13 @@
 # Site settings
-title: 'KD at S.E.A.'
+title: 'Kadie Jaffe'
 
 baseurl: '' # the subpath of your site, e.g. /blog
 url: 'http://kadie16.github.io' # the base hostname & protocol for your site
 
 # emojii
 # must comment these out for jekyll for now, can fix later by updating github pages 
-gems:
- - jemoji
+#gems:
+# - jemoji
 
 # Build settings
 markdown:            kramdown
@@ -15,7 +15,7 @@ relative_permalinks: false
 permalink:           :title/
 
 pagination:          true
-paginate:            8
+paginate:            6
 paginate_path:       page/:num/
 
 sass:

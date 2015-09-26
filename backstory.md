@@ -1,7 +1,11 @@
 ---
-layout: page
-title: Backstory 
+layout: post
+title: "How I Studied Abroad" 
 permalink: /story/
+date: 2015-06-01
+backgrounds:
+    - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/backgrounds/asiaMap.jpg
+thumb: https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/thumbnails/one.jpg
 ---
 
 
@@ -26,8 +30,7 @@ I found out there were a lot of scholarships available to help students study ab
 - disabled students <br>
 - students who recieve the pell grant. <br>
 - students participating in programs that are considered to be in "non traditonal" locations (mostly anywhere that isn't in europe). <br>
-I went to workshops and got feedback on my scholarship applications, and I ended up recieveing the Benjamin A. Gilman International Scholarship, the University of California Education Abroad Program Promise award, the Singapore International Pre Graduate Award, and a UCEAP scholarship. The best advice I got when I was applying was to "make them an offer they can't refuse", or otherwise be explicit about how participating in my program is important to my career and worldview. Now my trip is almost fully funded. 
-
+I went to workshops and got feedback on my scholarship applications, and I ended up recieveing the Benjamin A. Gilman International Scholarship, the University of California Education Abroad Program Promise award, the Singapore International Pre Graduate Award, and another UCEAP scholarship. The best advice I got when I was applying was to "make them an offer they can't refuse", or otherwise be explicit about how participating in my program is important to my career and worldview. Now my trip is almost fully funded.  
 My point is, there were several things that I thought might keep me from fulfilling my dream to study abroad. But I ended up finding a program that was ideal for me, and a bunch of resources to help me make it happen. 
 
  I feel insanely fortuate to experience this life changing trip. Hopefully by sharing this, I can show others that it is possible to embark on their own adventure :two_hearts: 

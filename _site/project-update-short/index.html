@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Work in Progress</title>
+    <meta name="description" content="A%20Demonstration%20of%20my%20Project%20thus%20far">
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Merriweather:300,300italic,400,400italic,700italic,700">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300,400,700">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,700">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/assets/css/vendors/slidebars.min.css">
+    <link rel="stylesheet" href="/assets/css/vendors/rrssb.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <link rel="apple-touch-icon-precomposed" href="/assets/images/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/assets/images/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/images/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/images/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/assets/images/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/images/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/assets/images/apple-touch-icon-152x152.png" />
+
+    <link rel="canonical" href="http://kadie16.github.io/project-update-short/">
+    <link rel="alternate" type="application/rss+xml" title="Kadie Jaffe" href="http://kadie16.github.io/feed.xml" />
+</head>
+
+
+<body>
+
+    <div class="loader">
+    <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32px" height="32px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+        <filter id="dropshadow" height="130%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+            <feOffset dx="0" dy="0" result="offsetblur"/>
+            <feMerge>
+                <feMergeNode/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <path d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+            <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.5s" repeatCount="indefinite"/>
+        </path><!-- style="filter:url(#dropshadow)" -->
+    </svg>
+</div>
+
+
+    <main id="sb-site">
+
+        <div class="container">
+            <div class="wrapper">
+                <div class="post">
+    
+
+    <header class="post-header">
+        
+        <img src="https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/posts/progress/angel8.png" alt="Work in Progress" class="post-thumb" />
+        
+
+        <h1 class="post-title">Work in Progress</h1>
+    </header>
+
+    <article class="post-content">
+        <center><iframe width="604.8" height="453.6" src="https://www.youtube.com/embed/cjPib3gQU-k" frameborder="0" allowfullscreen=""></iframe></center>
+<p><em><center>A Demonstration of my Project thus far</center></em></p>
+
+<p>My project is a C++ program that reads in data describing 3D models, in .obj file format, and renders and lights the models with OpenGL. Since my last post, I have implemented some user interactions and use of the CGAL data structure. The models I use to test my program came from the <a href="http://graphics.berkeley.edu">UC Berkeley Computer Graphics</a> website :)</p>
+
+<h2 id="latest-changes">Latest Changes</h2>
+<ul>
+  <li>Automatically find and fit model.</li>
+  <li>Maintain aspect ratio on window resize.</li>
+  <li>Select Color.</li>
+  <li>Shading based on vertex normal vectors.</li>
+  <li>Rotation by mouse drag.</li>
+  <li>Zoom by right click mouse drag.</li>
+  <li>Option to move model by mouse drag.</li>
+</ul>
+
+<h3 id="find-and-fit">Find and Fit</h3>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">cam</span><span class="p">.</span><span class="n">findModel</span><span class="p">(</span><span class="n">objModel</span><span class="p">);</span>
+<span class="n">cam</span><span class="p">.</span><span class="n">viewModel</span><span class="p">();</span>
+<span class="n">cam</span><span class="p">.</span><span class="n">moveToCenter</span><span class="p">();</span>
+<span class="n">zoomF</span> <span class="o">=</span> <span class="n">cam</span><span class="p">.</span><span class="n">fitModel</span><span class="p">(</span><span class="n">maxCoords</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">minCoords</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                     <span class="n">maxCoords</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">minCoords</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+                     <span class="n">maxCoords</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">minCoords</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span></code></pre></div>
+
+<p>Now, whenever a new .obj file is selected, the “camera” automatically centers the model and makes it fit on the screen. I say “camera” because there is no actual camera in OpenGL. Instead, you manipulate the view by applying matrix transformations to the modelview and projection matrices. More on that later. I wrote a “camera” class, which handles these transformations.</p>
+
+<h3 id="aspect-ratio">Aspect Ratio</h3>
+<p>I think this is probably the least noticeable new feature, but it was one of the bigger challenges. If you watch closely, you can see that when I resize the window in the video, the cube retains its shape. In otherwords, it doesn’t turn into a rectangle if the viewer isn’t perfectly square. You might also notice that the angel is more slender than before.</p>
+
+<p><img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/angel7.png" alt="Angel Aspect Before" /> <em><center>Squished angel</center></em>
+<img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/angel8.png" alt="Angel Aspect After" /> <em><center>Angel with corrected aspect ratio</center></em></p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="kt">void</span> <span class="n">camera</span><span class="o">::</span><span class="n">adjustAspect</span><span class="p">(</span><span class="kt">float</span> <span class="n">window</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="kt">float</span> <span class="n">window</span><span class="p">.</span><span class="n">height</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* Modify the Projection Matrix */</span>
+    <span class="n">glMatrixMode</span><span class="p">(</span><span class="n">GL_PROJECTION</span><span class="p">);</span>
+    <span class="cm">/* Start from a &#39;clean slate&#39; */</span> 
+    <span class="n">glLoadIdentity</span><span class="p">();</span>
+    <span class="cm">/* Calculate Aspect Ratio */</span>
+    <span class="kt">float</span> <span class="n">newAspect</span> <span class="o">=</span> <span class="n">window</span><span class="p">.</span><span class="n">width</span><span class="o">/</span><span class="n">window</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
+    <span class="cm">/* Adjust Accordingly */</span>
+    <span class="n">leftAdjust</span> <span class="o">=</span> <span class="n">newAspect</span> <span class="o">*</span> <span class="n">left</span><span class="p">;</span>
+    <span class="n">rightAdjust</span> <span class="o">=</span> <span class="n">newAspect</span> <span class="o">*</span> <span class="n">right</span><span class="p">;</span>
+    <span class="n">glOrtho</span><span class="p">(</span><span class="n">zoomF</span> <span class="o">*</span> <span class="n">leftAdjust</span><span class="p">,</span> <span class="n">zoomF</span> <span class="o">*</span> <span class="n">rightAdjust</span><span class="p">,</span> <span class="n">zoomF</span> <span class="o">*</span> <span class="n">bottom</span><span class="p">,</span> <span class="n">zoomF</span> <span class="o">*</span> <span class="n">top</span><span class="p">,</span> <span class="n">near</span><span class="p">,</span> <span class="n">far</span><span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+<h3 id="color-picking">Color Picking</h3>
+
+<p><img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/humanoid1.png" alt="humanoid color pick" /></p>
+
+<p>To me this feature seems more impressive than the constant aspect ratio, but it took about five minutes to implement. Thanks to QT, color picking boiled down to two lines of code.</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="kt">void</span> <span class="n">MainWindow</span><span class="o">::</span><span class="n">on_toolButton_clicked</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">QColor</span> <span class="n">color</span> <span class="o">=</span> <span class="n">QColorDialog</span><span class="o">::</span><span class="n">getColor</span><span class="p">();</span>
+    <span class="n">ui</span><span class="o">-&gt;</span><span class="n">widget</span><span class="o">-&gt;</span><span class="n">grabColor</span><span class="p">(</span><span class="n">color</span><span class="p">.</span><span class="n">red</span><span class="p">(),</span> <span class="n">color</span><span class="p">.</span><span class="n">green</span><span class="p">(),</span> <span class="n">color</span><span class="p">.</span><span class="n">blue</span><span class="p">());</span>
+<span class="p">}</span></code></pre></div>
+<p><em><center>ui is the User Interface, widget is the part of the ui that displays the model</center></em></p>
+
+<p>Ok, I had to write grabColor too, so maybe 5 lines. Still. I actually threw this feature in because I needed a break from some other issue I was stuck on.</p>
+
+<h3 id="vertex-shading">Vertex Shading</h3>
+
+<p>In my last post, I mentioned that every vertex needs a normal vector so openGL knows how to shade the model. At that time, I was just computing the normal for each face and lighting all of the vertices in that face uniformly.</p>
+
+<p><img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/shading1.png" alt="Before and after cube picture" /> <em><center>Before and After per-vertex shading</center></em></p>
+
+<p>Now, the normal for each vertex is assigned to be the <em>average</em> of the normals of all of the faces it belongs to. So the vertices on the corners of the cube are assigned a normal equal to the average of the normal vectors of the three faces that meet at that corner. The vertices on the edge of two faces get the average of the two normal vectors of those faces. The vertices in the middle of the face just get the normal that belongs to that face. OpenGL then interpolates in between the vertices to produce the smooth gradient you see.</p>
+
+<h3 id="user-controls">User Controls</h3>
+
+<h4 id="making-it-feel-natural">Making it “feel” natural</h4>
+<p>I expected understanding the openGL calls to be challenging, but I didn’t anticipate the challenge of making the controls intuitive. I guess this speaks to the idea that the best computer graphics go unnoticed.</p>
+
+<p>The user controls are simulated by a series of repaints. Actually the model is being redrawn constantly, but without adjustments to the modelview or projection matrix, it is just drawn exactly the same. So my goal is to animate, or redraw, the model so the user feels like they are actually touching and manipulating the model with their mouse.</p>
+
+<h4 id="rotation">Rotation</h4>
+<p>Getting the model to rotate wasn’t hard. I could just use glRotatef to do that.</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">glRotatef</span><span class="p">(</span><span class="n">GLfloat</span> <span class="n">angle</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">x</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">y</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">z</span><span class="p">);</span></code></pre></div>
+<p><em><center></center></em>
+Getting the model to rotate according to mouse drag wasn’t a big deal either. All I had to do was set the parameters in glRotatef based on the change in position of the mouse. The hard part was getting the model to rotate in a way that felt <em>natural</em>.</p>
+
+<p>The first problem is glRotatef rotates the model around the origin, the point (0,0,0). This gives the appearance that the model was orbiting about an arbitrary point in space. Not what I want. I want the model to rotate about it’s center. That way it stays where it is and just spins around.</p>
+
+<p>There is a clever trick to accomplish this. Since glRotatef rotates about the origin, you can just move whatever point you want to rotate about to the origin, apply the rotation, and then move the object back to where it was. Imagine I pick up the model, move it’s center to the origin, rotate it, and move it back to it’s original point in space.</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="cm">/* Move center to origin */</span>
+<span class="n">glTranslatef</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">center</span><span class="p">().</span><span class="n">x</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="n">center</span><span class="p">().</span><span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="n">center</span><span class="p">().</span><span class="n">z</span><span class="p">);</span>
+<span class="cm">/* Rotate */</span> 
+<span class="n">glRotatef</span><span class="p">(</span><span class="n">GLfloat</span> <span class="n">angle</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">x</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">y</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">z</span><span class="p">);</span>
+<span class="cm">/* Apply reverse translation to move center back to where it was */</span>
+<span class="n">glTranslatef</span><span class="p">(</span><span class="o">-</span> <span class="n">model</span><span class="p">.</span><span class="n">center</span><span class="p">().</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span> <span class="n">model</span><span class="p">.</span><span class="n">center</span><span class="p">().</span><span class="n">y</span><span class="p">,</span> <span class="o">-</span> <span class="n">model</span><span class="p">.</span><span class="n">center</span><span class="p">().</span><span class="n">z</span><span class="p">);</span></code></pre></div>
+<p><em><center></center></em></p>
+
+<p>Pretty neat trick! But still, I am left with a model that is rotating in crazy unpredictable patterns.</p>
+
+<iframe width="604.8" height="453.6" src="https://www.youtube.com/embed/ebHibD78bCI" frameborder="0" allowfullscreen=""></iframe>
+<p><em><center>?????????</center></em></p>
+
+<p>The rotations seem accurate at the beginning of the demo, but soon deviate from what is expected. You can see that the effect of dragging the mouse in one direction (like left to right) is inconsistent as time goes on.</p>
+
+<p>This is because the rotations are accumulating.</p>
+
+<blockquote>
+  <p><strong>Desired Effect</strong>: <br />
+0.) Start Position. <br />
+1.) Apply rotation A to position at 0. <br />
+2.) Apply rotation <strong>B</strong> to position at 1. <br /></p>
+</blockquote>
+
+<p>We want each mouse drag to produce a new, independent rotation. So when I drag the mouse from left to right, the model spins right, regardless of the rotations I performed previously.</p>
+
+<blockquote>
+  <p><strong>Actual Effect</strong>: <br />
+0.) Start Position. <br />
+1.) Apply rotation A to position at 0. <br />
+2.) Apply rotation <strong>(A + B)</strong> to position at 1. <br /></p>
+</blockquote>
+
+<p>As is, the rotations are adding on top of eachother. So when I drag the mouse left to right, the model spins according to the sum of the prior rotation and the desired left to right rotation. Confusing right?!?!?!?!</p>
+
+<h4 id="opengl-matrix-stack">OpenGL Matrix Stack</h4>
+<p>Here, the openGL matrix stack comes in. Here is the deal: In order to rotate my model, I am manipulating the Model View Matrix. But openGL actually maintains a “stack” of Model View Matrices for me to work with. If I want to save my current matrix, I can “push” it to the stack. Then, I can change the matrix however I want. When I decide that I want to go back to that matrix I pushed earlier, I can “pop” the matrix and I will get the next one on the stack. More confusion, no?</p>
+
+<p>Let’s pretend that coloring is a matrix operation. So I start out with a regular white model view matrix. I call glPushMatrix(). Then I paint the matrix yellow.</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="cm">/* My matrix is white */</span>
+<span class="n">glPushMatrix</span><span class="p">();</span> <span class="c1">// Saving white matrix for later. </span>
+<span class="n">applyPaint</span><span class="p">(</span><span class="n">Yellow</span><span class="p">);</span>
+<span class="n">drawMyMatrix</span><span class="p">();</span></code></pre></div>
+<p><em><center> displays a yellow matrix </center></em></p>
+
+<p>Next, I decide I want a red matrix. If I just start using red paint to my yellow matrix, I am going to end up with an orange matrix. So, first I call glPopMatrix(). Now I get the white matrix back, paint it red, and I have a true red matrix.</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="cm">/* My matrix is yellow */</span>
+<span class="n">glPopMatrix</span><span class="p">();</span> <span class="c1">// Getting the white matrix back. </span>
+<span class="n">applyPaint</span><span class="p">(</span><span class="n">red</span><span class="p">);</span>
+<span class="n">drawMyMatrix</span><span class="p">();</span>
+<span class="n">glPushMatrix</span><span class="p">();</span> <span class="c1">// Saving red matrix for later.</span></code></pre></div>
+<p><em><center> displays a red matrix </center></em></p>
+
+<p>Now, I call glPushMatrix() again. I want to turn the matrix purple this time. So I paint this matrix blue, and get a purple matrix. Now I want a green matrix! But I don’t want to slather green paint on a purple thing.</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">applyPaint</span><span class="p">(</span><span class="n">blue</span><span class="p">);</span>
+<span class="cm">/* Now my matrix is purple! */</span>
+<span class="n">drawMyMatrix</span><span class="p">();</span></code></pre></div>
+<p><em><center> displays a purple matrix </center></em></p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">glPopMatrix</span><span class="p">();</span> <span class="c1">// Got my red matrix back. </span>
+<span class="n">glPopMatrix</span><span class="p">();</span> <span class="c1">// Got my white matrix back. </span>
+<span class="n">applyPaint</span><span class="p">(</span><span class="n">green</span><span class="p">);</span>
+<span class="n">drawMyMatrix</span><span class="p">();</span></code></pre></div>
+<p><em><center> displays a green matrix </center></em></p>
+
+<h4 id="back-to-rotation">Back to Rotation</h4>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">QQuaternion</span> <span class="n">GLWidget</span><span class="o">::</span><span class="n">drag2Rotate</span><span class="p">(</span><span class="kt">float</span> <span class="n">dx</span><span class="p">,</span> <span class="kt">float</span> <span class="n">dy</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="cm">/* Define Axis of Rotation */</span>
+    <span class="n">axisOfRotation</span><span class="p">.</span><span class="n">setX</span><span class="p">(</span><span class="o">-</span><span class="n">dy</span><span class="p">);</span>
+    <span class="n">axisOfRotation</span><span class="p">.</span><span class="n">setY</span><span class="p">(</span><span class="o">-</span><span class="n">dx</span><span class="p">);</span>
+    <span class="n">axisOfRotation</span><span class="p">.</span><span class="n">setZ</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="n">magnitude</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">dx</span><span class="o">*</span><span class="n">dx</span> <span class="o">+</span> <span class="n">dy</span><span class="o">*</span><span class="n">dy</span><span class="p">);</span>
+    <span class="cm">/* Update Rotation Quaternion */</span>
+    <span class="n">QQuaternion</span> <span class="n">newQ</span> <span class="o">=</span> <span class="n">QQuaternion</span><span class="o">::</span><span class="n">fromAxisAndAngle</span><span class="p">(</span><span class="n">axisOfRotation</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">);</span>
+    <span class="n">currQ</span> <span class="o">=</span> <span class="n">newQ</span> <span class="o">*</span> <span class="n">currQ</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">currQ</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+<p><em><center> I keep track of the current Quaternion (represents the current rotation) by multiplying the new, applied rotation by the former rotation </center></em></p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">glPushMatrix</span><span class="p">();</span> <span class="cm">/* Saves state before rotation */</span>
+        <span class="n">QMatrix4x4</span> <span class="n">rotationMatrix</span><span class="p">;</span> <span class="o">/</span> <span class="n">Begins</span> <span class="n">as</span> <span class="n">Identity</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">Like</span> <span class="n">a</span> <span class="s">&quot;white&quot;</span> <span class="n">matrix</span> <span class="n">from</span> <span class="n">my</span> <span class="n">example</span>
+        <span class="cm">/* Here I rotate by the Quaternion, which holds the current rotation */</span>
+        <span class="n">rotationMatrix</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">currQ</span><span class="p">);</span>
+        <span class="n">glMatrixMode</span><span class="p">(</span><span class="n">GL_MODELVIEW</span><span class="p">);</span>
+        <span class="cm">/* Translate so rotation occurs about model center */</span>
+        <span class="n">glTranslatef</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">center</span><span class="p">().</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">m</span><span class="p">.</span><span class="n">center</span><span class="p">().</span><span class="n">at</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">m</span><span class="p">.</span><span class="n">center</span><span class="p">().</span><span class="n">at</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+        <span class="n">glMultMatrixf</span><span class="p">(</span><span class="n">mat</span><span class="p">.</span><span class="n">constData</span><span class="p">());</span>
+        <span class="n">glTranslatef</span><span class="p">(</span><span class="o">-</span><span class="n">m</span><span class="p">.</span><span class="n">center</span><span class="p">().</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="n">m</span><span class="p">.</span><span class="n">center</span><span class="p">().</span><span class="n">at</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="o">-</span><span class="n">m</span><span class="p">.</span><span class="n">center</span><span class="p">().</span><span class="n">at</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+        <span class="n">m</span><span class="p">.</span><span class="n">drawMe</span><span class="p">();</span>
+        <span class="n">glPopMatrix</span><span class="p">();</span> <span class="cm">/* Reverts to state before rotation */</span></code></pre></div>
+<p><em><center> This way, the next time the model is drawn, the rotation is applied to the original, "white", matrix. </center></em></p>
+
+<h4 id="zoom">Zoom</h4>
+<p>My first idea was to use glScalef on the Model View Matrix to zoom.</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="kt">void</span> <span class="n">MainWindow</span><span class="o">::</span><span class="n">on_toolButton_clicked</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">glMatrixMode</span><span class="p">(</span><span class="n">GL_MODELVIEW</span><span class="p">);</span> <span class="c1">// Specifies which matrix will be scaled</span>
+    <span class="n">glScalef</span><span class="p">(</span><span class="n">xScale</span><span class="p">,</span> <span class="n">yScale</span><span class="p">,</span> <span class="n">zScale</span><span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+<p><em><center> Calling glScalef(0.5,0.5,0.5) would uniformly scale the Model View Matrix down 50%</center></em></p>
+
+<p>That isn’t quite right. Here I am actually changing the size of the model, rather than getting closer or further. This is kind of like the desired effect, but if I get too close holes start appearing in my models. By scaling the Model View Matrix, the model can get so big that parts of it would lie outside the clipping planes.</p>
+
+<iframe width="604.8" height="453.6" src="https://www.youtube.com/embed/crWdEMgDwNE" frameborder="0" allowfullscreen=""></iframe>
+
+<p>Instead of adjusting the Model View Matrix, I need to adjust the Projection Matrix. Doing so changes the way I view the “world”, as opposed to changing the model itself.</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="kt">void</span> <span class="n">camera</span><span class="o">::</span><span class="n">setZoom</span><span class="p">(</span><span class="kt">float</span> <span class="n">factor</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">factor</span> <span class="o">&gt;</span> <span class="mf">0.01</span><span class="p">)</span>
+        <span class="n">zoomF</span> <span class="o">=</span> <span class="n">factor</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="n">zoomF</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">;</span>
+    <span class="n">glMatrixMode</span><span class="p">(</span><span class="n">GL_PROJECTION</span><span class="p">);</span>
+    <span class="n">glLoadIdentity</span><span class="p">();</span> <span class="c1">// Make sure zoom isn&#39;t applied to the previous state</span>
+    <span class="n">glOrtho</span><span class="p">(</span><span class="n">leftAdjust</span><span class="o">*</span><span class="n">zoomF</span><span class="p">,</span><span class="n">rightAdjust</span><span class="o">*</span><span class="n">zoomF</span><span class="p">,</span><span class="n">bottom</span><span class="o">*</span><span class="n">zoomF</span><span class="p">,</span><span class="n">top</span><span class="o">*</span><span class="n">zoomF</span><span class="p">,</span><span class="o">-</span><span class="n">near</span><span class="p">,</span><span class="o">-</span><span class="n">far</span><span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+<hr />
+
+<p>That’s it for now :) My next post will show my final project!</p>
+
+
+    </article>
+
+    
+
+     
+
+
+    <footer class="post-meta">
+        
+        <div class="meta">
+            <h3 class="meta-title">Date</h3>
+            <span class="meta-content">August 1, 2015</span>
+        </div>
+        
+        
+        
+        
+    </footer>
+
+   
+
+</div>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63774988-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+            </div>
+
+            
+
+
+
+
+            
+<div class="next-post">
+    <a href="/gitlet/" class="next-post-link"></a>
+
+    <img src="https://octodex.github.com/images/daftpunktocat-guy.gif" class="next-post-thumb" />
+
+    <div class="next-post-info">
+        <span class="next-story">Next Story</span>
+        <h3 class="next-post-title">Gitlet & BearGit</h3>
+    </div>
+</div>
+
+
+
+        </div>
+
+    </main>
+
+    <a href="#" class="sb-toggle-left">Menu
+    <span class="nav-icon"></span>
+</a>
+
+<div class="sb-slidebar sb-left sb-style-push">
+    <nav>
+        <a href="/"><h2 class="site-title">Kadie Jaffe</h2></a>
+        <ul class="sb-menu">
+        
+        
+            
+                
+            
+        
+            
+                
+                <li class="sb-close ">
+                    <a href="/Projects.html">Projects</a>
+                </li>
+                
+            
+        
+            
+                
+                <li class="sb-close ">
+                    <a href="/aboutMe/">About Me</a>
+                </li>
+                
+            
+        
+            
+                
+                <li class="sb-close ">
+                    <a href="/archive/">Archive</a>
+                </li>
+                
+            
+        
+            
+        
+            
+                
+                <li class="sb-close ">
+                    <a href="/blogIndex.html">KD at S.E.A.</a>
+                </li>
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                
+            
+        
+        </ul>
+
+        <div class="site-info">
+            <p><img src="https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/KadieJaffe.jpg" alt="Kadie Jaffe" style="float:left;width:52px;height:100px;"> 
+                By Kadie Jaffe 
+                <br>
+                <a href = "https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/resume/Kadie%20Jaffe's%20Resume%20Complete.pdf"> Download Resume </a> 
+                <br>
+                <a href = "https://linkedin.com/in/kadiejaffe" > LinkedIn </a><br>
+                <a href = "https://github.com/kadie16" > GitHub </a> <br>
+                
+            </p>
+            
+            <p>
+            Copyright &copy; 2015
+            </p>
+        </div>
+    </nav>
+</div>
+
+
+
+    <script type="text/javascript" src="/assets/js/libs/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/js/libs/slidebars.min.js"></script>
+<script type="text/javascript" src="/assets/js/libs/jquery.backstretch.min.js"></script>
+<script type="text/javascript" src="/assets/js/libs/jquery.scrollstop.js"></script>
+<script type="text/javascript" src="/assets/js/libs/rrssb.min.js"></script>
+<script type="text/javascript" src="/assets/js/functions.js"></script>
+<script type="text/javascript">
+    $(function($) {
+        $.slidebars();
+
+        var steps = [];
+        var images = [
+            'https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/background3.png',
+        ];
+
+        if (images.length > 0) {
+            $('.loader').addClass('loading');
+
+            steps = scrollSteps(images.length);
+
+            $.backstretch(images, {
+                fade: 1000
+            });
+
+            $.backstretch('pause');
+        }
+
+        $(document).on("backstretch.before", function (e, instance, index) {
+            $('.loader').addClass('loading');
+        });
+
+        $(document).on('scrollstop', function () {
+            if (steps.length > 0) {
+                var percentage = scrollPercentage();
+
+                for (var i = 0; i < steps.length; i++) {
+                    if (percentage < steps[i]) {
+                        if (i == $("body").data("backstretch").index) {
+                            break;
+                        }
+
+                        $.backstretch('show', i);
+                        break;
+                    }
+                }
+            }
+        });
+
+        $(document).on("backstretch.after", function (e, instance, index) {
+            $('.loader').removeClass('loading');
+        });
+    });
+</script>
+
+
+</body>
+
+</html>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63774988-1', 'auto');
+  ga('send', 'pageview');
+
+</script>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>I'm working, I swear!</title>
+    <meta name="description" content="So%20far%20all%20I’ve%20mentioned%20are%20the%20adventures%20I’ve%20been%20having!%20If%20you’re%20wondering,%20as%20my%20Grandpa%20Joe%20put%20it:%20“when%20the%20hell%20are%20you%20going%20to%20work”,%20then%20thi...">
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Merriweather:300,300italic,400,400italic,700italic,700">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300,400,700">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,700">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/assets/css/vendors/slidebars.min.css">
+    <link rel="stylesheet" href="/assets/css/vendors/rrssb.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <link rel="apple-touch-icon-precomposed" href="/assets/images/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/assets/images/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/images/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/images/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/assets/images/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/images/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/assets/images/apple-touch-icon-152x152.png" />
+
+    <link rel="canonical" href="http://kadie16.github.io/working-I-swear/">
+    <link rel="alternate" type="application/rss+xml" title="Kadie Jaffe" href="http://kadie16.github.io/feed.xml" />
+</head>
+
+
+<body>
+
+    <div class="loader">
+    <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32px" height="32px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+        <filter id="dropshadow" height="130%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+            <feOffset dx="0" dy="0" result="offsetblur"/>
+            <feMerge>
+                <feMergeNode/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <path d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+            <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.5s" repeatCount="indefinite"/>
+        </path><!-- style="filter:url(#dropshadow)" -->
+    </svg>
+</div>
+
+
+    <main id="sb-site">
+
+        <div class="container">
+            <div class="wrapper">
+                <div class="post">
+    
+
+    <header class="post-header">
+        
+        <img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/6angel.png" alt="I'm working, I swear!" class="post-thumb" />
+        
+
+        <h1 class="post-title">I'm working, I swear!</h1>
+    </header>
+
+    <article class="post-content">
+        <p>So far all I’ve mentioned are the adventures I’ve been having! If you’re wondering, as my Grandpa Joe put it: “when the hell are you going to work”, then this post is for you :)</p>
+
+<h1 id="about-my-project">About My Project</h1>
+<p>I am building a program that will allow users to load 3D models (.obj file format) and interact with them via transformations such as rotation, translation, deformation etc. My ultimate goal is to implement the ability to select parts of a volume mesh, so the user can select and interact with seperate parts of their model. I am using C++, OpenGL, and QT for my project.</p>
+
+<p>I was first inspired to learn about computer graphics when my (amazing) materials science professor told me about his son who works on lighting movies at Pixar. I have always loved developing my technical background, but I also love painting and drawing and creating visual things. Until I learned about the opportunity to work in computer graphics, it never occurred to me that I could excercise both of my interests at the same time.</p>
+
+<p>I have virtually no experience with C++, definitely none with OpenGL and I hadn’t even heard of QT until my supervisor told me about it. It is also my first time building a GUI (Graphical User Interface … the window and buttons). Initially, I was feeling a little lost and intimidated while trying to familiarize myself with all three new things simultaneously. So I completeley understand if this is too much computer science jargon. I won’t be offended if you just look at the pictures. But hopefully some of you will find this interesting :)</p>
+
+<p>After a lot confusion (days), my supervisor helped me organize my learning strategy and I finally got a program running.</p>
+
+<p><img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/0triangle.PNG" alt="Triangle" /> <em><center>Nothing special, just a rotating triangle with a quit button, but this was exciting haha :)</center></em></p>
+
+<p>Next I worked on loading actual objects. To do this, I needed to read information from a user selected .obj file. These files are lists of the vertices (lines beginning with v), and faces (lines beginning with f). Each face is a triangle, made up of three of the vertices.</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">v</span>  <span class="mf">0.0</span>  <span class="mf">0.0</span>  <span class="mf">0.0</span>  
+<span class="n">v</span>  <span class="mf">0.0</span>  <span class="mf">0.0</span>  <span class="mf">1.0</span> 
+<span class="n">v</span>  <span class="mf">0.0</span>  <span class="mf">1.0</span>  <span class="mf">0.0</span>  
+<span class="n">v</span>  <span class="mf">0.0</span>  <span class="mf">1.0</span>  <span class="mf">1.0</span> 
+
+<span class="p">...</span> <span class="n">etc</span> <span class="p">...</span>  
+
+<span class="n">f</span>  <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>  <span class="mi">7</span><span class="o">/</span><span class="mi">2</span>  <span class="mi">5</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">f</span>  <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>  <span class="mi">3</span><span class="o">/</span><span class="mi">2</span>  <span class="mi">7</span><span class="o">/</span><span class="mi">2</span> 
+<span class="n">f</span>  <span class="mi">1</span><span class="o">/</span><span class="mi">6</span>  <span class="mi">4</span><span class="o">/</span><span class="mi">6</span>  <span class="mi">3</span><span class="o">/</span><span class="mi">6</span> 
+
+<span class="p">...</span> <span class="n">etc</span> <span class="p">...</span></code></pre></div>
+
+<p><em><center>Part of the .obj file for a cube. The first face is using vertices 1, 7, and 5 (which I deleted to make this example smaller).</center></em></p>
+
+<p>Once I have all of the information from the file stored, I have to iterate through each face and ask OpenGL to draw the respective triangle. I’ve been using some models from the <a href="http://graphics.berkeley.edu/resources/GarmentLibrary/">Berkeley Garment Library</a> as test files.</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="cm">/* So OpenGL knows I want it to draw triangles */</span>
+<span class="n">glBegin</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">);</span>
+	<span class="cm">/* For every Face : */</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">faces</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="cm">/* Get vertices from the Face */</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="n">faces</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+                <span class="n">v1</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">getVertex</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+                <span class="n">v2</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">getVertex</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+                <span class="n">v3</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">getVertex</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+
+                <span class="cm">/* Rendering, aka Drawing, the Face (OpenGL Stuff) */</span>
+                <span class="n">glColor4f</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// Color it Cyan for Fun  </span>
+                <span class="n">glVertex3f</span><span class="p">(</span><span class="n">v1</span><span class="p">.</span><span class="n">getX</span><span class="p">(),</span> <span class="n">v1</span><span class="p">.</span><span class="n">getY</span><span class="p">(),</span> <span class="n">v1</span><span class="p">.</span><span class="n">getZ</span><span class="p">());</span>
+                <span class="n">glVertex3f</span><span class="p">(</span><span class="n">v2</span><span class="p">.</span><span class="n">getX</span><span class="p">(),</span> <span class="n">v2</span><span class="p">.</span><span class="n">getY</span><span class="p">(),</span> <span class="n">v2</span><span class="p">.</span><span class="n">getZ</span><span class="p">());</span>
+                <span class="n">glVertex3f</span><span class="p">(</span><span class="n">v3</span><span class="p">.</span><span class="n">getX</span><span class="p">(),</span> <span class="n">v3</span><span class="p">.</span><span class="n">getY</span><span class="p">(),</span> <span class="n">v3</span><span class="p">.</span><span class="n">getZ</span><span class="p">());</span>
+            <span class="p">}</span>
+    <span class="p">}</span>
+<span class="n">glEnd</span><span class="p">();</span></code></pre></div>
+
+<p><img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/1robe.png" alt="Robe1" /> <em><center>Yeah, pink and cyan. I'll change to neutral colors later, OK?</center></em></p>
+
+<p>Yay!! I’ve rendered a model! But it isn’t very exciting looking. It’s supposed to look 3D. It looks flat because it hasn’t been lit yet. If you draw a sphere on a piece of paper, and paint it all one color, it looks like a circle. You need to add lighting and shading to make it look like a sphere, right? Same idea. Cool, I’ll enable lighting.</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">glEnable</span><span class="p">(</span><span class="n">GL_LIGHTING</span><span class="p">);</span></code></pre></div>
+
+<p><img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/2robe.png" alt="Robe2" /></p>
+
+<p>Ok so enabling lighting isn’t enough. Now all of the models I load are just black. At this point, OpenGL has no idea how this model is supposed to be lit. I can’t just expect OpenGL to know that my vertices are supposed to look like a robe.</p>
+
+<p>In order to really light the model, OpenGL needs the normals for each vertex. A normal is a vector that is perpendicular to the face, that points outward. Knowing this, OpenGL can determine where each vertex is actually facing at any given position of the model, and depict the light accordingly. For the most accurate, smooth shading, the normal for each vertex should be an average of the normals of all of the faces that the vertex belongs to. But right now, for simplicity I am just using one.</p>
+
+<p><img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/3dress.png" alt="Dress3" /></p>
+
+<p>Cool! Now the models are starting to take some shape :) But obviously something is still wrong. After a couple hours, I realized there was a [1] that was supposed to be a [0] in my normal calculations.</p>
+
+<p><img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/4angel.png" alt="Angel" /></p>
+
+<p>Getting the angel to load was really exciting. This is something I was looking forward to from the beginning, when I just had a triangle. But, the black part is there because the angel is crossing the “clipping plane”. The clipping plane is where OpenGL determines that the face is either too close or too far along the z axis to be drawn. Have you ever played a video game and once you get close to an object it dissapears? So my next task is to make sure that no matter where the coordinates of the model are, my program finds them and displays the model on the screen.</p>
+
+<p><img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/5angelSide.png" alt="AngelAgain" /></p>
+
+<p><em><center>Isn't it neat that this is just a bunch of triangles and normals?</center></em></p>
+
+<p><img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/6angel.png" alt="Angel" /></p>
+
+<p><em><center>Angel data set courtesy of the U.C. Berkeley Computer Animation and Modeling Group.</center></em></p>
+
+    </article>
+
+    
+
+     
+
+
+    <footer class="post-meta">
+        
+        <div class="meta">
+            <h3 class="meta-title">Date</h3>
+            <span class="meta-content">July 3, 2015</span>
+        </div>
+        
+        
+        
+        
+    </footer>
+
+   
+
+</div>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63774988-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+            </div>
+
+            
+
+
+
+
+            
+<div class="next-post">
+    <a href="/laos/" class="next-post-link"></a>
+
+    <img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/laos/river1.jpg" class="next-post-thumb" />
+
+    <div class="next-post-info">
+        <span class="next-story">Next Story</span>
+        <h3 class="next-post-title">LAOS</h3>
+    </div>
+</div>
+
+
+
+        </div>
+
+    </main>
+
+    <a href="#" class="sb-toggle-left">Menu
+    <span class="nav-icon"></span>
+</a>
+
+<div class="sb-slidebar sb-left sb-style-push">
+    <nav>
+        <a href="/"><h2 class="site-title">Kadie Jaffe</h2></a>
+        <ul class="sb-menu">
+        
+        
+            
+                
+            
+        
+            
+                
+                <li class="sb-close ">
+                    <a href="/Projects.html">Projects</a>
+                </li>
+                
+            
+        
+            
+                
+                <li class="sb-close ">
+                    <a href="/aboutMe/">About Me</a>
+                </li>
+                
+            
+        
+            
+                
+                <li class="sb-close ">
+                    <a href="/archive/">Archive</a>
+                </li>
+                
+            
+        
+            
+        
+            
+                
+                <li class="sb-close ">
+                    <a href="/blogIndex.html">KD at S.E.A.</a>
+                </li>
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                
+            
+        
+        </ul>
+
+        <div class="site-info">
+            <p><img src="https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/KadieJaffe.jpg" alt="Kadie Jaffe" style="float:left;width:52px;height:100px;"> 
+                By Kadie Jaffe 
+                <br>
+                <a href = "https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/resume/Kadie%20Jaffe's%20Resume%20Complete.pdf"> Download Resume </a> 
+                <br>
+                <a href = "https://linkedin.com/in/kadiejaffe" > LinkedIn </a><br>
+                <a href = "https://github.com/kadie16" > GitHub </a> <br>
+                
+            </p>
+            
+            <p>
+            Copyright &copy; 2015
+            </p>
+        </div>
+    </nav>
+</div>
+
+
+
+    <script type="text/javascript" src="/assets/js/libs/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/js/libs/slidebars.min.js"></script>
+<script type="text/javascript" src="/assets/js/libs/jquery.backstretch.min.js"></script>
+<script type="text/javascript" src="/assets/js/libs/jquery.scrollstop.js"></script>
+<script type="text/javascript" src="/assets/js/libs/rrssb.min.js"></script>
+<script type="text/javascript" src="/assets/js/functions.js"></script>
+<script type="text/javascript">
+    $(function($) {
+        $.slidebars();
+
+        var steps = [];
+        var images = [
+            'https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/background3.png',
+        ];
+
+        if (images.length > 0) {
+            $('.loader').addClass('loading');
+
+            steps = scrollSteps(images.length);
+
+            $.backstretch(images, {
+                fade: 1000
+            });
+
+            $.backstretch('pause');
+        }
+
+        $(document).on("backstretch.before", function (e, instance, index) {
+            $('.loader').addClass('loading');
+        });
+
+        $(document).on('scrollstop', function () {
+            if (steps.length > 0) {
+                var percentage = scrollPercentage();
+
+                for (var i = 0; i < steps.length; i++) {
+                    if (percentage < steps[i]) {
+                        if (i == $("body").data("backstretch").index) {
+                            break;
+                        }
+
+                        $.backstretch('show', i);
+                        break;
+                    }
+                }
+            }
+        });
+
+        $(document).on("backstretch.after", function (e, instance, index) {
+            $('.loader').removeClass('loading');
+        });
+    });
+</script>
+
+
+</body>
+
+</html>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63774988-1', 'auto');
+  ga('send', 'pageview');
+
+</script>

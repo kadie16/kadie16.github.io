@@ -1,14 +1,15 @@
 ---
 layout: default
 home: true
+backgrounds: 
+    - https://38.media.tumblr.com/8f7a67f757504133061be5764102a4a5/tumblr_inline_n4t68m6fSV1qb53xe.png
 ---
 
 <div class="home">
+
     <ul class="post-list">
         {% if site.pagination %}
-        {% assign source = paginator.posts %}
-        {% else %}
-        {% assign source = site.posts %}
+        {% assign source = site.categories.featured %}
         {% endif %}
 
         {% for post in source %}
