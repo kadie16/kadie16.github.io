@@ -97,9 +97,9 @@ Getting the model to rotate wasn't hard. I could just use glRotatef to do that.
 {% endhighlight %} _<center></center>_
 Getting the model to rotate according to mouse drag wasn't a big deal either. All I had to do was set the parameters in glRotatef based on the change in position of the mouse. The hard part was getting the model to rotate in a way that felt _natural_. 
 
-The first problem is glRotatef rotates the model around the origin, the point (0,0,0). This gives the appearance that the model was orbiting about an arbitrary point in space. Not what I want. I want the model to rotate about it's center. That way it stays where it is and just spins around. 
+The first problem is glRotatef rotates the model around the origin, the point (0,0,0). This gives the appearance that the model was orbiting about an arbitrary point in space. Not what I want. I want the model to rotate about its center. That way it stays where it is and just spins around. 
 
-There is a clever trick to accomplish this. Since glRotatef rotates about the origin, you can just move whatever point you want to rotate about to the origin, apply the rotation, and then move the object back to where it was. Imagine I pick up the model, move it's center to the origin, rotate it, and move it back to it's original point in space. 
+There is a clever trick to accomplish this. Since glRotatef rotates about the origin, you can just move whatever point you want to rotate about to the origin, apply the rotation, and then move the object back to where it was. Imagine I pick up the model, move its center to the origin, rotate it, and move it back to its original point in space. 
 
 {% highlight c++ %}
 /* Move center to origin */
@@ -130,7 +130,7 @@ We want each mouse drag to produce a new, independent rotation. So when I drag t
 > 1.) Apply rotation A to position at 0. <br>
 > 2.) Apply rotation **(A + B)** to position at 1. <br>
 
-As is, the rotations are adding on top of eachother. So when I drag the mouse left to right, the model spins according to the sum of the prior rotation and the desired left to right rotation. Confusing right?!?!?!?!
+As is, the rotations are adding on top of each other. So when I drag the mouse left to right, the model spins according to the sum of the prior rotation and the desired left to right rotation. Confusing right?!?!?!?!
 
 ####OpenGL Matrix Stack 
 Here, the openGL matrix stack comes in. Here is the deal: In order to rotate my model, I am manipulating the Model View Matrix. But openGL actually maintains a "stack" of Model View Matrices for me to work with. If I want to save my current matrix, I can "push" it to the stack. Then, I can change the matrix however I want. When I decide that I want to go back to that matrix I pushed earlier, I can "pop" the matrix and I will get the next one on the stack. More confusion, no? 
