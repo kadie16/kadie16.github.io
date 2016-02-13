@@ -6,21 +6,22 @@
     <description></description>
     <link>http://kadie16.github.io/</link>
     <atom:link href="http://kadie16.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 25 Sep 2015 14:17:34 -0700</pubDate>
-    <lastBuildDate>Fri, 25 Sep 2015 14:17:34 -0700</lastBuildDate>
+    <pubDate>Fri, 12 Feb 2016 17:35:44 -0800</pubDate>
+    <lastBuildDate>Fri, 12 Feb 2016 17:35:44 -0800</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
-        <title>3D Viewer</title>
-        <description>&lt;center&gt;&lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/wwrJapA6R64&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/center&gt;
+        <title>My First Maya Project</title>
+        <description>&lt;p&gt;This semester I am taking a decal called UCBUGG, which stands for UC Berkeley Undergraduate Graphics Group. We are learning how to make an animated short using maya! This is my first maya project. He is a little robot. I don’t have a name for him but I think he is pretty cute. Some people said he looks like a penguin.&lt;/p&gt;
 
-&lt;p&gt;This was my first, and favorite CS61B data structures project. It is a simple checkers game with a few twists, written in Java.&lt;/p&gt;
+&lt;center&gt;&lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/plv-S4iDUYM&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/center&gt;
 
-&lt;p&gt;There are 3 kinds of pieces: pawns, bombs, and shields. Bombs (birds and bees) self destruct and destroy everything around them when they make a capture. Shields (roses) are protected from bomb explosions. Honeybears are pawns! Pieces become “crowned” when they reach the end of the board.&lt;/p&gt;
+&lt;p&gt;I used &lt;a href=&quot;http://ucbugg-labs.wikispaces.com/Introduction+to+Maya&quot;&gt;this tutorial&lt;/a&gt; to make this little guy. It was super helpful! The whole website has a lot of great tutorials if you are just starting out with Maya like I am.&lt;/p&gt;
+
 </description>
-        <pubDate>Fri, 28 Aug 2015 00:00:00 -0700</pubDate>
-        <link>http://kadie16.github.io/3dviewer/</link>
-        <guid isPermaLink="true">http://kadie16.github.io/3dviewer/</guid>
+        <pubDate>Mon, 01 Feb 2016 00:00:00 -0800</pubDate>
+        <link>http://kadie16.github.io/maya-robot/</link>
+        <guid isPermaLink="true">http://kadie16.github.io/maya-robot/</guid>
         
         <category>Java</category>
         
@@ -53,6 +54,25 @@
       </item>
     
       <item>
+        <title>3D Viewer</title>
+        <description>&lt;center&gt;&lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/wwrJapA6R64&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/center&gt;
+
+&lt;p&gt;A demo of my completed 3D Viewer project.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 28 Aug 2015 00:00:00 -0700</pubDate>
+        <link>http://kadie16.github.io/3dviewer/</link>
+        <guid isPermaLink="true">http://kadie16.github.io/3dviewer/</guid>
+        
+        <category>C++</category>
+        
+        
+        <category>projects</category>
+        
+        <category>project</category>
+        
+      </item>
+    
+      <item>
         <title>Gitlet &amp; BearGit</title>
         <description>&lt;h2 id=&quot;gitlet&quot;&gt;Gitlet&lt;/h2&gt;
 
@@ -134,6 +154,249 @@
         <guid isPermaLink="true">http://kadie16.github.io/gitlet/</guid>
         
         <category>Java</category>
+        
+        
+        <category>projects</category>
+        
+        <category>project</category>
+        
+      </item>
+    
+      <item>
+        <title>Work in Progress</title>
+        <description>&lt;center&gt;&lt;iframe width=&quot;604.8&quot; height=&quot;453.6&quot; src=&quot;https://www.youtube.com/embed/cjPib3gQU-k&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/center&gt;
+&lt;p&gt;&lt;em&gt;&lt;center&gt;A Demonstration of my Project thus far&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;My project is a C++ program that reads in data describing 3D models, in .obj file format, and renders and lights the models with OpenGL. Since my last post, I have implemented some user interactions and use of the CGAL data structure. The models I use to test my program came from the &lt;a href=&quot;http://graphics.berkeley.edu&quot;&gt;UC Berkeley Computer Graphics&lt;/a&gt; website :)&lt;/p&gt;
+
+&lt;h2 id=&quot;latest-changes&quot;&gt;Latest Changes&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Automatically find and fit model.&lt;/li&gt;
+  &lt;li&gt;Maintain aspect ratio on window resize.&lt;/li&gt;
+  &lt;li&gt;Select Color.&lt;/li&gt;
+  &lt;li&gt;Shading based on vertex normal vectors.&lt;/li&gt;
+  &lt;li&gt;Rotation by mouse drag.&lt;/li&gt;
+  &lt;li&gt;Zoom by right click mouse drag.&lt;/li&gt;
+  &lt;li&gt;Option to move model by mouse drag.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;find-and-fit&quot;&gt;Find and Fit&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;cam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;objModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;viewModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;moveToCenter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fitModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maxCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;minCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+                     &lt;span class=&quot;n&quot;&gt;maxCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;minCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+                     &lt;span class=&quot;n&quot;&gt;maxCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;minCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, whenever a new .obj file is selected, the “camera” automatically centers the model and makes it fit on the screen. I say “camera” because there is no actual camera in OpenGL. Instead, you manipulate the view by applying matrix transformations to the modelview and projection matrices. More on that later. I wrote a “camera” class, which handles these transformations.&lt;/p&gt;
+
+&lt;h3 id=&quot;aspect-ratio&quot;&gt;Aspect Ratio&lt;/h3&gt;
+&lt;p&gt;I think this is probably the least noticeable new feature, but it was one of the bigger challenges. If you watch closely, you can see that when I resize the window in the video, the cube retains its shape. In otherwords, it doesn’t turn into a rectangle if the viewer isn’t perfectly square. You might also notice that the angel is more slender than before.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/angel7.png&quot; alt=&quot;Angel Aspect Before&quot; /&gt; &lt;em&gt;&lt;center&gt;Squished angel&lt;/center&gt;&lt;/em&gt;
+&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/angel8.png&quot; alt=&quot;Angel Aspect After&quot; /&gt; &lt;em&gt;&lt;center&gt;Angel with corrected aspect ratio&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;camera&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;adjustAspect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;/* Modify the Projection Matrix */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;glMatrixMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_PROJECTION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;/* Start from a &amp;#39;clean slate&amp;#39; */&lt;/span&gt; 
+    &lt;span class=&quot;n&quot;&gt;glLoadIdentity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;/* Calculate Aspect Ratio */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newAspect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;/* Adjust Accordingly */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;leftAdjust&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newAspect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;rightAdjust&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newAspect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;glOrtho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;leftAdjust&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rightAdjust&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bottom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;near&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;far&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;color-picking&quot;&gt;Color Picking&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/humanoid1.png&quot; alt=&quot;humanoid color pick&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To me this feature seems more impressive than the constant aspect ratio, but it took about five minutes to implement. Thanks to QT, color picking boiled down to two lines of code.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MainWindow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;on_toolButton_clicked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;QColor&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;QColorDialog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ui&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;widget&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grabColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;&lt;center&gt;ui is the User Interface, widget is the part of the ui that displays the model&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Ok, I had to write grabColor too, so maybe 5 lines. Still. I actually threw this feature in because I needed a break from some other issue I was stuck on.&lt;/p&gt;
+
+&lt;h3 id=&quot;vertex-shading&quot;&gt;Vertex Shading&lt;/h3&gt;
+
+&lt;p&gt;In my last post, I mentioned that every vertex needs a normal vector so openGL knows how to shade the model. At that time, I was just computing the normal for each face and lighting all of the vertices in that face uniformly.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/shading1.png&quot; alt=&quot;Before and after cube picture&quot; /&gt; &lt;em&gt;&lt;center&gt;Before and After per-vertex shading&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, the normal for each vertex is assigned to be the &lt;em&gt;average&lt;/em&gt; of the normals of all of the faces it belongs to. So the vertices on the corners of the cube are assigned a normal equal to the average of the normal vectors of the three faces that meet at that corner. The vertices on the edge of two faces get the average of the two normal vectors of those faces. The vertices in the middle of the face just get the normal that belongs to that face. OpenGL then interpolates in between the vertices to produce the smooth gradient you see.&lt;/p&gt;
+
+&lt;h3 id=&quot;user-controls&quot;&gt;User Controls&lt;/h3&gt;
+
+&lt;h4 id=&quot;making-it-feel-natural&quot;&gt;Making it “feel” natural&lt;/h4&gt;
+&lt;p&gt;I expected understanding the openGL calls to be challenging, but I didn’t anticipate the challenge of making the controls intuitive. I guess this speaks to the idea that the best computer graphics go unnoticed.&lt;/p&gt;
+
+&lt;p&gt;The user controls are simulated by a series of repaints. Actually the model is being redrawn constantly, but without adjustments to the modelview or projection matrix, it is just drawn exactly the same. So my goal is to animate, or redraw, the model so the user feels like they are actually touching and manipulating the model with their mouse.&lt;/p&gt;
+
+&lt;h4 id=&quot;rotation&quot;&gt;Rotation&lt;/h4&gt;
+&lt;p&gt;Getting the model to rotate wasn’t hard. I could just use glRotatef to do that.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;glRotatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;angle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;&lt;center&gt;&lt;/center&gt;&lt;/em&gt;
+Getting the model to rotate according to mouse drag wasn’t a big deal either. All I had to do was set the parameters in glRotatef based on the change in position of the mouse. The hard part was getting the model to rotate in a way that felt &lt;em&gt;natural&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;The first problem is glRotatef rotates the model around the origin, the point (0,0,0). This gives the appearance that the model was orbiting about an arbitrary point in space. Not what I want. I want the model to rotate about it’s center. That way it stays where it is and just spins around.&lt;/p&gt;
+
+&lt;p&gt;There is a clever trick to accomplish this. Since glRotatef rotates about the origin, you can just move whatever point you want to rotate about to the origin, apply the rotation, and then move the object back to where it was. Imagine I pick up the model, move it’s center to the origin, rotate it, and move it back to it’s original point in space.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* Move center to origin */&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;glTranslatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;/* Rotate */&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;glRotatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;angle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;/* Apply reverse translation to move center back to where it was */&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;glTranslatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;&lt;center&gt;&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Pretty neat trick! But still, I am left with a model that is rotating in crazy unpredictable patterns.&lt;/p&gt;
+
+&lt;iframe width=&quot;604.8&quot; height=&quot;453.6&quot; src=&quot;https://www.youtube.com/embed/ebHibD78bCI&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;em&gt;&lt;center&gt;?????????&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;The rotations seem accurate at the beginning of the demo, but soon deviate from what is expected. You can see that the effect of dragging the mouse in one direction (like left to right) is inconsistent as time goes on.&lt;/p&gt;
+
+&lt;p&gt;This is because the rotations are accumulating.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Desired Effect&lt;/strong&gt;: &lt;br /&gt;
+0.) Start Position. &lt;br /&gt;
+1.) Apply rotation A to position at 0. &lt;br /&gt;
+2.) Apply rotation &lt;strong&gt;B&lt;/strong&gt; to position at 1. &lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;We want each mouse drag to produce a new, independent rotation. So when I drag the mouse from left to right, the model spins right, regardless of the rotations I performed previously.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Actual Effect&lt;/strong&gt;: &lt;br /&gt;
+0.) Start Position. &lt;br /&gt;
+1.) Apply rotation A to position at 0. &lt;br /&gt;
+2.) Apply rotation &lt;strong&gt;(A + B)&lt;/strong&gt; to position at 1. &lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;As is, the rotations are adding on top of eachother. So when I drag the mouse left to right, the model spins according to the sum of the prior rotation and the desired left to right rotation. Confusing right?!?!?!?!&lt;/p&gt;
+
+&lt;h4 id=&quot;opengl-matrix-stack&quot;&gt;OpenGL Matrix Stack&lt;/h4&gt;
+&lt;p&gt;Here, the openGL matrix stack comes in. Here is the deal: In order to rotate my model, I am manipulating the Model View Matrix. But openGL actually maintains a “stack” of Model View Matrices for me to work with. If I want to save my current matrix, I can “push” it to the stack. Then, I can change the matrix however I want. When I decide that I want to go back to that matrix I pushed earlier, I can “pop” the matrix and I will get the next one on the stack. More confusion, no?&lt;/p&gt;
+
+&lt;p&gt;Let’s pretend that coloring is a matrix operation. So I start out with a regular white model view matrix. I call glPushMatrix(). Then I paint the matrix yellow.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* My matrix is white */&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;glPushMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Saving white matrix for later. &lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;applyPaint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Yellow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;drawMyMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;&lt;center&gt; displays a yellow matrix &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, I decide I want a red matrix. If I just start using red paint to my yellow matrix, I am going to end up with an orange matrix. So, first I call glPopMatrix(). Now I get the white matrix back, paint it red, and I have a true red matrix.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* My matrix is yellow */&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;glPopMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Getting the white matrix back. &lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;applyPaint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;drawMyMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;glPushMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Saving red matrix for later.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;&lt;center&gt; displays a red matrix &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, I call glPushMatrix() again. I want to turn the matrix purple this time. So I paint this matrix blue, and get a purple matrix. Now I want a green matrix! But I don’t want to slather green paint on a purple thing.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;applyPaint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;/* Now my matrix is purple! */&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;drawMyMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;&lt;center&gt; displays a purple matrix &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;glPopMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Got my red matrix back. &lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;glPopMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Got my white matrix back. &lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;applyPaint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;drawMyMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;&lt;center&gt; displays a green matrix &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;back-to-rotation&quot;&gt;Back to Rotation&lt;/h4&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;QQuaternion&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLWidget&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drag2Rotate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;/* Define Axis of Rotation */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;axisOfRotation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;axisOfRotation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;axisOfRotation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setZ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;magnitude&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sqrt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;/* Update Rotation Quaternion */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;QQuaternion&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newQ&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;QQuaternion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fromAxisAndAngle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axisOfRotation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;magnitude&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;currQ&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newQ&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;currQ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;currQ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;&lt;center&gt; I keep track of the current Quaternion (represents the current rotation) by multiplying the new, applied rotation by the former rotation &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;glPushMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* Saves state before rotation */&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;QMatrix4x4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rotationMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Begins&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Identity&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Like&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;white&amp;quot;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matrix&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;my&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;example&lt;/span&gt;
+        &lt;span class=&quot;cm&quot;&gt;/* Here I rotate by the Quaternion, which holds the current rotation */&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;rotationMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rotate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;currQ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;glMatrixMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_MODELVIEW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;cm&quot;&gt;/* Translate so rotation occurs about model center */&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;glTranslatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;glMultMatrixf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;constData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;glTranslatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drawMe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;glPopMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* Reverts to state before rotation */&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;&lt;center&gt; This way, the next time the model is drawn, the rotation is applied to the original, &quot;white&quot;, matrix. &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;zoom&quot;&gt;Zoom&lt;/h4&gt;
+&lt;p&gt;My first idea was to use glScalef on the Model View Matrix to zoom.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MainWindow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;on_toolButton_clicked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;glMatrixMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_MODELVIEW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Specifies which matrix will be scaled&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;glScalef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xScale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;yScale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zScale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;&lt;center&gt; Calling glScalef(0.5,0.5,0.5) would uniformly scale the Model View Matrix down 50%&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;That isn’t quite right. Here I am actually changing the size of the model, rather than getting closer or further. This is kind of like the desired effect, but if I get too close holes start appearing in my models. By scaling the Model View Matrix, the model can get so big that parts of it would lie outside the clipping planes.&lt;/p&gt;
+
+&lt;iframe width=&quot;604.8&quot; height=&quot;453.6&quot; src=&quot;https://www.youtube.com/embed/crWdEMgDwNE&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Instead of adjusting the Model View Matrix, I need to adjust the Projection Matrix. Doing so changes the way I view the “world”, as opposed to changing the model itself.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;camera&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setZoom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;factor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;glMatrixMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_PROJECTION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;glLoadIdentity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Make sure zoom isn&amp;#39;t applied to the previous state&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;glOrtho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;leftAdjust&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rightAdjust&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bottom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;near&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;far&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;That’s it for now :) My next post will show my final project!&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 01 Aug 2015 00:00:00 -0700</pubDate>
+        <link>http://kadie16.github.io/project-update-short/</link>
+        <guid isPermaLink="true">http://kadie16.github.io/project-update-short/</guid>
+        
+        <category>C++</category>
+        
+        <category>Work</category>
+        
+        <category>Project</category>
+        
+        <category>OpenGL</category>
+        
+        <category>Computer</category>
+        
+        <category>Graphics</category>
+        
+        <category>QT</category>
+        
+        <category>CGAL</category>
         
         
         <category>projects</category>
@@ -380,249 +643,6 @@ Getting the model to rotate according to mouse drag wasn’t a big deal either. 
         
         
         <category>abroad</category>
-        
-        <category>project</category>
-        
-      </item>
-    
-      <item>
-        <title>Work in Progress</title>
-        <description>&lt;center&gt;&lt;iframe width=&quot;604.8&quot; height=&quot;453.6&quot; src=&quot;https://www.youtube.com/embed/cjPib3gQU-k&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/center&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt;A Demonstration of my Project thus far&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;My project is a C++ program that reads in data describing 3D models, in .obj file format, and renders and lights the models with OpenGL. Since my last post, I have implemented some user interactions and use of the CGAL data structure. The models I use to test my program came from the &lt;a href=&quot;http://graphics.berkeley.edu&quot;&gt;UC Berkeley Computer Graphics&lt;/a&gt; website :)&lt;/p&gt;
-
-&lt;h2 id=&quot;latest-changes&quot;&gt;Latest Changes&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Automatically find and fit model.&lt;/li&gt;
-  &lt;li&gt;Maintain aspect ratio on window resize.&lt;/li&gt;
-  &lt;li&gt;Select Color.&lt;/li&gt;
-  &lt;li&gt;Shading based on vertex normal vectors.&lt;/li&gt;
-  &lt;li&gt;Rotation by mouse drag.&lt;/li&gt;
-  &lt;li&gt;Zoom by right click mouse drag.&lt;/li&gt;
-  &lt;li&gt;Option to move model by mouse drag.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;find-and-fit&quot;&gt;Find and Fit&lt;/h3&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;cam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;objModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;cam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;viewModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;cam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;moveToCenter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fitModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maxCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;minCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-                     &lt;span class=&quot;n&quot;&gt;maxCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;minCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-                     &lt;span class=&quot;n&quot;&gt;maxCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;minCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now, whenever a new .obj file is selected, the “camera” automatically centers the model and makes it fit on the screen. I say “camera” because there is no actual camera in OpenGL. Instead, you manipulate the view by applying matrix transformations to the modelview and projection matrices. More on that later. I wrote a “camera” class, which handles these transformations.&lt;/p&gt;
-
-&lt;h3 id=&quot;aspect-ratio&quot;&gt;Aspect Ratio&lt;/h3&gt;
-&lt;p&gt;I think this is probably the least noticeable new feature, but it was one of the bigger challenges. If you watch closely, you can see that when I resize the window in the video, the cube retains its shape. In otherwords, it doesn’t turn into a rectangle if the viewer isn’t perfectly square. You might also notice that the angel is more slender than before.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/angel7.png&quot; alt=&quot;Angel Aspect Before&quot; /&gt; &lt;em&gt;&lt;center&gt;Squished angel&lt;/center&gt;&lt;/em&gt;
-&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/angel8.png&quot; alt=&quot;Angel Aspect After&quot; /&gt; &lt;em&gt;&lt;center&gt;Angel with corrected aspect ratio&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;camera&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;adjustAspect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;cm&quot;&gt;/* Modify the Projection Matrix */&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;glMatrixMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_PROJECTION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;cm&quot;&gt;/* Start from a &amp;#39;clean slate&amp;#39; */&lt;/span&gt; 
-    &lt;span class=&quot;n&quot;&gt;glLoadIdentity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;cm&quot;&gt;/* Calculate Aspect Ratio */&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newAspect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;cm&quot;&gt;/* Adjust Accordingly */&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;leftAdjust&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newAspect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;rightAdjust&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newAspect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;glOrtho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;leftAdjust&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rightAdjust&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bottom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;near&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;far&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;color-picking&quot;&gt;Color Picking&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/humanoid1.png&quot; alt=&quot;humanoid color pick&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;To me this feature seems more impressive than the constant aspect ratio, but it took about five minutes to implement. Thanks to QT, color picking boiled down to two lines of code.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MainWindow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;on_toolButton_clicked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;QColor&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;QColorDialog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;ui&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;widget&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grabColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt;ui is the User Interface, widget is the part of the ui that displays the model&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Ok, I had to write grabColor too, so maybe 5 lines. Still. I actually threw this feature in because I needed a break from some other issue I was stuck on.&lt;/p&gt;
-
-&lt;h3 id=&quot;vertex-shading&quot;&gt;Vertex Shading&lt;/h3&gt;
-
-&lt;p&gt;In my last post, I mentioned that every vertex needs a normal vector so openGL knows how to shade the model. At that time, I was just computing the normal for each face and lighting all of the vertices in that face uniformly.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/shading1.png&quot; alt=&quot;Before and after cube picture&quot; /&gt; &lt;em&gt;&lt;center&gt;Before and After per-vertex shading&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Now, the normal for each vertex is assigned to be the &lt;em&gt;average&lt;/em&gt; of the normals of all of the faces it belongs to. So the vertices on the corners of the cube are assigned a normal equal to the average of the normal vectors of the three faces that meet at that corner. The vertices on the edge of two faces get the average of the two normal vectors of those faces. The vertices in the middle of the face just get the normal that belongs to that face. OpenGL then interpolates in between the vertices to produce the smooth gradient you see.&lt;/p&gt;
-
-&lt;h3 id=&quot;user-controls&quot;&gt;User Controls&lt;/h3&gt;
-
-&lt;h4 id=&quot;making-it-feel-natural&quot;&gt;Making it “feel” natural&lt;/h4&gt;
-&lt;p&gt;I expected understanding the openGL calls to be challenging, but I didn’t anticipate the challenge of making the controls intuitive. I guess this speaks to the idea that the best computer graphics go unnoticed.&lt;/p&gt;
-
-&lt;p&gt;The user controls are simulated by a series of repaints. Actually the model is being redrawn constantly, but without adjustments to the modelview or projection matrix, it is just drawn exactly the same. So my goal is to animate, or redraw, the model so the user feels like they are actually touching and manipulating the model with their mouse.&lt;/p&gt;
-
-&lt;h4 id=&quot;rotation&quot;&gt;Rotation&lt;/h4&gt;
-&lt;p&gt;Getting the model to rotate wasn’t hard. I could just use glRotatef to do that.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;glRotatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;angle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt;&lt;/center&gt;&lt;/em&gt;
-Getting the model to rotate according to mouse drag wasn’t a big deal either. All I had to do was set the parameters in glRotatef based on the change in position of the mouse. The hard part was getting the model to rotate in a way that felt &lt;em&gt;natural&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;The first problem is glRotatef rotates the model around the origin, the point (0,0,0). This gives the appearance that the model was orbiting about an arbitrary point in space. Not what I want. I want the model to rotate about it’s center. That way it stays where it is and just spins around.&lt;/p&gt;
-
-&lt;p&gt;There is a clever trick to accomplish this. Since glRotatef rotates about the origin, you can just move whatever point you want to rotate about to the origin, apply the rotation, and then move the object back to where it was. Imagine I pick up the model, move it’s center to the origin, rotate it, and move it back to it’s original point in space.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* Move center to origin */&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;glTranslatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;/* Rotate */&lt;/span&gt; 
-&lt;span class=&quot;n&quot;&gt;glRotatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;angle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;/* Apply reverse translation to move center back to where it was */&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;glTranslatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt;&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Pretty neat trick! But still, I am left with a model that is rotating in crazy unpredictable patterns.&lt;/p&gt;
-
-&lt;iframe width=&quot;604.8&quot; height=&quot;453.6&quot; src=&quot;https://www.youtube.com/embed/ebHibD78bCI&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt;?????????&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;The rotations seem accurate at the beginning of the demo, but soon deviate from what is expected. You can see that the effect of dragging the mouse in one direction (like left to right) is inconsistent as time goes on.&lt;/p&gt;
-
-&lt;p&gt;This is because the rotations are accumulating.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;Desired Effect&lt;/strong&gt;: &lt;br /&gt;
-0.) Start Position. &lt;br /&gt;
-1.) Apply rotation A to position at 0. &lt;br /&gt;
-2.) Apply rotation &lt;strong&gt;B&lt;/strong&gt; to position at 1. &lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;We want each mouse drag to produce a new, independent rotation. So when I drag the mouse from left to right, the model spins right, regardless of the rotations I performed previously.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;Actual Effect&lt;/strong&gt;: &lt;br /&gt;
-0.) Start Position. &lt;br /&gt;
-1.) Apply rotation A to position at 0. &lt;br /&gt;
-2.) Apply rotation &lt;strong&gt;(A + B)&lt;/strong&gt; to position at 1. &lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;As is, the rotations are adding on top of eachother. So when I drag the mouse left to right, the model spins according to the sum of the prior rotation and the desired left to right rotation. Confusing right?!?!?!?!&lt;/p&gt;
-
-&lt;h4 id=&quot;opengl-matrix-stack&quot;&gt;OpenGL Matrix Stack&lt;/h4&gt;
-&lt;p&gt;Here, the openGL matrix stack comes in. Here is the deal: In order to rotate my model, I am manipulating the Model View Matrix. But openGL actually maintains a “stack” of Model View Matrices for me to work with. If I want to save my current matrix, I can “push” it to the stack. Then, I can change the matrix however I want. When I decide that I want to go back to that matrix I pushed earlier, I can “pop” the matrix and I will get the next one on the stack. More confusion, no?&lt;/p&gt;
-
-&lt;p&gt;Let’s pretend that coloring is a matrix operation. So I start out with a regular white model view matrix. I call glPushMatrix(). Then I paint the matrix yellow.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* My matrix is white */&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;glPushMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Saving white matrix for later. &lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;applyPaint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Yellow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;drawMyMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt; displays a yellow matrix &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Next, I decide I want a red matrix. If I just start using red paint to my yellow matrix, I am going to end up with an orange matrix. So, first I call glPopMatrix(). Now I get the white matrix back, paint it red, and I have a true red matrix.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* My matrix is yellow */&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;glPopMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Getting the white matrix back. &lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;applyPaint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;drawMyMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;glPushMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Saving red matrix for later.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt; displays a red matrix &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Now, I call glPushMatrix() again. I want to turn the matrix purple this time. So I paint this matrix blue, and get a purple matrix. Now I want a green matrix! But I don’t want to slather green paint on a purple thing.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;applyPaint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;/* Now my matrix is purple! */&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;drawMyMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt; displays a purple matrix &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;glPopMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Got my red matrix back. &lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;glPopMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Got my white matrix back. &lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;applyPaint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;drawMyMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt; displays a green matrix &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;back-to-rotation&quot;&gt;Back to Rotation&lt;/h4&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;QQuaternion&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLWidget&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drag2Rotate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;cm&quot;&gt;/* Define Axis of Rotation */&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;axisOfRotation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;axisOfRotation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;axisOfRotation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setZ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;magnitude&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sqrt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;cm&quot;&gt;/* Update Rotation Quaternion */&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;QQuaternion&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newQ&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;QQuaternion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fromAxisAndAngle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axisOfRotation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;magnitude&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;currQ&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newQ&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;currQ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;currQ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt; I keep track of the current Quaternion (represents the current rotation) by multiplying the new, applied rotation by the former rotation &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;glPushMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* Saves state before rotation */&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;QMatrix4x4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rotationMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Begins&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Identity&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Like&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;white&amp;quot;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matrix&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;my&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;example&lt;/span&gt;
-        &lt;span class=&quot;cm&quot;&gt;/* Here I rotate by the Quaternion, which holds the current rotation */&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;rotationMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rotate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;currQ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;glMatrixMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_MODELVIEW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;cm&quot;&gt;/* Translate so rotation occurs about model center */&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;glTranslatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;glMultMatrixf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;constData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;glTranslatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drawMe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;glPopMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* Reverts to state before rotation */&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt; This way, the next time the model is drawn, the rotation is applied to the original, &quot;white&quot;, matrix. &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;zoom&quot;&gt;Zoom&lt;/h4&gt;
-&lt;p&gt;My first idea was to use glScalef on the Model View Matrix to zoom.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MainWindow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;on_toolButton_clicked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;glMatrixMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_MODELVIEW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Specifies which matrix will be scaled&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;glScalef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xScale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;yScale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zScale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt; Calling glScalef(0.5,0.5,0.5) would uniformly scale the Model View Matrix down 50%&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;That isn’t quite right. Here I am actually changing the size of the model, rather than getting closer or further. This is kind of like the desired effect, but if I get too close holes start appearing in my models. By scaling the Model View Matrix, the model can get so big that parts of it would lie outside the clipping planes.&lt;/p&gt;
-
-&lt;iframe width=&quot;604.8&quot; height=&quot;453.6&quot; src=&quot;https://www.youtube.com/embed/crWdEMgDwNE&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;Instead of adjusting the Model View Matrix, I need to adjust the Projection Matrix. Doing so changes the way I view the “world”, as opposed to changing the model itself.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;camera&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setZoom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;factor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;glMatrixMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_PROJECTION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;glLoadIdentity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Make sure zoom isn&amp;#39;t applied to the previous state&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;glOrtho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;leftAdjust&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rightAdjust&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bottom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;near&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;far&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;That’s it for now :) My next post will show my final project!&lt;/p&gt;
-
-</description>
-        <pubDate>Sat, 01 Aug 2015 00:00:00 -0700</pubDate>
-        <link>http://kadie16.github.io/project-update-short/</link>
-        <guid isPermaLink="true">http://kadie16.github.io/project-update-short/</guid>
-        
-        <category>C++</category>
-        
-        <category>Work</category>
-        
-        <category>Project</category>
-        
-        <category>OpenGL</category>
-        
-        <category>Computer</category>
-        
-        <category>Graphics</category>
-        
-        <category>QT</category>
-        
-        <category>CGAL</category>
-        
-        
-        <category>projects</category>
         
         <category>project</category>
         
@@ -794,7 +814,7 @@ Getting the model to rotate according to mouse drag wasn’t a big deal either. 
         <category>QT</category>
         
         
-        <category>projects</category>
+        <category>abroad</category>
         
         <category>project</category>
         
@@ -901,77 +921,7 @@ Getting the model to rotate according to mouse drag wasn’t a big deal either. 
         <category>QT</category>
         
         
-        <category>abroad</category>
-        
-        <category>project</category>
-        
-      </item>
-    
-      <item>
-        <title>A day in the life</title>
-        <description>&lt;p&gt;A day in the life&lt;/p&gt;
-
-&lt;p&gt;After a few weeks in Singapore, I began feeling really at home. At first I moved around alot: from my hostel in Chinatown to Liz and Arif’s apartment in Bishan, to Patricia’s apartment where I live now. I found Liz and Arif through AirBnB just in time to have an accomodation ready for my Mom’s arrival. The apartment was beautiful, and Liz and Arif kindly suggested places in and out of Singapore that I could visit. I really enjoyed talking with them in the mornings and evenings. I would have loved to stay longer, but Liz’s parents were coming to visit and they needed the room.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;pic of room&lt;/li&gt;
-  &lt;li&gt;pic of apartment&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;It was a little difficult to find a place that would be willing to rent a room for such a short period of time. Thankfully I found Patricia, who welcomed me to her condo near Holland Village. The morning after I arrived, Patricia walked with me around the neighborhood to show me the nearby grocery stores, MRT stations, and resturaunts. It was so nice of her to spend so much time showing me around! The condo has a gym and a beautiful pool. I use the gym and meditate by the pool in the morning before work. LOL ok I meditated once. For seven minutes. But I do actually use the gym when I wake up on time :)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;pic of pool&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;life-at-work&quot;&gt;Life at Work&lt;/h2&gt;
-&lt;p&gt;The IHPC is at Fusionopolis, a modern building at the one-north MRT. Most of the tennants are research institutions. Lucas Films is also somewhere in the building. There are a variety of eateries and coffee shops downstairs, including two food courts and a full grocery store. I love having Cold-Storage, the grocery store right downstairs. I usually get a salad there for lunch and buy apples, cherries, or blueberries to snack on. Sometimes I get thai food at one of the food courts.&lt;/p&gt;
-
-&lt;p&gt;I’ve made friends with some of the other students who are interning at the IHPC: Pat, Vee, and Nop from Thailand, Eric from Singapore, Yesim from Turkey, and Rektah and Ayush from India. Meeting and colaborating with students from around the world has been the coolest experience. Even though most of us are working on seperate projects, we often ask eachother questions. Or atleast I ask them questions lol. I lucked out being assigned to share a desk with Eric. He helped me so much with my program and even took the time to talk me through some critical C++ concepts. I was so grateful for his help when I was hitting the learning curve. Eric is doing a semester at USC this spring, so I’m excited to see him in California :)&lt;/p&gt;
-
-&lt;h4 id=&quot;singlish-eric-taught-me&quot;&gt;Singlish Eric Taught Me&lt;/h4&gt;
-&lt;p&gt;English is Singapore’s official language, but it is considered overly formal and weird to speak “proper english”. Still, pretty much nobody speaks singlish to me because I am so obviously a foreign. Lol. I kept seeing the word “lah” everywhere but I didn’t know what it meant so I had to ask Eric.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;Lah:&lt;/strong&gt; &lt;br /&gt;
-It’s kind of like an exclamation mark. You just throw it in at the end of your sentence lah! You can pretty much use it whenever you want. I think. &lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Whenever someone says lah to me I get excited because I would really like to be included in this singlish thing!!&lt;/p&gt;
-
-&lt;h4 id=&quot;other-cool-stuff-my-new-friends-told-me&quot;&gt;Other cool stuff my new friends told me&lt;/h4&gt;
-
-&lt;p&gt;I have really enjoyed learning about how student life is different in other countries. Ayush told me about what the whole college admission process in India is like while we were riding the MRT. Students there study for years to do well on a qualifying exam. The students who score the highest get the choice of what and where they want to study. It is similar to SATs in the US, except that admission is based exlusively on that test. The universities don’t care about your essays (there are none), work experience, challenges overcome, or extra curricular activities. Ayush explained that it is actually atypical for teenagers who intend to go to college to work or play competitive sports, since they have to devote all of their after school hours to studying for the exam. Hopefully I’m getting this right.&lt;/p&gt;
-
-&lt;p&gt;I had so much fun spending time with Ayush and learning about his country. Admittedly, I was surprised at how well we could relate despite being from such different places and cultures. I actually asked him if he knew what sarcasm was. It seems ridiculous now but at the time I wasn’t sure if they use sarcasm in India. Sometimes we got confused by eachother’s accents. Like one time when I was asking if his room had windows, and he kept looking at me like I was crazy. He thought I was asking about “mentos”. I finally started admitting when I couldn’t understand him when he called me out, saying “I think you only get 50% of what I say but you still laugh”!&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;pics of me and ayush&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Here are some more photos from the things I’ve been doing :)&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 03 Jul 2015 00:00:00 -0700</pubDate>
-        <link>http://kadie16.github.io/a-day-in-the-life/</link>
-        <guid isPermaLink="true">http://kadie16.github.io/a-day-in-the-life/</guid>
-        
-        <category>C++</category>
-        
-        <category>Work</category>
-        
-        <category>Project</category>
-        
-        <category>OpenGL</category>
-        
-        <category>Computer</category>
-        
-        <category>Graphics</category>
-        
-        <category>QT</category>
-        
-        
-        <category>abroad</category>
+        <category>projects</category>
         
         <category>project</category>
         
