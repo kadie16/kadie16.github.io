@@ -6,13 +6,13 @@
     <description></description>
     <link>http://kadie16.github.io/</link>
     <atom:link href="http://kadie16.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 12 Feb 2016 18:08:04 -0800</pubDate>
-    <lastBuildDate>Fri, 12 Feb 2016 18:08:04 -0800</lastBuildDate>
+    <pubDate>Tue, 23 Feb 2016 14:16:46 -0800</pubDate>
+    <lastBuildDate>Tue, 23 Feb 2016 14:16:46 -0800</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
         <title>My First Maya Project</title>
-        <description>&lt;p&gt;This semester I am taking a decal called UCBUGG, which stands for UC Berkeley Undergraduate Graphics Group. We are learning how to make an animated short using maya! This is my first maya project. He is a little robot. I don’t have a name for him but I think he is pretty cute. Some people said he looks like a penguin.&lt;/p&gt;
+        <description>&lt;p&gt;This semester I am taking a decal called UCBUGG, which stands for UC Berkeley Undergraduate Graphics Group. We are learning how to make an animated short using maya! This is my first maya project. He is a little robot. I don’t have a name for him but I think he is pretty cute. Some people said he looks like a penguin. My former supervisor Like thinks he looks like a bumble bee :)&lt;/p&gt;
 
 &lt;center&gt;&lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/plv-S4iDUYM&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/center&gt;
 
@@ -56,9 +56,15 @@
     
       <item>
         <title>3D Viewer</title>
-        <description>&lt;center&gt;&lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/wwrJapA6R64&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/center&gt;
+        <description>&lt;center&gt;&lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/WWfwJuYsd7c&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/center&gt;
 
-&lt;p&gt;A demo of my completed 3D Viewer project.&lt;/p&gt;
+&lt;p&gt;A demo of my completed 3D Viewer project, written in C++. I also used OpenGL, GLSL, CGAL, and QT. I implemented user interactions including rotation, translation, and zoom by manipulating the viewing volume. The program also supports generation of 3-D volume mesh from surface mesh data.&lt;/p&gt;
+
+&lt;p&gt;Just to clarify, my project is the viewing program itself! Not the models you see. I got the models I used to test my program from the UC Berkeley Computer Graphics group.&lt;/p&gt;
+
+&lt;p&gt;If you are interested in learning about the progression of my work on this project, check out these posts: &lt;br /&gt;
+- &lt;a href=&quot;http://kadie.me/working-I-swear/&quot;&gt;I’m working, I swear!&lt;/a&gt; &lt;br /&gt;
+- &lt;a href=&quot;http://kadie.me/project-update-short/&quot;&gt;Work in Progress&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 28 Aug 2015 00:00:00 -0700</pubDate>
         <link>http://kadie16.github.io/3dviewer/</link>
@@ -75,17 +81,15 @@
     
       <item>
         <title>3D Viewer</title>
-        <description>&lt;center&gt;&lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/wwrJapA6R64&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/center&gt;
+        <description>&lt;center&gt;&lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/WWfwJuYsd7c&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/center&gt;
 
-&lt;p&gt;This was my first, and favorite CS61B data structures project. It is a simple checkers game with a few twists, written in Java.&lt;/p&gt;
-
-&lt;p&gt;There are 3 kinds of pieces: pawns, bombs, and shields. Bombs (birds and bees) self destruct and destroy everything around them when they make a capture. Shields (roses) are protected from bomb explosions. Honeybears are pawns! Pieces become “crowned” when they reach the end of the board.&lt;/p&gt;
+&lt;p&gt;A demo of my completed 3D Viewer project, written in C++. I also used OpenGL, GLSL, CGAL, and QT. I implemented user interactions including rotation, translation, and zoom by manipulating the viewing volume. The program also supports generation of 3-D volume mesh from surface mesh data.&lt;/p&gt;
 </description>
         <pubDate>Fri, 28 Aug 2015 00:00:00 -0700</pubDate>
         <link>http://kadie16.github.io/3dviewer/</link>
         <guid isPermaLink="true">http://kadie16.github.io/3dviewer/</guid>
         
-        <category>Java</category>
+        <category>C++</category>
         
         
         <category>featured</category>

@@ -15,7 +15,7 @@ tags: C++ Work Project OpenGL Computer Graphics QT CGAL
 
 My project is a C++ program that reads in data describing 3D models, in .obj file format, and renders and lights the models with OpenGL. Since my last post, I have implemented some user interactions and use of the CGAL data structure. The models I use to test my program came from the [UC Berkeley Computer Graphics](http://graphics.berkeley.edu) website :)
 
-##Latest Changes
+## Latest Changes
 - Automatically find and fit model.  
 - Maintain aspect ratio on window resize. 
 - Select Color.
@@ -25,7 +25,7 @@ My project is a C++ program that reads in data describing 3D models, in .obj fil
 - Option to move model by mouse drag. 
 
 
-###Find and Fit 
+### Find and Fit 
 {% highlight c++ %}
 cam.findModel(objModel);
 cam.viewModel();
@@ -37,7 +37,7 @@ zoomF = cam.fitModel(maxCoords.at(0), minCoords.at(0),
 
 Now, whenever a new .obj file is selected, the "camera" automatically centers the model and makes it fit on the screen. I say "camera" because there is no actual camera in OpenGL. Instead, you manipulate the view by applying matrix transformations to the modelview and projection matrices. More on that later. I wrote a "camera" class, which handles these transformations. 
 
-###Aspect Ratio 
+### Aspect Ratio 
 I think this is probably the least noticeable new feature, but it was one of the bigger challenges. If you watch closely, you can see that when I resize the window in the video, the cube retains its shape. In otherwords, it doesn't turn into a rectangle if the viewer isn't perfectly square. You might also notice that the angel is more slender than before. 
 
 ![Angel Aspect Before](https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/angel7.png) _<center>Squished angel</center>_
@@ -59,7 +59,7 @@ void camera::adjustAspect(float window.width, float window.height) {
 {% endhighlight %}
 
 
-###Color Picking
+### Color Picking
 
 ![humanoid color pick](https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/humanoid1.png)
 
@@ -83,14 +83,14 @@ In my last post, I mentioned that every vertex needs a normal vector so openGL k
 
 Now, the normal for each vertex is assigned to be the _average_ of the normals of all of the faces it belongs to. So the vertices on the corners of the cube are assigned a normal equal to the average of the normal vectors of the three faces that meet at that corner. The vertices on the edge of two faces get the average of the two normal vectors of those faces. The vertices in the middle of the face just get the normal that belongs to that face. OpenGL then interpolates in between the vertices to produce the smooth gradient you see. 
 
-###User Controls
+### User Controls
 
-####Making it "feel" natural
+#### Making it "feel" natural
 I expected understanding the openGL calls to be challenging, but I didn't anticipate the challenge of making the controls intuitive. I guess this speaks to the idea that the best computer graphics go unnoticed.
 
 The user controls are simulated by a series of repaints. Actually the model is being redrawn constantly, but without adjustments to the modelview or projection matrix, it is just drawn exactly the same. So my goal is to animate, or redraw, the model so the user feels like they are actually touching and manipulating the model with their mouse. 
 
-####Rotation  
+#### Rotation  
 Getting the model to rotate wasn't hard. I could just use glRotatef to do that. 
 {% highlight c++ %}
     glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
@@ -132,7 +132,7 @@ We want each mouse drag to produce a new, independent rotation. So when I drag t
 
 As is, the rotations are adding on top of eachother. So when I drag the mouse left to right, the model spins according to the sum of the prior rotation and the desired left to right rotation. Confusing right?!?!?!?!
 
-####OpenGL Matrix Stack 
+#### OpenGL Matrix Stack 
 Here, the openGL matrix stack comes in. Here is the deal: In order to rotate my model, I am manipulating the Model View Matrix. But openGL actually maintains a "stack" of Model View Matrices for me to work with. If I want to save my current matrix, I can "push" it to the stack. Then, I can change the matrix however I want. When I decide that I want to go back to that matrix I pushed earlier, I can "pop" the matrix and I will get the next one on the stack. More confusion, no? 
 
 Let's pretend that coloring is a matrix operation. So I start out with a regular white model view matrix. I call glPushMatrix(). Then I paint the matrix yellow. 
@@ -169,7 +169,7 @@ applyPaint(green);
 drawMyMatrix();
 {% endhighlight %} _<center> displays a green matrix </center>_
 
-####Back to Rotation
+#### Back to Rotation
 
 {% highlight c++ %}
 
@@ -202,7 +202,7 @@ QQuaternion GLWidget::drag2Rotate(float dx, float dy)
 {% endhighlight %} _<center> This way, the next time the model is drawn, the rotation is applied to the original, "white", matrix. </center>_
 
 
-####Zoom
+#### Zoom
 My first idea was to use glScalef on the Model View Matrix to zoom.
 {% highlight c++ %}
 void MainWindow::on_toolButton_clicked() {

@@ -8,7 +8,7 @@ category: "Project"
 tags: Java 
 ---
 
-This semester I am taking a decal called UCBUGG, which stands for UC Berkeley Undergraduate Graphics Group. We are learning how to make an animated short using maya! This is my first maya project. He is a little robot. I don't have a name for him but I think he is pretty cute. Some people said he looks like a penguin. 
+This semester I am taking a decal called UCBUGG, which stands for UC Berkeley Undergraduate Graphics Group. We are learning how to make an animated short using maya! This is my first maya project. He is a little robot. I don't have a name for him but I think he is pretty cute. Some people said he looks like a penguin. My former supervisor Like thinks he looks like a bumble bee :) 
 
 <center><iframe width="420" height="315" src="https://www.youtube.com/embed/plv-S4iDUYM" frameborder="0" allowfullscreen></iframe></center> 
 

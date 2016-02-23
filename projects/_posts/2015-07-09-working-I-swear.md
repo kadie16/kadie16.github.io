@@ -11,7 +11,7 @@ tags: C++ Work Project OpenGL Computer Graphics QT
 
 So far all I've mentioned are the adventures I've been having! If you're wondering, as my Grandpa Joe put it: "when the hell are you going to work", then this post is for you :) 
 
-#About My Project
+# About My Project
 I am building a program that will allow users to load 3D models (.obj file format) and interact with them via transformations such as rotation, translation, deformation etc. My ultimate goal is to implement the ability to select parts of a volume mesh, so the user can select and interact with seperate parts of their model. I am using C++, OpenGL, and QT for my project. 
 
 I was first inspired to learn about computer graphics when my (amazing) materials science professor told me about his son who works on lighting movies at Pixar. I have always loved developing my technical background, but I also love painting and drawing and creating visual things. Until I learned about the opportunity to work in computer graphics, it never occurred to me that I could excercise both of my interests at the same time. 
