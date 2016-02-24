@@ -4,7 +4,7 @@ title: "A day in the life"
 date: 2015-07-03
 backgrounds:
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/the-life/sharkz.JPG
-    - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/the-life/pool.JPG
+    - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/the-life/temple.JPG
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/the-life/superTrees.JPG
 thumb: https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/the-life/marinaBay.JPG
 category: Project
@@ -14,17 +14,17 @@ tags: C++ Work Project OpenGL Computer Graphics QT
 After a few weeks in Singapore, I began feeling really at home. At first I moved around alot: from my hostel in Chinatown to Liz and Arif’s apartment in Bishan, to Patricia's apartment where I live now. I found Liz and Arif through AirBnB just in time to have an accomodation ready for my Mom's arrival. The apartment was beautiful, and Liz and Arif kindly suggested places in and out of Singapore that I could visit. I really enjoyed talking with them in the mornings and evenings. I would have loved to stay longer, but Liz’s parents were coming to visit and they needed the room. 
 
 ![apartment](https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/the-life/apartment.JPG)
-<center><i>Liz and Arif's apartment was always spotless!</i></center>
+<center><i>Liz and Arif's apartment was always spotless!</i></center><br>
 
 It was a little difficult to find a place that would be willing to rent a room for such a short period of time. Thankfully I found Patricia, who welcomed me to her condo near Holland Village. The morning after I arrived, Patricia walked with me around the neighborhood to show me the nearby grocery stores, MRT stations, and resturaunts. It was so nice of her to spend so much time showing me around! The condo has a gym and a beautiful pool. I use the gym and meditate by the pool in the morning before work. LOL ok I meditated once. For seven minutes. But I do actually use the gym when I wake up on time :)
 
 ![apartment](https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/the-life/pool.JPG)
-<center><i>My meditation spot</i></center>
+<center><i>My meditation spot</i></center><br>
 
 ## Life at Work 
 
 ![apartment](https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/the-life/elevatorLobby.jpg)
-<center><i>The apartment was always spotless!</i></center>
+<center><i>Crazy thing in the elevator lobby at Fusionopolis</i></center><br>
 
 The IHPC is at Fusionopolis, a modern building at the one-north MRT. Most of the tennants are research institutions. Lucas Films is also somewhere in the building. There are a variety of eateries and coffee shops downstairs, including two food courts and a full grocery store. I love having Cold-Storage, the grocery store right downstairs. I usually get a salad there for lunch and buy apples, cherries, or blueberries to snack on. Sometimes I get thai food at one of the food courts.  
 
