@@ -6,9 +6,159 @@
     <description></description>
     <link>http://kadie16.github.io/</link>
     <atom:link href="http://kadie16.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 01 Mar 2016 22:39:06 -0800</pubDate>
-    <lastBuildDate>Tue, 01 Mar 2016 22:39:06 -0800</lastBuildDate>
+    <pubDate>Tue, 01 Mar 2016 22:43:20 -0800</pubDate>
+    <lastBuildDate>Tue, 01 Mar 2016 22:43:20 -0800</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Mesh Editing and GLSL</title>
+        <description>&lt;div&gt;
+        &lt;p&gt;In this project, I first learned to tesselate bezier patches to generate triangular meshes from bezier curves. Then, I implemented the ability to modify those meshes by flipping and splitting edges, or &quot;upsampling&quot; to increase the amount of triangle faces that represent the mesh. Finally, I wrote some cool GLSL shaders. My favorite was the reflection shader, which maps each pixel on the surface to a place on a reflection texture. &lt;/p&gt;
+
+    &lt;h2 align=&quot;middle&quot;&gt;Part 1: Fun with Bezier Patches&lt;/h2&gt;
+        &lt;p&gt;The first thing I needed to do was generate a triangle mesh from an input Bezier Surface. A Bezier surface is specified by control points (16, in this case). The control points specify curves, and the convex hull of the control points contains a surface. That surface is the mesh I am trying to represent. &lt;/p&gt;
+        &lt;p&gt;In order to represent the surface as a triangular mesh, I need to tesselate the Bezier surface specified by the control points into triangles. I accomplished this using the Bernstein Polynomials.I wrote some helper functions to help me evaluate the Bernstein Polynomials, used them to evaluate each control point. Once I determined which triangles I needed, I added them to a halfedge data structure to represent the mesh. &lt;/p&gt;
+                    &lt;img src=&quot;../images/part1.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;My Rendering of the teapot.bez Mesh&lt;/figcaption&gt;
+        &lt;h2 align=&quot;middle&quot;&gt;Part 2: Average normals for half-edge meshes&lt;/h2&gt;
+        &lt;p&gt;Next, I computed per vertex normals that were an average of the normals of their faces. This results in a nicer, smoother shading effect than when normal vectors are just computer per face. To accomplish this, I traversed the faces that the vertex belonged to in the half edge data structure, computing the normal for each face along the way. First I got the half edge that the vertex was attached to. Then, I saved it as h_original so I could keep track of where I started. Then I got the halfedge&#39;s twin and next half edge, and computed the vectors those half edges represented. I computed the normal of that face by crossing those two vectors before advancing to the next face. Once I reached h_original again, indicating I had tranversed all of the faces of that vertex, I returned the unit vector of the sum of all of the normal vectors as the normal vector for that particular vertex. &lt;/p&gt;
+                    &lt;img src=&quot;../images/part2/facenormals.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Each vertex is shaded uniformly according to the normal vector of one face.&lt;/figcaption&gt;
+
+                    &lt;img src=&quot;../images/part2/avgnormals.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;This shows the teapot shaded according to per vertex normal vectors.&lt;/figcaption&gt;
+
+                    &lt;img src=&quot;../images/part2/bug.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Initially I was calculating the vectors for the first face incorectly, which gave this cool swirly effect. &lt;/figcaption&gt;
+
+         &lt;h2 align=&quot;middle&quot;&gt;Part 3: Edge Flip&lt;/h2&gt;
+        &lt;p&gt;Next, I implemented the abillity to flip edges in the mesh. As I mentioned before, the mesh is represented as a half edge data structure. A half edge data structure is mostly a few key components: vertices, halfedges, edges, and faces. Vertices, edges, and faces each keep track of a single half edge. Halfedges each keep track of a twin halfedge (the one on the other side of the edge), a next halfedge (the next one on the face), an edge (made up of the half edge and its&#39; twin), and a face. &lt;/p&gt;
+        &lt;p&gt;In order to accomplish the edge flip, I just needed to reassign the pointers of all of the elements involving the edge before and after the flip.&lt;/p&gt;
+                    &lt;img src=&quot;../images/part3/bug.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Bug: Every edge I tried to flip poked a hole in my mesh!&lt;/figcaption&gt;
+        &lt;p&gt; Initially I was only reassigning pointers for the elements on the &lt;i&gt;inside&lt;/i&gt; of the two faces between the edge I was trying to flip. Can you imagine why this would poke holes in my mesh? I was neglecting to reassign pointers for the halfedges on the outside of the borders of the faces. So while the edge may have been flipped correctly, the halfedges in the rest of the mesh weren&#39;t informed of the changes, and lost track of (could no longer traverse) that part of the mesh!&lt;/p&gt; 
+        &lt;p&gt; Once I assigned the pointers to the outside half edges too, I got the desired result.  &lt;/p&gt;
+                    &lt;img src=&quot;../images/part3/preflip.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;A Torus mesh before any edges are flipped.&lt;/figcaption&gt;
+                    &lt;img src=&quot;../images/part3/postflip.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Torus mesh after flipping some edges.&lt;/figcaption&gt;
+         &lt;h2 align=&quot;middle&quot;&gt;Part 4: Edge Split&lt;/h2&gt;
+        &lt;p&gt;Next, I implemented the ability to split edges of the mesh. This was somewhat similar to flipping edges in that it involved a lot of reassigning of pointers. However, splitting became a little more complicated because it involved adding some new edges, faces, and a new vertex to the mesh. &lt;/p&gt;
+                    &lt;img src=&quot;../images/part4/bug2.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Bug: Whenever I attempted an edge split, I punched a huge dent in my teapot! This shows a bunch of split-attempts near eachother, resulting in one giant heart dent. &lt;/figcaption&gt;
+        &lt;p&gt; This initial error was caused by an error calculating the position of my new vertex. In fact, I wasn&#39;t calculating the position of the vertex at all. So everytime I split an edge, I was adding a new vertex at the origin. That&#39;s why when I split, all of these dents were getting punched toward the same spot! &lt;/p&gt; 
+        &lt;p&gt; Once I updated the position of the new vertex to be the midpoint between the other corner vertices, I achieved the desired result. &lt;/p&gt;
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part4/pre_split.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Bean mesh before edges are split.&lt;/figcaption&gt;
+
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part4/post_split.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Bean mesh with some split edges in the middle.&lt;/figcaption&gt;
+
+        &lt;h2 align=&quot;middle&quot;&gt;Part 5: Upsampling via Loop Subdivision&lt;/h2&gt;
+        &lt;p&gt;Upsampling was the most challenging part of the project for me. There were quite a few issues to be debugged, but at a high level the approach is pretty straight forward.&lt;/p&gt;
+        &lt;li&gt; 
+            First I marked all of the existing vertices as &quot;old&quot;, indicating they were part of the mesh before it was upsampled. 
+            &lt;li&gt; 
+            Next I calculated new positions for all of the old vertices according to the vertex subdivision rule.
+        &lt;/li&gt; 
+            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;n = vertex degree&lt;/pre&gt;&lt;/p&gt; 
+            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;u = 3/(8*n)&lt;/pre&gt;&lt;/p&gt;
+            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;(1 - 3/8) * original_position + u * neighbor_position_sum&lt;/pre&gt;&lt;/p&gt;
+        &lt;li&gt; 
+            Then I calculated positions for all of the new (to be added) vertices according to: 
+        &lt;/li&gt; 
+            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;3/8 * (A + B) + 1/8 * (C + D)&lt;/pre&gt;&lt;/p&gt;
+            &lt;p&gt; where A and B are the vertex positions on the edge that the new vertex will lie, and C and D are the vertex positons on the adjacent edges of the faces on either side of the edge that the new vertex will lie. &lt;/p&gt;
+        &lt;li&gt; Next, I split every &quot;old&quot; or prexisting edge in the mesh.
+        &lt;li&gt;Finally, I flipped any edge that connected a new vertex and an existing vertex, and then updated all of the vertex positions. 
+        &lt;/li&gt; 
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part1.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Teapot mesh before upsample&lt;/figcaption&gt;
+
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part5/up_teapot.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Teapot mesh after upsample&lt;/figcaption&gt;
+
+        &lt;p&gt; Some times a little pre processing before upsampling a mesh can help significantly. A good example of this is the simple cube mesh. The way the edges are oriented can cause some irregularity when then mesh is upsampled. The upsampling behavior can be improved significantly if the edges that cross the faces of the cube are split prior to upsampling. This gives a more symmetrical mesh, which helps the upsampling give a symmetrical result. &lt;/p&gt;
+        &lt;p&gt;Here you can see a side by side comparison of the upsampling of two cubes. The &lt;b&gt; left cube &lt;/b&gt; is the original mesh being upsampled. The &lt;b&gt; right cube &lt;/b&gt; had each of the face crossing edges split before it is upsampled.  
+
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part5/cube.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Regular cube mesh before upsample&lt;/figcaption&gt;
+
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part5/split_cube.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Cube mesh with each face of cube split before upsample&lt;/figcaption&gt;
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part5/up_cube.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Regular cube after upsample (1X). Note the irregularity&lt;/figcaption&gt;
+
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part5/up_split_cube.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Pre-split cube mesh after upsample (1X).&lt;/figcaption&gt;
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part5/up_cube_2.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Regular cube after multiple upsamples. The irregularity has propagated.&lt;/figcaption&gt;
+
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part5/up_split_cube_3.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Pre-split cube mesh after multiple upsamples. Looks like a nice smooth cube!&lt;/figcaption&gt;
+         &lt;h2 align=&quot;middle&quot;&gt;Part 6: Fun with Shaders&lt;/h2&gt;
+        &lt;p&gt;Part 6 was my favorite! I wrote GLSL shaders which specify how OpenGL should light the scene. I implemented a simple Blinn Phong shader, and a really cool reflection environment map shader. &lt;/p&gt;
+                    &lt;img src=&quot;../images/part6/phongcow.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Cow With Pink Phong Shader&lt;/figcaption&gt;
+        &lt;p&gt;For the Phong shader, I followed the following procedue:
+            &lt;li&gt; Calculate the light vector, l 
+            &lt;li&gt; Calculate the vector to my &quot;eye position&quot;, v
+            &lt;li&gt; Normalize the sum of the vectors l and v
+            &lt;li&gt; Return a linear combination of the ambient, diffuse, and specular lights: 
+            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;LightVec = ambient_light + diffuse_light*max(dot(normal_vector, l), 0) + specular_light*(max(dot(n,normalize(l+v)), 0)^shininess_factor&lt;/pre&gt;&lt;/p&gt;
+            
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part6/defaultcow.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Cow With Default Shader&lt;/figcaption&gt;
+             
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part6/greyphongcow.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Cow With Grey Phong Shader&lt;/figcaption&gt;
+                &lt;br /&gt;
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part6/defaultbug.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Beetle With Default Shader&lt;/figcaption&gt;
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part6/phongbug.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Beetle With Phong Shader&lt;/figcaption&gt;
+
+        &lt;p&gt; I liked the environment map reflection shader the best. This is what I did to accomplish this effect: 
+            &lt;li&gt; Calculate the vector to my &quot;eye position&quot;, v
+            &lt;li&gt; Calculate the reflection vector using v and the normal vector of the vertex 
+            &lt;li&gt; Convert the reflection vector into polar coordinates
+            &lt;li&gt; Convert the polar coordinates into uv coordinates 
+            &lt;li&gt; Retrieve the colors for the vertex from the environment map using the uv coordinates. 
+         
+                    &lt;img src=&quot;../images/part6/reflectcow.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Cow With Reflection Map Shader&lt;/figcaption&gt;
+                    &lt;img src=&quot;../images/part6/reflectbug.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Beetle With Reflection Map Shader&lt;/figcaption&gt;
+
+
+
+
+&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/p&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/p&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/p&gt;&lt;/td&gt;&lt;/td&gt;&lt;/li&gt;&lt;/li&gt;&lt;/td&gt;&lt;/td&gt;&lt;/div&gt;
+</description>
+        <pubDate>Tue, 01 Mar 2016 00:00:00 -0800</pubDate>
+        <link>http://kadie16.github.io/mesh-editing-and-glsl/</link>
+        <guid isPermaLink="true">http://kadie16.github.io/mesh-editing-and-glsl/</guid>
+        
+        
+        <category>projects</category>
+        
+        <category>project</category>
+        
+      </item>
     
       <item>
         <title>Mesh Editing and GLSL</title>
@@ -176,7 +326,7 @@
         <category>Java</category>
         
         
-        <category>projects</category>
+        <category>featured</category>
         
         <category>project</category>
         
@@ -198,7 +348,7 @@
         <category>Java</category>
         
         
-        <category>featured</category>
+        <category>projects</category>
         
         <category>project</category>
         
@@ -210,13 +360,8 @@
 &lt;p&gt;I used Bresenham&#39;s algorithm to rasterize lines. In order to rasterize the line, the algorithm needs to decide which pixels lie closest to it. The line will not directly intersect the center of every pixel, so it must be decided which pixels it intersects the most. To do this, it steps through the line, incrementing the x coordinate by one if the overall change in x is greater than the overall change in y, or incrementing the y coordinate if the opposite is true. For this description I will assume we are rasterizing a line dx &amp;gt; dy. &lt;/p&gt;
 &lt;p&gt; Then the algorithm needs to make a decision about which pixel is closest to the next point on the line. It uses a decision parameter pk. If pk is less than zero, it plots the point (x, y) and increments pk by 2*dy. Otherwise, it plots the point (x, y + 1) or (x, y - 1) depending on if the slope is positive or negative, respectively. It that case it increments pk by 2*dy - 2*dx and continues stepping through the line. The multiplications by two make the algorithm only use integer calculations, which makes it more efficient. 
 
-&lt;div&gt;
-            &lt;table style=&quot;width=100%&quot;&gt;
-                &lt;tr&gt;
-                    &lt;img src=&quot;../images/part1.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;img src=&quot;../images/part_1.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Result Using Bresenham&#39;s Line Rasterizing Algorithm &lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-        
 
 &lt;h2 align=&quot;middle&quot;&gt;Part 2:Rasterizing Single-Color Triangles&lt;/h2&gt;
 &lt;p&gt;I ended up using two different methods to rasterize triangles. In the first method, I was breaking the triangles into &quot;top flat&quot; and &quot;bottom flat&quot; cases, and then stepping through the triangle and rendering it line by line. After part 5, I ended up switching to using barycentric coordinates to rasterize them. I needed to calculate barycentric coordinates to retrieve the correct color for each pixel, so it made sense to rasterize each pixel individually rather than rasterize a line at a time. Using barycentric coordinates to rasterize triangles also gave a cleaner result. 
@@ -250,24 +395,17 @@
 &lt;br /&gt; 
 superframebuffer.resize(total_sample_pts * 4)&lt;/pre&gt;&lt;/p&gt;
 
-&lt;div&gt;
-            &lt;table style=&quot;width=100%&quot;&gt;
-                &lt;tr&gt;&lt;center&gt;
+&lt;center&gt;
                     &lt;img src=&quot;../images/part_3_off_by_4.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt;Sample_Rate = 4. Image colors are off and image is repeating. The colors are off due to the indexing in red shown above. It should be: 
                     &lt;pre&gt; int index = (k*dimension) + &lt;font color=&quot;red&quot;&gt; &lt;font color=&quot;blue&quot;&gt;4 *&lt;/font&gt;(i + j)&lt;/font&gt;&lt;/pre&gt; Due to the supersamplebuffer storing rgba values for each pixel. &lt;/figcaption&gt;&lt;/center&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-            &lt;/table&gt;
-        &lt;/div&gt;
+
 &lt;p&gt; The image is being repeated due to another indexing error when the pixels are drawn into the supersamplebuffer. Once the index was corrected, I got a new result:&lt;/p&gt;
-&lt;div&gt;
-	&lt;table style=&quot;width=100%&quot;&gt;
-                &lt;tr align=&quot;left&quot;&gt;
+
+
                     &lt;img src=&quot;../images/part_3_indexbug.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt;&lt;br /&gt;Sample_Rate = 4. Image is scaled up larger than it should be and is lighter due to super sample pixel being blended with blank pixels.  &lt;/figcaption&gt;
-                &lt;/tr&gt;
-            &lt;/table&gt;
-        &lt;/div&gt; 
+
 &lt;p&gt; The super sample pixel is:
         &lt;p&gt;&lt;pre align=&quot;middle&quot;&gt; 1/sqrt(sample_rate) &lt;/pre&gt;
             the size of a frame buffer pixel, so it&#39;s color blended with:
@@ -281,69 +419,43 @@ superframebuffer.resize(total_sample_pts * 4)&lt;/pre&gt;&lt;/p&gt;
         &lt;/p&gt;
         &lt;p&gt; Then the resolve method downsampled the pixels back to the resolution of the framebuffer.So colors from a sqrt(sample_rate) X sqrt(sample_rate) square of pixels in the superframebuffer were averaged, and the resulting color was assigned to one corresponding pixel in the frame buffer, giving the final result.
 
-                &lt;tr&gt;
                     &lt;td align=&quot;middle&quot;&gt;
                     &lt;img src=&quot;../images/part3_1.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt;Sample_Rate = 1&lt;/figcaption&gt;
-                
-                &lt;tr&gt;
                     &lt;td align=&quot;middle&quot;&gt;
                     &lt;img src=&quot;../images/part3_2.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt;Sample_Rate = 4&lt;/figcaption&gt;
-                
-                &lt;tr&gt;
                     &lt;td align=&quot;middle&quot;&gt;
                     &lt;img src=&quot;../images/part3_4.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt;Sample_Rate = 16&lt;/figcaption&gt;
-                
 
 
 
 &lt;h2 align=&quot;middle&quot;&gt;Part 4: Transforms&lt;/h2&gt;
 &lt;p&gt;For part 4, I implemented the transform matrices as shown in the SVG spec. Then I created a new svg file, &quot;first.svg&quot;. I grabbed one of the stars shown in another example file and pasted it in my file. Then I made four identical stars and alternated their colors. Next, I put them all in a group that would translate them closer to the center of the page. Finally, I put each star in it&#39;s own group with a rotation applied. I incremented each rotation by .25 and added enough stars to make a ring of stars!&lt;/p&gt;
 
-&lt;div&gt;
-                &lt;tr&gt;
-                    &lt;img src=&quot;../images/p4_2.png&quot; width=&quot;800px&quot; /&gt;
+&lt;img src=&quot;../images/p4_2.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Ring of Stars &lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-                &lt;tr&gt;
                     &lt;img src=&quot;../images/p_4_3.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Ring of Stars Showing Zoom In, Translate GUI Features&lt;br /&gt; &lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-                &lt;tr&gt;
                     &lt;img src=&quot;../images/p_4_5.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Ring of Stars Showing Zoom Out, Translate GUI Features&lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-            
-        &lt;/div&gt;
 
 
 &lt;h2 align=&quot;middle&quot;&gt;Part 5: Barycentric coordinates&lt;/h2&gt;
 &lt;p&gt; Barycentric coordinates give us a way to assign each vertex in a triangle an attribute, and then linearly interpolate those attributes to assign the appropriate value for the other pixels within the triangle. &lt;/p&gt;
 
-&lt;div&gt;
-            &lt;table style=&quot;width=100%&quot;&gt;
-                &lt;tr&gt;
-                    &lt;img src=&quot;../images/part_5_tri.png&quot; width=&quot;800px&quot; /&gt;
+&lt;img src=&quot;../images/part_5_tri.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Triangle with a red vertex, blue vertex, and green vertex. The pixels between the vertices are assigned a color based on their barycentric coordinates.&lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-            &lt;/table&gt;
-        &lt;/div&gt;
+
 
 &lt;p&gt; In the example above, I will refer to the upper left vertex as &lt;font color=&quot;red&quot;&gt;R&lt;/font&gt;, the upper right vertex as &lt;font color=&quot;green&quot;&gt;G&lt;/font&gt;, and the lowest vertex as &lt;font color=&quot;blue&quot;&gt;B&lt;/font&gt;. All of the pixels between these vertices are assigned a color depending on where they are relative to &lt;font color=&quot;red&quot;&gt;R&lt;/font&gt;, &lt;font color=&quot;green&quot;&gt;G&lt;/font&gt;, and &lt;font color=&quot;blue&quot;&gt;B&lt;/font&gt;.
 &lt;p&gt; Observe the pixels that lie on the edge between &lt;font color=&quot;red&quot;&gt;R&lt;/font&gt; and &lt;font color=&quot;blue&quot;&gt;B&lt;/font&gt;. The pixels closest to &lt;font color=&quot;red&quot;&gt;R&lt;/font&gt; are all red, and the pixels closest to &lt;font color=&quot;blue&quot;&gt;B&lt;/font&gt; are all blue. However, the pixels right in the middle of the edge are a purple shade, since they lie directly between the red and blue vertices. The pixel that lies exactly in the center of the two vertices gets:
 	&lt;pre align=&quot;center&quot;&gt;.5*color(&lt;font color=&quot;blue&quot;&gt;B&lt;/font&gt;) + .5*color(&lt;font color=&quot;red&quot;&gt;R&lt;/font&gt;) + 0*color(&lt;font color=&quot;green&quot;&gt;G&lt;/font&gt;)&lt;/pre&gt;
 The number that is multiplied by the color of each vertex is either alpha, beta, or gamma. Each one represents the relative distance from the pixel to one of the three triangle vertices. In the above example, alpha and beta are 0.5, since the pixel is halfway between the red and blue pixels. Gamma is zero since it is relatively far away. 
-To implement this in my program, I first calculate the alpha, beta, and gamma barycentric coordinates using the coordinates passed into &lt;font color=&quot;blue&quot;&gt;&amp;lt;DrawRend::render_barycentric_triangle()&lt;/font&gt;. Then, these are passed to &lt;font color=&quot;blue&quot;&gt; ColorTri::color()&lt;/font&gt;. This method then multiplies alpha by the &quot;a&quot; vertex color, beta by the &quot;b&quot; vertex color, and gamma = (1 - alpha - beta) by the &quot;c&quot; vertex color. 
-
-&lt;table style=&quot;width=100%&quot;&gt;
-                &lt;tr&gt;
+To implement this in my program, I first calculate the alpha, beta, and gamma barycentric coordinates using the coordinates passed into &lt;font color=&quot;blue&quot;&gt;&amp;lt;DrawRend::render_barycentric_triangle()&lt;/font&gt;. Then, these are passed to &lt;font color=&quot;blue&quot;&gt; ColorTri::color()&lt;/font&gt;. This method then multiplies alpha by the &quot;a&quot; vertex color, beta by the &quot;b&quot; vertex color, and gamma = (1 - alpha - beta) by the &quot;c&quot; vertex co
                     &lt;img src=&quot;../images/part_5.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Color Wheel Result.&lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-            &lt;/table&gt;
-        
 
 
 &lt;h2 align=&quot;middle&quot;&gt;Part 6: Pixel sampling for texture mapping&lt;/h2&gt;
@@ -356,118 +468,71 @@ Once I had adjusted the uv vector, it is passed into &lt;font color=&quot;blue&q
 &lt;h4&gt; Nearest vs Bilinear Sampling &lt;/h4&gt;
 The nearest level sampling method simply returns the color of the pixel as above. The Bilinear method returns an interpolation of the four nearest uv coordinates. I used the algorithm in the book to implement bilinear sampling. The difference between nearest and bilinear sampling is the most apparent in the map sample images, which have distinct thin vertical lines through them. &lt;/p&gt;
 
-&lt;div&gt;
-            &lt;table style=&quot;width=100%&quot;&gt;
-                &lt;tr&gt;
-                    &lt;img src=&quot;../images/part_6_nearest_1.png&quot; width=&quot;800px&quot; /&gt;
+&lt;img src=&quot;../images/part_6_nearest_1.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Nearest Level Pixel Sampling, sample_rate = 1. &lt;br /&gt;Jaggies! Blegh!&lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-                &lt;tr&gt;
                     &lt;img src=&quot;../images/part_6_bilinear_1.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Bilinear Pixel Sampling, sample_rate = 1 &lt;br /&gt;
                		SoooOossosoSo smooth &amp;lt;3 &lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-        
 Even with a high sample rate, the difference between the two methods is apparent on these images. &lt;br /&gt;&lt;br /&gt;
-&lt;div&gt;
-                &lt;tr&gt;
                     &lt;img src=&quot;../images/part_6_nearest_16.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Nearest Level Pixel Sampling, sample_rate = 16 &lt;br /&gt;
                     	Gross! Blurry Jaggies!&lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-                &lt;tr&gt;
                     &lt;img src=&quot;../images/part_6_bilinear_16.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Bilinear Pixel Sampling, sample_rate = 16 &lt;br /&gt; 
                    Ridiculously good looking.&lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-            
-        &lt;/div&gt;
+
 &lt;br /&gt;&lt;br /&gt;
 &lt;p&gt; 
 	However, without these distinct lines, the effect is much less noticeable. In the campanille image, I actually prefer the nearest sampling method. The features of the image seem slightly better with the nearest sampling.  &lt;/p&gt;
-&lt;div&gt;
-                &lt;tr&gt;
-                    &lt;img src=&quot;../images/part_6_camp_nearest.png&quot; width=&quot;800px&quot; /&gt;
+
+&lt;img src=&quot;../images/part_6_camp_nearest.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Nearest Level Pixel Sampling, sample_rate = 16 &lt;br /&gt;
                     	Looks pretty nice.&lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-                &lt;tr&gt;
                     &lt;img src=&quot;../images/part6_camp_bi.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Bilinear Pixel Sampling, sample_rate = 16 &lt;br /&gt; 
                     &lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-            
-        &lt;/div&gt;
 &lt;p&gt; 
 	Initially when retrieving the mip map colors, I had a bug because I wasn&#39;t dividing my colors by 255. Thanks to piazza, I knew I had to divide them by 255 since the color was expecting a float between 0 and 1. However at first that was just giving me black images. Then I realized I literally had to divide it by &quot;255.&quot; to prevent a precision error. 
-	&lt;div&gt;
-                &lt;tr&gt;
                     &lt;img src=&quot;../images/part_6_1.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Weird Colors&lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-                &lt;tr&gt;
                     &lt;img src=&quot;../images/part_6_5.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Looks Like Sprinkles!&lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-                &lt;tr&gt;
                     &lt;img src=&quot;../images/part_6_4.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Corner Sprinkles&lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-            
-        &lt;/div&gt;
 
 
 &lt;h2 align=&quot;middle&quot;&gt;Part 7: Level sampling with mipmaps for texture mapping&lt;/h2&gt;
 &lt;p&gt;In the final part, I implemented the &quot;get level&quot; method using the math described in the textbook. This allows the texture sampling to grab different mip maps for each pixel, depending on which is most appropriate. Sometimes the effects are desirable, and other times it ends up blurring the image. &lt;/p&gt;
 &lt;p&gt; In trilinear sampling, the color from the getLevel() mipMap and the color from the adjacent level are blended to give the resulting color. 
-&lt;div&gt;
-                &lt;tr&gt;
                     &lt;img src=&quot;../images/part_7_lzero_pnear.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Level Zero, Nearest Sampling&lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-                &lt;tr&gt;
                     &lt;img src=&quot;../images/part_7_lzero_plin.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Level Zero, Linear Sampling &lt;br /&gt; &lt;/figcaption&gt;&lt;br /&gt;
                     &lt;p&gt; I thought the above combination, Level Zero with Linear Sampling, gave the best result. It is the only one that eliminates the Jaggies in the &quot;Maleficent&quot; chrome text. &lt;/p&gt;
-                &lt;/tr&gt;
-                &lt;tr&gt;
                     &lt;img src=&quot;../images/part_7_lnear_plin.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Nearest Level, Linear Sampling&lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-                &lt;tr&gt;
                     &lt;img src=&quot;../images/part_7_lnear_pnear.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Nearest Level, Nearest Sampling&lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
-            
-        &lt;/div&gt;
-&lt;p&gt; For closer images, there was visable blurring when using the trilinear sampling method. &lt;/p&gt;
-&lt;div&gt;&lt;tr&gt;
+&lt;p&gt; For closer images, there was visable blurring when using the trilinear sampling met
                     &lt;img src=&quot;../images/part_7_llin_maleficent.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Trilinear Sampling &lt;br /&gt; Observe the blurring in Maleficent&#39;s face. &lt;/figcaption&gt;&lt;br /&gt;
                     
-                &lt;/tr&gt;
-                &lt;tr&gt;
                     &lt;img src=&quot;../images/part_7_llin_maleficent2.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Trilinear Sampling&lt;/figcaption&gt;&lt;br /&gt;
                     
-                &lt;/tr&gt;
-             	&lt;tr&gt;
                     &lt;img src=&quot;../images/part7_lnear_pnear_2.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Nearest Level, Nearest Sampling&lt;br /&gt;I felt this was the best result for this image. &lt;/figcaption&gt;&lt;br /&gt;
                     
-                &lt;/tr&gt;
-                &lt;tr&gt;
                     &lt;img src=&quot;../images/part_7_plin_lzero.png&quot; width=&quot;800px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt; Level Zero, Linear Sampling &lt;br /&gt; The jaggies are less apparent in the writing, but Maleficent is a little more blurry.&lt;/figcaption&gt;&lt;br /&gt;
-                &lt;/tr&gt;
+
+
+
             
-        &lt;/div&gt;
-
-            
 
 
 
-&lt;/p&gt;&lt;/p&gt;&lt;/table&gt;&lt;/div&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/table&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 28 Jan 2016 00:00:00 -0800</pubDate>
         <link>http://kadie16.github.io/rasterizester/</link>
@@ -1004,249 +1069,6 @@ Getting the model to rotate according to mouse drag wasn’t a big deal either. 
         
         
         <category>abroad</category>
-        
-        <category>project</category>
-        
-      </item>
-    
-      <item>
-        <title>Work in Progress</title>
-        <description>&lt;center&gt;&lt;iframe width=&quot;604.8&quot; height=&quot;453.6&quot; src=&quot;https://www.youtube.com/embed/cjPib3gQU-k&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/center&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt;A Demonstration of my Project thus far&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;My project is a C++ program that reads in data describing 3D models, in .obj file format, and renders and lights the models with OpenGL. Since my last post, I have implemented some user interactions and use of the CGAL data structure. The models I use to test my program came from the &lt;a href=&quot;http://graphics.berkeley.edu&quot;&gt;UC Berkeley Computer Graphics&lt;/a&gt; website :)&lt;/p&gt;
-
-&lt;h2 id=&quot;latest-changes&quot;&gt;Latest Changes&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Automatically find and fit model.&lt;/li&gt;
-  &lt;li&gt;Maintain aspect ratio on window resize.&lt;/li&gt;
-  &lt;li&gt;Select Color.&lt;/li&gt;
-  &lt;li&gt;Shading based on vertex normal vectors.&lt;/li&gt;
-  &lt;li&gt;Rotation by mouse drag.&lt;/li&gt;
-  &lt;li&gt;Zoom by right click mouse drag.&lt;/li&gt;
-  &lt;li&gt;Option to move model by mouse drag.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;find-and-fit&quot;&gt;Find and Fit&lt;/h3&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;cam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;objModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;cam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;viewModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;cam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;moveToCenter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fitModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maxCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;minCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-                     &lt;span class=&quot;n&quot;&gt;maxCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;minCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-                     &lt;span class=&quot;n&quot;&gt;maxCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;minCoords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now, whenever a new .obj file is selected, the “camera” automatically centers the model and makes it fit on the screen. I say “camera” because there is no actual camera in OpenGL. Instead, you manipulate the view by applying matrix transformations to the modelview and projection matrices. More on that later. I wrote a “camera” class, which handles these transformations.&lt;/p&gt;
-
-&lt;h3 id=&quot;aspect-ratio&quot;&gt;Aspect Ratio&lt;/h3&gt;
-&lt;p&gt;I think this is probably the least noticeable new feature, but it was one of the bigger challenges. If you watch closely, you can see that when I resize the window in the video, the cube retains its shape. In otherwords, it doesn’t turn into a rectangle if the viewer isn’t perfectly square. You might also notice that the angel is more slender than before.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/angel7.png&quot; alt=&quot;Angel Aspect Before&quot; /&gt; &lt;em&gt;&lt;center&gt;Squished angel&lt;/center&gt;&lt;/em&gt;
-&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/angel8.png&quot; alt=&quot;Angel Aspect After&quot; /&gt; &lt;em&gt;&lt;center&gt;Angel with corrected aspect ratio&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;camera&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;adjustAspect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;cm&quot;&gt;/* Modify the Projection Matrix */&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;glMatrixMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_PROJECTION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;cm&quot;&gt;/* Start from a &amp;#39;clean slate&amp;#39; */&lt;/span&gt; 
-    &lt;span class=&quot;n&quot;&gt;glLoadIdentity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;cm&quot;&gt;/* Calculate Aspect Ratio */&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newAspect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;cm&quot;&gt;/* Adjust Accordingly */&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;leftAdjust&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newAspect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;rightAdjust&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newAspect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;glOrtho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;leftAdjust&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rightAdjust&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bottom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;near&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;far&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;color-picking&quot;&gt;Color Picking&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/humanoid1.png&quot; alt=&quot;humanoid color pick&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;To me this feature seems more impressive than the constant aspect ratio, but it took about five minutes to implement. Thanks to QT, color picking boiled down to two lines of code.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MainWindow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;on_toolButton_clicked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;QColor&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;QColorDialog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;ui&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;widget&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grabColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt;ui is the User Interface, widget is the part of the ui that displays the model&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Ok, I had to write grabColor too, so maybe 5 lines. Still. I actually threw this feature in because I needed a break from some other issue I was stuck on.&lt;/p&gt;
-
-&lt;h3 id=&quot;vertex-shading&quot;&gt;Vertex Shading&lt;/h3&gt;
-
-&lt;p&gt;In my last post, I mentioned that every vertex needs a normal vector so openGL knows how to shade the model. At that time, I was just computing the normal for each face and lighting all of the vertices in that face uniformly.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/progress/shading1.png&quot; alt=&quot;Before and after cube picture&quot; /&gt; &lt;em&gt;&lt;center&gt;Before and After per-vertex shading&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Now, the normal for each vertex is assigned to be the &lt;em&gt;average&lt;/em&gt; of the normals of all of the faces it belongs to. So the vertices on the corners of the cube are assigned a normal equal to the average of the normal vectors of the three faces that meet at that corner. The vertices on the edge of two faces get the average of the two normal vectors of those faces. The vertices in the middle of the face just get the normal that belongs to that face. OpenGL then interpolates in between the vertices to produce the smooth gradient you see.&lt;/p&gt;
-
-&lt;h3 id=&quot;user-controls&quot;&gt;User Controls&lt;/h3&gt;
-
-&lt;h4 id=&quot;making-it-feel-natural&quot;&gt;Making it “feel” natural&lt;/h4&gt;
-&lt;p&gt;I expected understanding the openGL calls to be challenging, but I didn’t anticipate the challenge of making the controls intuitive. I guess this speaks to the idea that the best computer graphics go unnoticed.&lt;/p&gt;
-
-&lt;p&gt;The user controls are simulated by a series of repaints. Actually the model is being redrawn constantly, but without adjustments to the modelview or projection matrix, it is just drawn exactly the same. So my goal is to animate, or redraw, the model so the user feels like they are actually touching and manipulating the model with their mouse.&lt;/p&gt;
-
-&lt;h4 id=&quot;rotation&quot;&gt;Rotation&lt;/h4&gt;
-&lt;p&gt;Getting the model to rotate wasn’t hard. I could just use glRotatef to do that.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;glRotatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;angle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt;&lt;/center&gt;&lt;/em&gt;
-Getting the model to rotate according to mouse drag wasn’t a big deal either. All I had to do was set the parameters in glRotatef based on the change in position of the mouse. The hard part was getting the model to rotate in a way that felt &lt;em&gt;natural&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;The first problem is glRotatef rotates the model around the origin, the point (0,0,0). This gives the appearance that the model was orbiting about an arbitrary point in space. Not what I want. I want the model to rotate about it’s center. That way it stays where it is and just spins around.&lt;/p&gt;
-
-&lt;p&gt;There is a clever trick to accomplish this. Since glRotatef rotates about the origin, you can just move whatever point you want to rotate about to the origin, apply the rotation, and then move the object back to where it was. Imagine I pick up the model, move it’s center to the origin, rotate it, and move it back to it’s original point in space.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* Move center to origin */&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;glTranslatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;/* Rotate */&lt;/span&gt; 
-&lt;span class=&quot;n&quot;&gt;glRotatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;angle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLfloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;/* Apply reverse translation to move center back to where it was */&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;glTranslatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt;&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Pretty neat trick! But still, I am left with a model that is rotating in crazy unpredictable patterns.&lt;/p&gt;
-
-&lt;iframe width=&quot;604.8&quot; height=&quot;453.6&quot; src=&quot;https://www.youtube.com/embed/ebHibD78bCI&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt;?????????&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;The rotations seem accurate at the beginning of the demo, but soon deviate from what is expected. You can see that the effect of dragging the mouse in one direction (like left to right) is inconsistent as time goes on.&lt;/p&gt;
-
-&lt;p&gt;This is because the rotations are accumulating.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;Desired Effect&lt;/strong&gt;: &lt;br /&gt;
-0.) Start Position. &lt;br /&gt;
-1.) Apply rotation A to position at 0. &lt;br /&gt;
-2.) Apply rotation &lt;strong&gt;B&lt;/strong&gt; to position at 1. &lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;We want each mouse drag to produce a new, independent rotation. So when I drag the mouse from left to right, the model spins right, regardless of the rotations I performed previously.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;Actual Effect&lt;/strong&gt;: &lt;br /&gt;
-0.) Start Position. &lt;br /&gt;
-1.) Apply rotation A to position at 0. &lt;br /&gt;
-2.) Apply rotation &lt;strong&gt;(A + B)&lt;/strong&gt; to position at 1. &lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;As is, the rotations are adding on top of eachother. So when I drag the mouse left to right, the model spins according to the sum of the prior rotation and the desired left to right rotation. Confusing right?!?!?!?!&lt;/p&gt;
-
-&lt;h4 id=&quot;opengl-matrix-stack&quot;&gt;OpenGL Matrix Stack&lt;/h4&gt;
-&lt;p&gt;Here, the openGL matrix stack comes in. Here is the deal: In order to rotate my model, I am manipulating the Model View Matrix. But openGL actually maintains a “stack” of Model View Matrices for me to work with. If I want to save my current matrix, I can “push” it to the stack. Then, I can change the matrix however I want. When I decide that I want to go back to that matrix I pushed earlier, I can “pop” the matrix and I will get the next one on the stack. More confusion, no?&lt;/p&gt;
-
-&lt;p&gt;Let’s pretend that coloring is a matrix operation. So I start out with a regular white model view matrix. I call glPushMatrix(). Then I paint the matrix yellow.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* My matrix is white */&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;glPushMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Saving white matrix for later. &lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;applyPaint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Yellow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;drawMyMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt; displays a yellow matrix &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Next, I decide I want a red matrix. If I just start using red paint to my yellow matrix, I am going to end up with an orange matrix. So, first I call glPopMatrix(). Now I get the white matrix back, paint it red, and I have a true red matrix.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* My matrix is yellow */&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;glPopMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Getting the white matrix back. &lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;applyPaint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;drawMyMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;glPushMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Saving red matrix for later.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt; displays a red matrix &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Now, I call glPushMatrix() again. I want to turn the matrix purple this time. So I paint this matrix blue, and get a purple matrix. Now I want a green matrix! But I don’t want to slather green paint on a purple thing.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;applyPaint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;/* Now my matrix is purple! */&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;drawMyMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt; displays a purple matrix &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;glPopMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Got my red matrix back. &lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;glPopMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Got my white matrix back. &lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;applyPaint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;drawMyMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt; displays a green matrix &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;back-to-rotation&quot;&gt;Back to Rotation&lt;/h4&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;QQuaternion&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GLWidget&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drag2Rotate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;cm&quot;&gt;/* Define Axis of Rotation */&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;axisOfRotation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;axisOfRotation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;axisOfRotation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setZ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;magnitude&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sqrt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;cm&quot;&gt;/* Update Rotation Quaternion */&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;QQuaternion&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newQ&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;QQuaternion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fromAxisAndAngle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axisOfRotation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;magnitude&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;currQ&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newQ&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;currQ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;currQ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt; I keep track of the current Quaternion (represents the current rotation) by multiplying the new, applied rotation by the former rotation &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;glPushMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* Saves state before rotation */&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;QMatrix4x4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rotationMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Begins&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Identity&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Like&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;white&amp;quot;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matrix&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;my&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;example&lt;/span&gt;
-        &lt;span class=&quot;cm&quot;&gt;/* Here I rotate by the Quaternion, which holds the current rotation */&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;rotationMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rotate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;currQ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;glMatrixMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_MODELVIEW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;cm&quot;&gt;/* Translate so rotation occurs about model center */&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;glTranslatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;glMultMatrixf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;constData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;glTranslatef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drawMe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;glPopMatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* Reverts to state before rotation */&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt; This way, the next time the model is drawn, the rotation is applied to the original, &quot;white&quot;, matrix. &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;zoom&quot;&gt;Zoom&lt;/h4&gt;
-&lt;p&gt;My first idea was to use glScalef on the Model View Matrix to zoom.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MainWindow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;on_toolButton_clicked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;glMatrixMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_MODELVIEW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Specifies which matrix will be scaled&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;glScalef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xScale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;yScale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zScale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;&lt;center&gt; Calling glScalef(0.5,0.5,0.5) would uniformly scale the Model View Matrix down 50%&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;That isn’t quite right. Here I am actually changing the size of the model, rather than getting closer or further. This is kind of like the desired effect, but if I get too close holes start appearing in my models. By scaling the Model View Matrix, the model can get so big that parts of it would lie outside the clipping planes.&lt;/p&gt;
-
-&lt;iframe width=&quot;604.8&quot; height=&quot;453.6&quot; src=&quot;https://www.youtube.com/embed/crWdEMgDwNE&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;Instead of adjusting the Model View Matrix, I need to adjust the Projection Matrix. Doing so changes the way I view the “world”, as opposed to changing the model itself.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;camera&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setZoom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;factor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;glMatrixMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_PROJECTION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;glLoadIdentity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Make sure zoom isn&amp;#39;t applied to the previous state&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;glOrtho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;leftAdjust&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rightAdjust&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bottom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zoomF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;near&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;far&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;That’s it for now :) My next post will show my final project!&lt;/p&gt;
-
-</description>
-        <pubDate>Sat, 01 Aug 2015 00:00:00 -0700</pubDate>
-        <link>http://kadie16.github.io/project-update-short/</link>
-        <guid isPermaLink="true">http://kadie16.github.io/project-update-short/</guid>
-        
-        <category>C++</category>
-        
-        <category>Work</category>
-        
-        <category>Project</category>
-        
-        <category>OpenGL</category>
-        
-        <category>Computer</category>
-        
-        <category>Graphics</category>
-        
-        <category>QT</category>
-        
-        <category>CGAL</category>
-        
-        
-        <category>projects</category>
         
         <category>project</category>
         
