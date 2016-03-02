@@ -6,9 +6,159 @@
     <description></description>
     <link>http://kadie16.github.io/</link>
     <atom:link href="http://kadie16.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 26 Feb 2016 20:38:29 -0800</pubDate>
-    <lastBuildDate>Fri, 26 Feb 2016 20:38:29 -0800</lastBuildDate>
+    <pubDate>Tue, 01 Mar 2016 22:39:06 -0800</pubDate>
+    <lastBuildDate>Tue, 01 Mar 2016 22:39:06 -0800</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Mesh Editing and GLSL</title>
+        <description>&lt;div&gt;
+        &lt;p&gt;In this project, I first learned to tesselate bezier patches to generate triangular meshes from bezier curves. Then, I implemented the ability to modify those meshes by flipping and splitting edges, or &quot;upsampling&quot; to increase the amount of triangle faces that represent the mesh. Finally, I wrote some cool GLSL shaders. My favorite was the reflection shader, which maps each pixel on the surface to a place on a reflection texture. &lt;/p&gt;
+
+    &lt;h2 align=&quot;middle&quot;&gt;Part 1: Fun with Bezier Patches&lt;/h2&gt;
+        &lt;p&gt;The first thing I needed to do was generate a triangle mesh from an input Bezier Surface. A Bezier surface is specified by control points (16, in this case). The control points specify curves, and the convex hull of the control points contains a surface. That surface is the mesh I am trying to represent. &lt;/p&gt;
+        &lt;p&gt;In order to represent the surface as a triangular mesh, I need to tesselate the Bezier surface specified by the control points into triangles. I accomplished this using the Bernstein Polynomials.I wrote some helper functions to help me evaluate the Bernstein Polynomials, used them to evaluate each control point. Once I determined which triangles I needed, I added them to a halfedge data structure to represent the mesh. &lt;/p&gt;
+                    &lt;img src=&quot;../images/part1.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;My Rendering of the teapot.bez Mesh&lt;/figcaption&gt;
+        &lt;h2 align=&quot;middle&quot;&gt;Part 2: Average normals for half-edge meshes&lt;/h2&gt;
+        &lt;p&gt;Next, I computed per vertex normals that were an average of the normals of their faces. This results in a nicer, smoother shading effect than when normal vectors are just computer per face. To accomplish this, I traversed the faces that the vertex belonged to in the half edge data structure, computing the normal for each face along the way. First I got the half edge that the vertex was attached to. Then, I saved it as h_original so I could keep track of where I started. Then I got the halfedge&#39;s twin and next half edge, and computed the vectors those half edges represented. I computed the normal of that face by crossing those two vectors before advancing to the next face. Once I reached h_original again, indicating I had tranversed all of the faces of that vertex, I returned the unit vector of the sum of all of the normal vectors as the normal vector for that particular vertex. &lt;/p&gt;
+                    &lt;img src=&quot;../images/part2/facenormals.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Each vertex is shaded uniformly according to the normal vector of one face.&lt;/figcaption&gt;
+
+                    &lt;img src=&quot;../images/part2/avgnormals.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;This shows the teapot shaded according to per vertex normal vectors.&lt;/figcaption&gt;
+
+                    &lt;img src=&quot;../images/part2/bug.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Initially I was calculating the vectors for the first face incorectly, which gave this cool swirly effect. &lt;/figcaption&gt;
+
+         &lt;h2 align=&quot;middle&quot;&gt;Part 3: Edge Flip&lt;/h2&gt;
+        &lt;p&gt;Next, I implemented the abillity to flip edges in the mesh. As I mentioned before, the mesh is represented as a half edge data structure. A half edge data structure is mostly a few key components: vertices, halfedges, edges, and faces. Vertices, edges, and faces each keep track of a single half edge. Halfedges each keep track of a twin halfedge (the one on the other side of the edge), a next halfedge (the next one on the face), an edge (made up of the half edge and its&#39; twin), and a face. &lt;/p&gt;
+        &lt;p&gt;In order to accomplish the edge flip, I just needed to reassign the pointers of all of the elements involving the edge before and after the flip.&lt;/p&gt;
+                    &lt;img src=&quot;../images/part3/bug.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Bug: Every edge I tried to flip poked a hole in my mesh!&lt;/figcaption&gt;
+        &lt;p&gt; Initially I was only reassigning pointers for the elements on the &lt;i&gt;inside&lt;/i&gt; of the two faces between the edge I was trying to flip. Can you imagine why this would poke holes in my mesh? I was neglecting to reassign pointers for the halfedges on the outside of the borders of the faces. So while the edge may have been flipped correctly, the halfedges in the rest of the mesh weren&#39;t informed of the changes, and lost track of (could no longer traverse) that part of the mesh!&lt;/p&gt; 
+        &lt;p&gt; Once I assigned the pointers to the outside half edges too, I got the desired result.  &lt;/p&gt;
+                    &lt;img src=&quot;../images/part3/preflip.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;A Torus mesh before any edges are flipped.&lt;/figcaption&gt;
+                    &lt;img src=&quot;../images/part3/postflip.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Torus mesh after flipping some edges.&lt;/figcaption&gt;
+         &lt;h2 align=&quot;middle&quot;&gt;Part 4: Edge Split&lt;/h2&gt;
+        &lt;p&gt;Next, I implemented the ability to split edges of the mesh. This was somewhat similar to flipping edges in that it involved a lot of reassigning of pointers. However, splitting became a little more complicated because it involved adding some new edges, faces, and a new vertex to the mesh. &lt;/p&gt;
+                    &lt;img src=&quot;../images/part4/bug2.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Bug: Whenever I attempted an edge split, I punched a huge dent in my teapot! This shows a bunch of split-attempts near eachother, resulting in one giant heart dent. &lt;/figcaption&gt;
+        &lt;p&gt; This initial error was caused by an error calculating the position of my new vertex. In fact, I wasn&#39;t calculating the position of the vertex at all. So everytime I split an edge, I was adding a new vertex at the origin. That&#39;s why when I split, all of these dents were getting punched toward the same spot! &lt;/p&gt; 
+        &lt;p&gt; Once I updated the position of the new vertex to be the midpoint between the other corner vertices, I achieved the desired result. &lt;/p&gt;
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part4/pre_split.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Bean mesh before edges are split.&lt;/figcaption&gt;
+
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part4/post_split.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Bean mesh with some split edges in the middle.&lt;/figcaption&gt;
+
+        &lt;h2 align=&quot;middle&quot;&gt;Part 5: Upsampling via Loop Subdivision&lt;/h2&gt;
+        &lt;p&gt;Upsampling was the most challenging part of the project for me. There were quite a few issues to be debugged, but at a high level the approach is pretty straight forward.&lt;/p&gt;
+        &lt;li&gt; 
+            First I marked all of the existing vertices as &quot;old&quot;, indicating they were part of the mesh before it was upsampled. 
+            &lt;li&gt; 
+            Next I calculated new positions for all of the old vertices according to the vertex subdivision rule.
+        &lt;/li&gt; 
+            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;n = vertex degree&lt;/pre&gt;&lt;/p&gt; 
+            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;u = 3/(8*n)&lt;/pre&gt;&lt;/p&gt;
+            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;(1 - 3/8) * original_position + u * neighbor_position_sum&lt;/pre&gt;&lt;/p&gt;
+        &lt;li&gt; 
+            Then I calculated positions for all of the new (to be added) vertices according to: 
+        &lt;/li&gt; 
+            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;3/8 * (A + B) + 1/8 * (C + D)&lt;/pre&gt;&lt;/p&gt;
+            &lt;p&gt; where A and B are the vertex positions on the edge that the new vertex will lie, and C and D are the vertex positons on the adjacent edges of the faces on either side of the edge that the new vertex will lie. &lt;/p&gt;
+        &lt;li&gt; Next, I split every &quot;old&quot; or prexisting edge in the mesh.
+        &lt;li&gt;Finally, I flipped any edge that connected a new vertex and an existing vertex, and then updated all of the vertex positions. 
+        &lt;/li&gt; 
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part1.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Teapot mesh before upsample&lt;/figcaption&gt;
+
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part5/up_teapot.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Teapot mesh after upsample&lt;/figcaption&gt;
+
+        &lt;p&gt; Some times a little pre processing before upsampling a mesh can help significantly. A good example of this is the simple cube mesh. The way the edges are oriented can cause some irregularity when then mesh is upsampled. The upsampling behavior can be improved significantly if the edges that cross the faces of the cube are split prior to upsampling. This gives a more symmetrical mesh, which helps the upsampling give a symmetrical result. &lt;/p&gt;
+        &lt;p&gt;Here you can see a side by side comparison of the upsampling of two cubes. The &lt;b&gt; left cube &lt;/b&gt; is the original mesh being upsampled. The &lt;b&gt; right cube &lt;/b&gt; had each of the face crossing edges split before it is upsampled.  
+
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part5/cube.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Regular cube mesh before upsample&lt;/figcaption&gt;
+
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part5/split_cube.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Cube mesh with each face of cube split before upsample&lt;/figcaption&gt;
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part5/up_cube.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Regular cube after upsample (1X). Note the irregularity&lt;/figcaption&gt;
+
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part5/up_split_cube.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Pre-split cube mesh after upsample (1X).&lt;/figcaption&gt;
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part5/up_cube_2.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Regular cube after multiple upsamples. The irregularity has propagated.&lt;/figcaption&gt;
+
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part5/up_split_cube_3.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Pre-split cube mesh after multiple upsamples. Looks like a nice smooth cube!&lt;/figcaption&gt;
+         &lt;h2 align=&quot;middle&quot;&gt;Part 6: Fun with Shaders&lt;/h2&gt;
+        &lt;p&gt;Part 6 was my favorite! I wrote GLSL shaders which specify how OpenGL should light the scene. I implemented a simple Blinn Phong shader, and a really cool reflection environment map shader. &lt;/p&gt;
+                    &lt;img src=&quot;../images/part6/phongcow.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Cow With Pink Phong Shader&lt;/figcaption&gt;
+        &lt;p&gt;For the Phong shader, I followed the following procedue:
+            &lt;li&gt; Calculate the light vector, l 
+            &lt;li&gt; Calculate the vector to my &quot;eye position&quot;, v
+            &lt;li&gt; Normalize the sum of the vectors l and v
+            &lt;li&gt; Return a linear combination of the ambient, diffuse, and specular lights: 
+            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;LightVec = ambient_light + diffuse_light*max(dot(normal_vector, l), 0) + specular_light*(max(dot(n,normalize(l+v)), 0)^shininess_factor&lt;/pre&gt;&lt;/p&gt;
+            
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part6/defaultcow.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Cow With Default Shader&lt;/figcaption&gt;
+             
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part6/greyphongcow.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Cow With Grey Phong Shader&lt;/figcaption&gt;
+                &lt;br /&gt;
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part6/defaultbug.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Beetle With Default Shader&lt;/figcaption&gt;
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part6/phongbug.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Beetle With Phong Shader&lt;/figcaption&gt;
+
+        &lt;p&gt; I liked the environment map reflection shader the best. This is what I did to accomplish this effect: 
+            &lt;li&gt; Calculate the vector to my &quot;eye position&quot;, v
+            &lt;li&gt; Calculate the reflection vector using v and the normal vector of the vertex 
+            &lt;li&gt; Convert the reflection vector into polar coordinates
+            &lt;li&gt; Convert the polar coordinates into uv coordinates 
+            &lt;li&gt; Retrieve the colors for the vertex from the environment map using the uv coordinates. 
+         
+                    &lt;img src=&quot;../images/part6/reflectcow.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Cow With Reflection Map Shader&lt;/figcaption&gt;
+                    &lt;img src=&quot;../images/part6/reflectbug.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Beetle With Reflection Map Shader&lt;/figcaption&gt;
+
+
+
+
+&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/p&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/p&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/p&gt;&lt;/td&gt;&lt;/td&gt;&lt;/li&gt;&lt;/li&gt;&lt;/td&gt;&lt;/td&gt;&lt;/div&gt;
+</description>
+        <pubDate>Tue, 01 Mar 2016 00:00:00 -0800</pubDate>
+        <link>http://kadie16.github.io/mesh-editing-and-glsl/</link>
+        <guid isPermaLink="true">http://kadie16.github.io/mesh-editing-and-glsl/</guid>
+        
+        
+        <category>featured</category>
+        
+        <category>project</category>
+        
+      </item>
     
       <item>
         <title>My First Maya Project</title>
@@ -318,6 +468,197 @@ Even with a high sample rate, the difference between the two methods is apparent
 
 
 &lt;/p&gt;&lt;/p&gt;&lt;/table&gt;&lt;/div&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/table&gt;&lt;/div&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 28 Jan 2016 00:00:00 -0800</pubDate>
+        <link>http://kadie16.github.io/rasterizester/</link>
+        <guid isPermaLink="true">http://kadie16.github.io/rasterizester/</guid>
+        
+        
+        <category>projects</category>
+        
+        <category>project</category>
+        
+      </item>
+    
+      <item>
+        <title>Rasterizester Project</title>
+        <description>&lt;h2 align=&quot;middle&quot;&gt;Part 1: Rasterizing Lines&lt;/h2&gt;
+&lt;p&gt;I used Bresenham&#39;s algorithm to rasterize lines. In order to rasterize the line, the algorithm needs to decide which pixels lie closest to it. The line will not directly intersect the center of every pixel, so it must be decided which pixels it intersects the most. To do this, it steps through the line, incrementing the x coordinate by one if the overall change in x is greater than the overall change in y, or incrementing the y coordinate if the opposite is true. For this description I will assume we are rasterizing a line dx &amp;gt; dy. &lt;/p&gt;
+&lt;p&gt; Then the algorithm needs to make a decision about which pixel is closest to the next point on the line. It uses a decision parameter pk. If pk is less than zero, it plots the point (x, y) and increments pk by 2*dy. Otherwise, it plots the point (x, y + 1) or (x, y - 1) depending on if the slope is positive or negative, respectively. It that case it increments pk by 2*dy - 2*dx and continues stepping through the line. The multiplications by two make the algorithm only use integer calculations, which makes it more efficient. 
+
+                    &lt;img src=&quot;../images/part_1.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Result Using Bresenham&#39;s Line Rasterizing Algorithm &lt;/figcaption&gt;&lt;br /&gt;
+
+&lt;h2 align=&quot;middle&quot;&gt;Part 2:Rasterizing Single-Color Triangles&lt;/h2&gt;
+&lt;p&gt;I ended up using two different methods to rasterize triangles. In the first method, I was breaking the triangles into &quot;top flat&quot; and &quot;bottom flat&quot; cases, and then stepping through the triangle and rendering it line by line. After part 5, I ended up switching to using barycentric coordinates to rasterize them. I needed to calculate barycentric coordinates to retrieve the correct color for each pixel, so it made sense to rasterize each pixel individually rather than rasterize a line at a time. Using barycentric coordinates to rasterize triangles also gave a cleaner result. 
+					&lt;img src=&quot;../images/part_2_1.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Original Method: Note the lines extending off the claw and tail.&lt;/figcaption&gt;
+                    &lt;img src=&quot;../images/part_2_2.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Barycentric Method&lt;/figcaption&gt;
+            &lt;p&gt;In the first method I used to rasterize triangles, I broke them into three cases: 
+            &lt;ul&gt;
+            &lt;li&gt;Bottom Flat Triangles&lt;/li&gt;
+            &lt;li&gt;Top Flat Triangles&lt;/li&gt;
+            &lt;li&gt;Other&lt;/li&gt;&lt;/ul&gt;
+        For the bottom flat triangles, I started by using my rasterize_line function to rasterize the bottom (flat) edge of the triangle, which was just the line between the two vertices with the lowest y coordinate. From there I calculated the inverse slope of each non-flat side of the triangle, and added that to the respective x coordinate. Then I incremented the y coordinate and plotted a line between the current x values and the y value.&lt;/p&gt;
+        &lt;p&gt;Incrementing the x values and plotting the line: &lt;/p&gt;
+        &lt;p align=&quot;middle&quot;&gt;
+        &lt;pre align=&quot;middle&quot;&gt;current_x1 = current_x1 + m1^-1&lt;/pre&gt;
+        &lt;pre align=&quot;middle&quot;&gt;current_x2 = current_x2 + m2^-1&lt;/pre&gt;
+        &lt;pre align=&quot;middle&quot;&gt;rasterize_line(current_x1, y, current_x2, y)&lt;/pre&gt;&lt;/p&gt;
+        &lt;p&gt; Where current_x1 is initialized to the x value of one of the bottom corners and current_x2 is the x value of the other bottom corner. Adding the inverse slope steps the x_values up along the edges of the triangle towards the top vertex. The subroutine to render top flat triangles was done similarly&lt;/p&gt; 
+        &lt;p&gt; For the &quot;other&quot; case, I would simply divide the triangle into two seperate triangles: a bottom flat triangle and a top flat triangle. I generated a &quot;fourth&quot; vertex that was directly across from the &quot;middle&quot; vertex, the one with the middle y coordinate. &lt;/p&gt; 
+        &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt; x4 = x0 + ((y1 - y0)/(y2 - y0) * (x2 - x0))&lt;/pre&gt;&lt;/p&gt;
+        &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;y4 = y1&lt;/pre&gt;&lt;/p&gt;
+        &lt;p&gt; Where coordinates are sorted according to ascending y coordinates (so (x0, y0) has the smallest y coordinate and (x2, y2) has the highest y coordinate). Using this new fourth coordinate, I could use my prewritten subroutines to render the original triangle as two seperate triangles, one that was flat on top and the other which was flat on bottom. &lt;/p&gt; 
+&lt;img src=&quot;../images/part2.png&quot; /&gt;
+&lt;center&gt;Final Result: Rendered Triangles&lt;/center&gt;
+
+&lt;h2 align=&quot;middle&quot;&gt; Part 3: Antialiasing triangles&lt;/h2&gt;
+&lt;br /&gt;
+&lt;p&gt; Part three was the most challenging for me! First I initialized the super sample buffer as a vector of unsigned chars, simiar to the frame rate buffer, except scaled up based on the sample rate. 
+&lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;total_sample_pts = width * height * sample_rate
+&lt;br /&gt; 
+superframebuffer.resize(total_sample_pts * 4)&lt;/pre&gt;&lt;/p&gt;
+
+&lt;center&gt;
+                    &lt;img src=&quot;../images/part_3_off_by_4.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Sample_Rate = 4. Image colors are off and image is repeating. The colors are off due to the indexing in red shown above. It should be: 
+                    &lt;pre&gt; int index = (k*dimension) + &lt;font color=&quot;red&quot;&gt; &lt;font color=&quot;blue&quot;&gt;4 *&lt;/font&gt;(i + j)&lt;/font&gt;&lt;/pre&gt; Due to the supersamplebuffer storing rgba values for each pixel. &lt;/figcaption&gt;&lt;/center&gt;&lt;br /&gt;
+
+&lt;p&gt; The image is being repeated due to another indexing error when the pixels are drawn into the supersamplebuffer. Once the index was corrected, I got a new result:&lt;/p&gt;
+
+
+                    &lt;img src=&quot;../images/part_3_indexbug.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;&lt;br /&gt;Sample_Rate = 4. Image is scaled up larger than it should be and is lighter due to super sample pixel being blended with blank pixels.  &lt;/figcaption&gt;
+
+&lt;p&gt; The super sample pixel is:
+        &lt;p&gt;&lt;pre align=&quot;middle&quot;&gt; 1/sqrt(sample_rate) &lt;/pre&gt;
+            the size of a frame buffer pixel, so it&#39;s color blended with:
+            &lt;pre align=&quot;middle&quot;&gt; (sqrt(sample_rate) - 1)/sqrt(sample_rate) &lt;/pre&gt; white pixels, giving the lighter, less opaque appearance.&lt;/p&gt;
+        &lt;p&gt; I went through countless other iterations of indexing errors, many of which I can&#39;t recreate now. I ended up changing my resolve method to keep track of the x and y coordinate of the current frame buffer pixel. However, just now when trying to recreate another bug, I got my original resolve code to work. Still, my supersamples were getting lighter due to the blending error I described above. &lt;/p&gt; 
+        &lt;p&gt; The biggest challenge I had was understanding how to actually anti-alias. At one point I was drawing to the super sample buffer correctly, my resolve method was working mostly correctly (the size of the images stayed consistent among different sample_rates), however there was no anti-aliasing. The jaggies looked the same whether the super_sample_rate was 1 or 16. &lt;/p&gt; 
+        &lt;p&gt; 
+            Did I need to scale the points by sqrt(sample_rate) in my supersample_point method? Did I need to scale up the triangle according to the sample rate? Or was it both? Between this and the indexing stuff, I was really confusing myself. Thankfully, Ren patiently talked through the idea with me until I understood: I needed to scale one or the other. Either the points or the triangle, but not both.
+        &lt;/p&gt;  
+        &lt;p&gt;  Scaling the size of the triangle felt more intuitive to me, so that is what I went with. In my &lt;font color=&quot;blue&quot;&gt; void DrawRend::rasterize_triangle() &lt;/font&gt; method, I scaled the input coordinates (x0,y0,...,x2,y2) up by a factor of sqrt(sample_rate). Then I repaired my &lt;font color=&quot;blue&quot;&gt; DrawRend::supersample_point(x, y) &lt;/font&gt; method so that it stored the true x and y coordinates, as opposed scaling them up as I did before. This allowed (sample_rate) more pixels to be rendered inside the triangle.
+        &lt;/p&gt;
+        &lt;p&gt; Then the resolve method downsampled the pixels back to the resolution of the framebuffer.So colors from a sqrt(sample_rate) X sqrt(sample_rate) square of pixels in the superframebuffer were averaged, and the resulting color was assigned to one corresponding pixel in the frame buffer, giving the final result.
+
+                    &lt;td align=&quot;middle&quot;&gt;
+                    &lt;img src=&quot;../images/part3_1.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Sample_Rate = 1&lt;/figcaption&gt;
+                    &lt;td align=&quot;middle&quot;&gt;
+                    &lt;img src=&quot;../images/part3_2.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Sample_Rate = 4&lt;/figcaption&gt;
+                    &lt;td align=&quot;middle&quot;&gt;
+                    &lt;img src=&quot;../images/part3_4.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Sample_Rate = 16&lt;/figcaption&gt;
+
+
+
+&lt;h2 align=&quot;middle&quot;&gt;Part 4: Transforms&lt;/h2&gt;
+&lt;p&gt;For part 4, I implemented the transform matrices as shown in the SVG spec. Then I created a new svg file, &quot;first.svg&quot;. I grabbed one of the stars shown in another example file and pasted it in my file. Then I made four identical stars and alternated their colors. Next, I put them all in a group that would translate them closer to the center of the page. Finally, I put each star in it&#39;s own group with a rotation applied. I incremented each rotation by .25 and added enough stars to make a ring of stars!&lt;/p&gt;
+
+&lt;img src=&quot;../images/p4_2.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Ring of Stars &lt;/figcaption&gt;&lt;br /&gt;
+                    &lt;img src=&quot;../images/p_4_3.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Ring of Stars Showing Zoom In, Translate GUI Features&lt;br /&gt; &lt;/figcaption&gt;&lt;br /&gt;
+                    &lt;img src=&quot;../images/p_4_5.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Ring of Stars Showing Zoom Out, Translate GUI Features&lt;/figcaption&gt;&lt;br /&gt;
+
+
+&lt;h2 align=&quot;middle&quot;&gt;Part 5: Barycentric coordinates&lt;/h2&gt;
+&lt;p&gt; Barycentric coordinates give us a way to assign each vertex in a triangle an attribute, and then linearly interpolate those attributes to assign the appropriate value for the other pixels within the triangle. &lt;/p&gt;
+
+&lt;img src=&quot;../images/part_5_tri.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Triangle with a red vertex, blue vertex, and green vertex. The pixels between the vertices are assigned a color based on their barycentric coordinates.&lt;/figcaption&gt;&lt;br /&gt;
+
+
+&lt;p&gt; In the example above, I will refer to the upper left vertex as &lt;font color=&quot;red&quot;&gt;R&lt;/font&gt;, the upper right vertex as &lt;font color=&quot;green&quot;&gt;G&lt;/font&gt;, and the lowest vertex as &lt;font color=&quot;blue&quot;&gt;B&lt;/font&gt;. All of the pixels between these vertices are assigned a color depending on where they are relative to &lt;font color=&quot;red&quot;&gt;R&lt;/font&gt;, &lt;font color=&quot;green&quot;&gt;G&lt;/font&gt;, and &lt;font color=&quot;blue&quot;&gt;B&lt;/font&gt;.
+&lt;p&gt; Observe the pixels that lie on the edge between &lt;font color=&quot;red&quot;&gt;R&lt;/font&gt; and &lt;font color=&quot;blue&quot;&gt;B&lt;/font&gt;. The pixels closest to &lt;font color=&quot;red&quot;&gt;R&lt;/font&gt; are all red, and the pixels closest to &lt;font color=&quot;blue&quot;&gt;B&lt;/font&gt; are all blue. However, the pixels right in the middle of the edge are a purple shade, since they lie directly between the red and blue vertices. The pixel that lies exactly in the center of the two vertices gets:
+	&lt;pre align=&quot;center&quot;&gt;.5*color(&lt;font color=&quot;blue&quot;&gt;B&lt;/font&gt;) + .5*color(&lt;font color=&quot;red&quot;&gt;R&lt;/font&gt;) + 0*color(&lt;font color=&quot;green&quot;&gt;G&lt;/font&gt;)&lt;/pre&gt;
+The number that is multiplied by the color of each vertex is either alpha, beta, or gamma. Each one represents the relative distance from the pixel to one of the three triangle vertices. In the above example, alpha and beta are 0.5, since the pixel is halfway between the red and blue pixels. Gamma is zero since it is relatively far away. 
+To implement this in my program, I first calculate the alpha, beta, and gamma barycentric coordinates using the coordinates passed into &lt;font color=&quot;blue&quot;&gt;&amp;lt;DrawRend::render_barycentric_triangle()&lt;/font&gt;. Then, these are passed to &lt;font color=&quot;blue&quot;&gt; ColorTri::color()&lt;/font&gt;. This method then multiplies alpha by the &quot;a&quot; vertex color, beta by the &quot;b&quot; vertex color, and gamma = (1 - alpha - beta) by the &quot;c&quot; vertex co
+                    &lt;img src=&quot;../images/part_5.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Color Wheel Result.&lt;/figcaption&gt;&lt;br /&gt;
+
+
+&lt;h2 align=&quot;middle&quot;&gt;Part 6: Pixel sampling for texture mapping&lt;/h2&gt;
+&lt;h4&gt; Finding the UV Texture Coordinates &lt;/h4&gt;
+&lt;p&gt; Implementing part 6 was very similar to part 5. The same way I used barycentric coordinates to interpolate the colors of three vertices of a triangle for the pixels in the triangle, I could map a coordinate inside a triangle to its corresponding uv texture coordinate. In &lt;font color=&quot;blue&quot;&gt; Color TexTri::color(Vector2D xy, Vector2D dx, Vector2D dy, SampleParams sp) &lt;/font&gt;, I multiply alpha by the &quot;a&quot; vertex&#39;s uv coordinate vector, beta by the &quot;b&quot; coordinate uv vector, and gamma by the &quot;c&quot; coordinate uv vector. &lt;/p&gt;
+&lt;h4&gt; Retrieving the Color from the MipMap &lt;/h4&gt;
+Once I had adjusted the uv vector, it is passed into &lt;font color=&quot;blue&quot;&gt;Texture::sample(const SampleParams &amp;amp;sp)&lt;/font&gt;, which then calls the appropriate sampling method according to the sp.psm parameter. The sampling method retreives the level 0 mip map (for this portion). The uv coordinates are between 0 and 1, so the sampling method then scales them up to match the proportions of the mipmap. 
+&lt;pre align=&quot;center&quot;&gt; x = uv.x * mipmap.width &lt;br /&gt; y = uv.y * mipmap*height &lt;/pre&gt; Then, the color of the pixel is retrieved from the mipmap. 
+&lt;pre align=&quot;center&quot;&gt;return MipMapPixelColor(x, y, level)&lt;/pre&gt;
+&lt;h4&gt; Nearest vs Bilinear Sampling &lt;/h4&gt;
+The nearest level sampling method simply returns the color of the pixel as above. The Bilinear method returns an interpolation of the four nearest uv coordinates. I used the algorithm in the book to implement bilinear sampling. The difference between nearest and bilinear sampling is the most apparent in the map sample images, which have distinct thin vertical lines through them. &lt;/p&gt;
+
+&lt;img src=&quot;../images/part_6_nearest_1.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Nearest Level Pixel Sampling, sample_rate = 1. &lt;br /&gt;Jaggies! Blegh!&lt;/figcaption&gt;&lt;br /&gt;
+                    &lt;img src=&quot;../images/part_6_bilinear_1.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Bilinear Pixel Sampling, sample_rate = 1 &lt;br /&gt;
+               		SoooOossosoSo smooth &amp;lt;3 &lt;/figcaption&gt;&lt;br /&gt;
+Even with a high sample rate, the difference between the two methods is apparent on these images. &lt;br /&gt;&lt;br /&gt;
+                    &lt;img src=&quot;../images/part_6_nearest_16.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Nearest Level Pixel Sampling, sample_rate = 16 &lt;br /&gt;
+                    	Gross! Blurry Jaggies!&lt;/figcaption&gt;&lt;br /&gt;
+                    &lt;img src=&quot;../images/part_6_bilinear_16.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Bilinear Pixel Sampling, sample_rate = 16 &lt;br /&gt; 
+                   Ridiculously good looking.&lt;/figcaption&gt;&lt;br /&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+&lt;p&gt; 
+	However, without these distinct lines, the effect is much less noticeable. In the campanille image, I actually prefer the nearest sampling method. The features of the image seem slightly better with the nearest sampling.  &lt;/p&gt;
+
+&lt;img src=&quot;../images/part_6_camp_nearest.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Nearest Level Pixel Sampling, sample_rate = 16 &lt;br /&gt;
+                    	Looks pretty nice.&lt;/figcaption&gt;&lt;br /&gt;
+                    &lt;img src=&quot;../images/part6_camp_bi.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Bilinear Pixel Sampling, sample_rate = 16 &lt;br /&gt; 
+                    &lt;/figcaption&gt;&lt;br /&gt;
+&lt;p&gt; 
+	Initially when retrieving the mip map colors, I had a bug because I wasn&#39;t dividing my colors by 255. Thanks to piazza, I knew I had to divide them by 255 since the color was expecting a float between 0 and 1. However at first that was just giving me black images. Then I realized I literally had to divide it by &quot;255.&quot; to prevent a precision error. 
+                    &lt;img src=&quot;../images/part_6_1.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Weird Colors&lt;/figcaption&gt;&lt;br /&gt;
+                    &lt;img src=&quot;../images/part_6_5.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Looks Like Sprinkles!&lt;/figcaption&gt;&lt;br /&gt;
+                    &lt;img src=&quot;../images/part_6_4.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Corner Sprinkles&lt;/figcaption&gt;&lt;br /&gt;
+
+
+&lt;h2 align=&quot;middle&quot;&gt;Part 7: Level sampling with mipmaps for texture mapping&lt;/h2&gt;
+&lt;p&gt;In the final part, I implemented the &quot;get level&quot; method using the math described in the textbook. This allows the texture sampling to grab different mip maps for each pixel, depending on which is most appropriate. Sometimes the effects are desirable, and other times it ends up blurring the image. &lt;/p&gt;
+&lt;p&gt; In trilinear sampling, the color from the getLevel() mipMap and the color from the adjacent level are blended to give the resulting color. 
+                    &lt;img src=&quot;../images/part_7_lzero_pnear.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Level Zero, Nearest Sampling&lt;/figcaption&gt;&lt;br /&gt;
+                    &lt;img src=&quot;../images/part_7_lzero_plin.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Level Zero, Linear Sampling &lt;br /&gt; &lt;/figcaption&gt;&lt;br /&gt;
+                    &lt;p&gt; I thought the above combination, Level Zero with Linear Sampling, gave the best result. It is the only one that eliminates the Jaggies in the &quot;Maleficent&quot; chrome text. &lt;/p&gt;
+                    &lt;img src=&quot;../images/part_7_lnear_plin.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Nearest Level, Linear Sampling&lt;/figcaption&gt;&lt;br /&gt;
+                    &lt;img src=&quot;../images/part_7_lnear_pnear.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Nearest Level, Nearest Sampling&lt;/figcaption&gt;&lt;br /&gt;
+&lt;p&gt; For closer images, there was visable blurring when using the trilinear sampling met
+                    &lt;img src=&quot;../images/part_7_llin_maleficent.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Trilinear Sampling &lt;br /&gt; Observe the blurring in Maleficent&#39;s face. &lt;/figcaption&gt;&lt;br /&gt;
+                    
+                    &lt;img src=&quot;../images/part_7_llin_maleficent2.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Trilinear Sampling&lt;/figcaption&gt;&lt;br /&gt;
+                    
+                    &lt;img src=&quot;../images/part7_lnear_pnear_2.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Nearest Level, Nearest Sampling&lt;br /&gt;I felt this was the best result for this image. &lt;/figcaption&gt;&lt;br /&gt;
+                    
+                    &lt;img src=&quot;../images/part_7_plin_lzero.png&quot; width=&quot;800px&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt; Level Zero, Linear Sampling &lt;br /&gt; The jaggies are less apparent in the writing, but Maleficent is a little more blurry.&lt;/figcaption&gt;&lt;br /&gt;
+
+
+
+            
+
+
+
+&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 28 Jan 2016 00:00:00 -0800</pubDate>
         <link>http://kadie16.github.io/rasterizester/</link>
@@ -906,178 +1247,6 @@ Getting the model to rotate according to mouse drag wasn’t a big deal either. 
         
         
         <category>projects</category>
-        
-        <category>project</category>
-        
-      </item>
-    
-      <item>
-        <title>LAOS</title>
-        <description>&lt;p&gt;&lt;img src=&quot;https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/posts/laos/piggyBack.jpg&quot; alt=&quot;tuktuk&quot; /&gt; &lt;em&gt;&lt;center&gt;&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;going-to-vang-vieng&quot;&gt;Going to Vang Vieng&lt;/h2&gt;
-
-&lt;p&gt;I really can’t do justice to my Laos trip by writing about it, but I’ll try. I got into Vientiane pretty late at night on July 3rd and took a taxi to my hotel. Navigating Laos was a little more difficult than Thailand. The language barrier was more prominent, and the infrastructure fell anywhere between well kept buildings and mud huts. I needed to travel about four hours from Vientiane to Vang Vieng to meet Sarah and Ryan. In the morning, I asked the concierge at my hotel for a cab to the bus station. The staff insisted I take a tuk-tuk to save money. Lol. One of the hotel employees helped me flag one down on the street, with two young buddhist monks were occupying the back. They couldn’t have been older than 10 or 12. They directed their eyes away from me, but politely shifted over to make room. After a few blocks, the tuk tuk driver ordered them out and gestured to this random truck with a bunch of people stuffed inside. They hopped out and into the truck, and the tuk-tuk driver took a U-turn to proceed down a rocky, unpaved road. He swerved past most of the potholes but a few times I thought I was about to fly out of the tuk-tuk lol. I’m pretty sure I got ripped off because the ride cost just as much as my cab the night before, but I didn’t feel like complaining because it was still less than $5.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/posts/laos/tuktukSelfie.jpg&quot; alt=&quot;tuktuk&quot; /&gt; &lt;em&gt;&lt;center&gt;Me in my overpriced Tuk-Tuk&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;I didn’t really know what to expect when I got to the bus station. Thankfully right when I arrived, a man pointed to me and asked “Vang Vieng?”. I said yes and he led me over to a “mini bus”. I was sharing the mini bus with a bunch of teenage boys who were trying to covertly photograph me by pretending they were taking selfies. It was very obvious, so I just stuck my tongue out or smiled when I caught them. We stopped a couple times to squeeze in other passengers along the way,  and once to use the restroom. Everyone gathered to have a cigarette when we stopped. I stood with them and had a popsicle.&lt;/p&gt;
-
-&lt;p&gt;Just when I was beginning to wonder how much longer I’d be stuck in the mini bus, I arrived in Vang Vieng. I paid the gave the mini bus driver $5 and hopped in another tuk-tuk to meet Sarah and Ryan.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/posts/laos/tuktuk.jpg&quot; alt=&quot;tuktuk&quot; /&gt; &lt;em&gt;&lt;center&gt;Pulling into the driveway to Sarah and Ryan&#39;s hotel&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;We had some lunch at an Irish bar, and then rented tubes so we could go float down the river :)&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/posts/laos/shoes.jpg&quot; alt=&quot;shoes&quot; /&gt; &lt;em&gt;&lt;center&gt;We didn&#39;t leave our shoes lol&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;the-last-bar&quot;&gt;The Last Bar&lt;/h2&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/posts/laos/crib2.jpg&quot; alt=&quot;river&quot; /&gt; &lt;em&gt;&lt;center&gt;&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;I wasn’t expecting anyone in Laos to care about the 4th of July, but when we reached the first bar on the river there were a couple other Americans and plenty of people with red white and blue body paint. I asked one of the guys for a headband and he was kind enough to give me and Sarah his last ones :)&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/posts/laos/noRyan.jpg&quot; alt=&quot;tuktuk&quot; /&gt; &lt;em&gt;&lt;center&gt;&quot;Sorry Ryan, you can&#39;t be in the picture because you don&#39;t have a headband&quot;&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Ryan and Sarah and I had been looking for friendship bracelets since our first rendezvous in Phi Phi. We resolved to look for some that day because I might not see them in Asia again. It turned out we didn’t even have to, because one of the bartenders gave us friendship bracelets shortly after we started tubing :) It was pretty neat. After hanging out at the second bar for a while, we continued tubing down the river. We didn’t get very far, since the next bar was always roughly 50 yards away from the previous one. Every time we would approach another one, one of the people working there would cast their line (a waterbottle tied to a rope) and reel us in.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/posts/laos/fished4.jpg&quot; alt=&quot;tuktuk&quot; /&gt; &lt;em&gt;&lt;center&gt;He caught me :D &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/posts/laos/scenery.jpg&quot; alt=&quot;scenery&quot; /&gt; &lt;em&gt;&lt;center&gt; View at my favorite bar&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;The “bars” were really just makeshift porches on the side of the river, but they were sick. One of my favorites was up on a cliff next to a beautiful green meadow. The scenery was overwhelming. The next one had a mud pit and basketball hoop with sprinklers you could run through. We ended up sticking with with the same 30 or so people all day, because we would all leave gradually and end up at the next bar together. Every single bar we went to, including the first one, claimed to be “the last bar”.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/posts/laos/river2.jpg&quot; alt=&quot;river&quot; /&gt; &lt;em&gt;&lt;center&gt; Can you guess what I lost in the river? &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;The rest of the day was so incredible, I’m at a loss trying to describe it. At one of the “last bar”s we ended up wandering to a path that led up the mountain. Me and this guy David, I forget where he was from … Spain or something, decided to see where it led. So we convinced Sarah and Ryan to follow us, and we started hiking up this rocky trail in the jungle, barefoot and in our bathing suits. We had no idea how long it was but the further we went the more we felt compelled to keep going. We didn’t have any of our things so we were using imaginary cameras to save mental snapshots :). I can’t even tell you what we found when we reached the top because it was too cool and nothing I say can adequately describe it. Haha isn’t that annoying? Go to Laos and see for yourself! :)&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/posts/laos/crib.jpg&quot; alt=&quot;river&quot; /&gt; &lt;em&gt;&lt;center&gt; &lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;At the start of the day, we intended to be back by 6:00 so our deposits would be refunded. By 4:00 I was having so much fun that I decided I couldn’t care less about the deposit. By then, I had caught on to the “Last Bar” trick, so I didn’t think twice about floating right past the actual last bar. I was too busy giggling and hanging my head back over my tube to watch the upsidedown mountains glide through the sunset. At the time, “floating back to town” seemed like a perfectly reasonable idea.&lt;/p&gt;
-
-&lt;p&gt;Once the sun set, the light started dissapearing really quickly. Chaos ensued; for a few moments I was seriously concerned that I’d be forced to spend the night in my bathing suit, in the jungle, with the two strangers I recruited as my buddy system. I thought Sarah and Ryan had gotten out of the river a while ago, but later I found out they got back in to look for me. We ended up reuniting at a tuktuk when we heard eachother’s voices in the darkness. That is another story I can’t do justice to. Obviously I made it but staying in the river that late was stupid.&lt;/p&gt;
-
-&lt;p&gt;The next morning, we had breakfast at Friends Bar, a resturaunt with a bunch of table/cushion/couch/bed things that all face two tvs playing episodes of Friends. You can just chill in these things and eat and watch friends for hours. It’s pretty awesome. Then we layed in the hammocks and ate Rambuttan and chatted until my mini bus came to pick me up. I was sad to leave so soon, but it was an unforgetable trip nonetheless.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/posts/laos/back1.jpg&quot; alt=&quot;river&quot; /&gt; &lt;em&gt;&lt;center&gt; Having too much fun&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-</description>
-        <pubDate>Sat, 04 Jul 2015 00:00:00 -0700</pubDate>
-        <link>http://kadie16.github.io/laos/</link>
-        <guid isPermaLink="true">http://kadie16.github.io/laos/</guid>
-        
-        <category>Vientiane</category>
-        
-        <category>VangVieng</category>
-        
-        
-        <category>abroad</category>
-        
-        <category>laos</category>
-        
-      </item>
-    
-      <item>
-        <title>I&#39;m working, I swear!</title>
-        <description>&lt;p&gt;So far all I’ve mentioned are the adventures I’ve been having! If you’re wondering, as my Grandpa Joe put it: “when the hell are you going to work”, then this post is for you :)&lt;/p&gt;
-
-&lt;h1 id=&quot;about-my-project&quot;&gt;About My Project&lt;/h1&gt;
-&lt;p&gt;I am building a program that will allow users to load 3D models (.obj file format) and interact with them via transformations such as rotation, translation, deformation etc. My ultimate goal is to implement the ability to select parts of a volume mesh, so the user can select and interact with seperate parts of their model. I am using C++, OpenGL, and QT for my project.&lt;/p&gt;
-
-&lt;p&gt;I was first inspired to learn about computer graphics when my (amazing) materials science professor told me about his son who works on lighting movies at Pixar. I have always loved developing my technical background, but I also love painting and drawing and creating visual things. Until I learned about the opportunity to work in computer graphics, it never occurred to me that I could excercise both of my interests at the same time.&lt;/p&gt;
-
-&lt;p&gt;I have virtually no experience with C++, definitely none with OpenGL and I hadn’t even heard of QT until my supervisor told me about it. It is also my first time building a GUI (Graphical User Interface … the window and buttons). Initially, I was feeling a little lost and intimidated while trying to familiarize myself with all three new things simultaneously. So I completeley understand if this is too much computer science jargon. I won’t be offended if you just look at the pictures. But hopefully some of you will find this interesting :)&lt;/p&gt;
-
-&lt;p&gt;After a lot confusion (days), my supervisor helped me organize my learning strategy and I finally got a program running.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/0triangle.PNG&quot; alt=&quot;Triangle&quot; /&gt; &lt;em&gt;&lt;center&gt;Nothing special, just a rotating triangle with a quit button, but this was exciting haha :)&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Next I worked on loading actual objects. To do this, I needed to read information from a user selected .obj file. These files are lists of the vertices (lines beginning with v), and faces (lines beginning with f). Each face is a triangle, made up of three of the vertices.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;  
-&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt; 
-&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;  
-&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt; 
-
-&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;etc&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;  
-
-&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; 
-&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt; 
-
-&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;etc&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;em&gt;&lt;center&gt;Part of the .obj file for a cube. The first face is using vertices 1, 7, and 5 (which I deleted to make this example smaller).&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Once I have all of the information from the file stored, I have to iterate through each face and ask OpenGL to draw the respective triangle. I’ve been using some models from the &lt;a href=&quot;http://graphics.berkeley.edu/resources/GarmentLibrary/&quot;&gt;Berkeley Garment Library&lt;/a&gt; as test files.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* So OpenGL knows I want it to draw triangles */&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;glBegin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_TRIANGLES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;cm&quot;&gt;/* For every Face : */&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;faces&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;cm&quot;&gt;/* Get vertices from the Face */&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;faces&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getVertex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getVertex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getVertex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-                &lt;span class=&quot;cm&quot;&gt;/* Rendering, aka Drawing, the Face (OpenGL Stuff) */&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;glColor4f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Color it Cyan for Fun  &lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;glVertex3f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getZ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;glVertex3f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getZ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;glVertex3f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getZ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;glEnd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/1robe.png&quot; alt=&quot;Robe1&quot; /&gt; &lt;em&gt;&lt;center&gt;Yeah, pink and cyan. I&#39;ll change to neutral colors later, OK?&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Yay!! I’ve rendered a model! But it isn’t very exciting looking. It’s supposed to look 3D. It looks flat because it hasn’t been lit yet. If you draw a sphere on a piece of paper, and paint it all one color, it looks like a circle. You need to add lighting and shading to make it look like a sphere, right? Same idea. Cool, I’ll enable lighting.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;glEnable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GL_LIGHTING&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/2robe.png&quot; alt=&quot;Robe2&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Ok so enabling lighting isn’t enough. Now all of the models I load are just black. At this point, OpenGL has no idea how this model is supposed to be lit. I can’t just expect OpenGL to know that my vertices are supposed to look like a robe.&lt;/p&gt;
-
-&lt;p&gt;In order to really light the model, OpenGL needs the normals for each vertex. A normal is a vector that is perpendicular to the face, that points outward. Knowing this, OpenGL can determine where each vertex is actually facing at any given position of the model, and depict the light accordingly. For the most accurate, smooth shading, the normal for each vertex should be an average of the normals of all of the faces that the vertex belongs to. But right now, for simplicity I am just using one.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/3dress.png&quot; alt=&quot;Dress3&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Cool! Now the models are starting to take some shape :) But obviously something is still wrong. After a couple hours, I realized there was a [1] that was supposed to be a [0] in my normal calculations.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/4angel.png&quot; alt=&quot;Angel&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Getting the angel to load was really exciting. This is something I was looking forward to from the beginning, when I just had a triangle. But, the black part is there because the angel is crossing the “clipping plane”. The clipping plane is where OpenGL determines that the face is either too close or too far along the z axis to be drawn. Have you ever played a video game and once you get close to an object it dissapears? So my next task is to make sure that no matter where the coordinates of the model are, my program finds them and displays the model on the screen.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/5angelSide.png&quot; alt=&quot;AngelAgain&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;&lt;center&gt;Isn&#39;t it neat that this is just a bunch of triangles and normals?&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/6angel.png&quot; alt=&quot;Angel&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;&lt;center&gt;Angel data set courtesy of the U.C. Berkeley Computer Animation and Modeling Group.&lt;/center&gt;&lt;/em&gt;&lt;/p&gt;
-</description>
-        <pubDate>Fri, 03 Jul 2015 00:00:00 -0700</pubDate>
-        <link>http://kadie16.github.io/working-I-swear/</link>
-        <guid isPermaLink="true">http://kadie16.github.io/working-I-swear/</guid>
-        
-        <category>C++</category>
-        
-        <category>Work</category>
-        
-        <category>Project</category>
-        
-        <category>OpenGL</category>
-        
-        <category>Computer</category>
-        
-        <category>Graphics</category>
-        
-        <category>QT</category>
-        
-        
-        <category>abroad</category>
         
         <category>project</category>
         
