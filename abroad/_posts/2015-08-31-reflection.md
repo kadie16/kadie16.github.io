@@ -1,0 +1,32 @@
+---
+layout: post
+title: "Looking Back" 
+date: 2015-08-10
+backgrounds:
+    - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/backgrounds/asiaMap.jpg
+thumb: https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/backgrounds/asiaMap.jpg
+---
+
+Ever since I transferred to UC Berkeley, I have been overwhelmed by a constant onslaught of activities. Every day there are countless events on campus: club meetings, decals, recruiting events, distinguished speakers, the list goes on. Whenever I find a new thing I would love to participate in, I have to ask myself, but when? How am I possibly going to pursue a new interest when I am constantly on the verge of a problem-set induced panic attack as it is?
+
+Any engineering student knows the feeling. Going abroad is one of those activities that is hard to find time for. I missed at least one homework assignment in favor of improving my study abroad applications. In the month leading up to my departure, I was so consumed with finals that I did next to nothing to plan my trip. To give you some perspective, my passport came in the mail less than 12 hours before I left the country.
+Still, the paperwork is only a small part of the consideration. I think for engineering students, the bigger questions are whether you can afford a semester to go abroad without delaying graduation. Or if going abroad in the summer will keep you from doing an internship (arguably the most important “extracurricular” for engineering students). Plus, going abroad can be expensive. With all of these obstacles, it is understandable why engineering students are underrepresented in study abroad programs.
+So, is it worth it? For me, it was.
+
+I applied to a lot of scholarships, and was awarded four. I found a summer program that kept me on track to graduate and allowed me to participate in an internship. 
+
+During my time abroad, I worked as a student researcher at A*STAR Institute of High Performance Computing in Singapore. I wanted to learn about computer graphics, and my supervisor Like Gobeawan found the perfect project for me. I built a 3D model viewing application that renders .obj files and lets the user rotate, zoom, and move the models around. Then I integrated CGAL, the Computational Geometry Algorithms Library. With CGAL, I implemented volume mesh generation from the surface mesh data. It turns a “surface” made up of a bunch of triangles into a “volume” made up of a bunch of tetrahedrons. Like turning a piece of paper shaped like a triangle into a 3D pyramid.
+
+Not only did I learn a bunch of new computer graphics concepts and jargon, I discovered what it is like to work on a real project outside of the classroom. I ran into a lot of obstacles that I didn’t anticipate. I refactored my code over and over again as my project changed, and sometimes re-refactored back to how I started. I witnessed the terror that my program became if I wasn’t organized. Not only did I become a better programmer, I learned how to tackle my problems resourcefully.
+The things I learned at my internship will set me up for the rest of my life, but that wasn’t even the best part. The highlight of going abroad was getting to meet people from all over the world.
+
+I got to work with students from Singapore, China, Thailand, India, Vietnam and Turkey. My supervisor was from Indonesia. I visited 5 countries and met travellers from more places than I can remember. Observing the widely varied customs among different cultures was fascinating.
+
+Going abroad also taught me about my own culture. Being in a different country brought out my identity as an American. There are a lot of stereotypical American traits: expressive, outgoing, confident ... also arrogant, ignorant, selfish and lazy. I was reminded that I exhibit these traits more than once when people told me I am “so American”.
+I even found myself defending some less-desirable aspects of American culture. For instance, the high divorce rate. I discussed it with my closest friend in Singapore, Ayush, who was from India. Ayush believed that families should stay together, no matter what. I agree, but as a child of divorce I have to empathize with my parent’s decision, lest I fail to appreciate them for the amazing parents they are. So even though I dislike the high divorce rate, I defended it. I believe people change and it should be okay to leave a marriage you’ve grown out of, as selfish as that might be.
+
+So even though I tried to avoid perpetuating negative stereotypes, there are some things I did unapologetically. I believe it is essential to take care of yourself before you can help others (selfish). Sometimes I spoke loudly about my opinions (arrogant). I’m sure I violated more cultural expectations than I am even aware of (ignorant). Still, I always did my best to show respect for the values and traditions of others, whether I agreed with them or not.
+
+Still, the most remarkable thing I witnessed wasn’t the cosmic differences between the behaviors, beliefs, and customs of different cultures. What astonished me the most was how well I could relate to people, despite the different worlds we came from. It sounds naïve, but I didn’t really anticipate that people from Singapore, or Thailand, or India, or China or Laos would “get me”. Beyond the language barrier, I subconsciously imagined a cultural barrier would prevent us from really knowing each other. Even though we didn’t always understand each other’s values or traditions, I was in awe of how well we could understand each other’s feelings. I guess I’ve always known that underneath it all, we are all human. But it’s easy to forget that. Going abroad showed me how profoundly similar we really are.
+
+I’m so grateful for my opportunity to study abroad. Professionally, I was challenged to grow and work outside my comfort zone as a developer. Personally, I got to appreciate all kinds of different cultures and values, and relate to people in a way I didn’t think possible. I recognize that for some engineering students, studying abroad isn’t viable. But I hope my story will convince some that if it is even close to within reach, it’s valuable enough to pursue.
