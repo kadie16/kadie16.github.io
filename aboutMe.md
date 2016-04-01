@@ -2,6 +2,8 @@
 layout: page
 title: About Me  
 permalink: /aboutMe/
+backgrounds: 
+    - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/backgrounds/368266-colorful-flower-field.jpg
 ---
 
 <img src = "https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/backstory/calFriends.jpg" alt = "me and my friends at Cal"> <br> _<center>Me and some of my best friends at Cal</center>_ 

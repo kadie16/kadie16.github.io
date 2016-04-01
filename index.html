@@ -9,32 +9,10 @@ backgrounds:
 <br>
 
 
-
-
 <img src = "https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/resume/Kadie_Jaffe_Resume_Latest.png">
-<figcaption align="middle"><a href="https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/resume/Kadie_Jaffe_Resume_Latest.pdf"> Download as PDF </a></figcaption>
+<figcaption align="middle"><a href="https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/resume/Kadie_Jaffe_Resume_Latest.pdf"> Download as PDF </a></figcaption> <br> 
 
 
-
-<div class="home">
-    <ul class="post-list">
-        {% if site.pagination %}
-        {% assign source = site.categories.featured %}
-        {% endif %}
-
-        {% for post in source %}
-        <li>
-            <a href="{{ post.url | prepend: site.baseurl }}" class="post-list-link">
-                <div class="post-list-info">
-                    <h2 class="post-list-title">{{ post.title }}</h2>
-                    <span class="post-list-meta">{{ post.date | date: "%B %-d, %Y" }}</span>
-                </div>
-            </a>
-
-            <img src="{{ post.thumb }}" class="post-list-thumb" />
-        </li>
-        {% endfor %}
-    </ul>
 
     <!-- <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p> -->
     <!-- <p class="rss-subscribe">
@@ -43,4 +21,3 @@ backgrounds:
             <i class="icon ion-social-rss"></i>
         </a>
     </p> -->
-</div>

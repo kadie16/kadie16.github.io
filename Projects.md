@@ -2,7 +2,8 @@
 layout: page
 title: Projects 
 backgrounds: 
-    - 
+    - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/backgrounds/368266-colorful-flower-field.jpg
+
 ---
 
 <div class="home">

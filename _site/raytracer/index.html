@@ -114,7 +114,7 @@ These are the building blocks of the scenes. Triangles are used most commonly, b
 <h2 align="middle">Part 2: Bounding Volume Hierarchy (BVH)</h2>
 <p> So, remember that all of the scenes I am rendering are made up of a bunch of "primitives", usually triangles. As you can imagine, really complicated scenes require A LOT of triangles. We could be talking on the scale of hundreds of thousands of triangles, or even more. </p>
             <img src="../images/p3/part_2/wall-e_tri.png" />
-            <figcaption align="middle">Look at all of those triangles!</figcaption>
+            <figcaption align="middle">Triangles for days!</figcaption>
 <p> With that in mind, it isn't efficient to loop through every single triangle of the mesh for every ray I need to trace. I am tracing potentially thousands of rays per primative per scene. For simple meshes like those in part one, that will suffice, but for more complicated meshes like Wall-E I need a better solution. This is where bounding volume heirarchys come in. </p>
 <p> By subdividing my mesh into bounding volumes, I can first test if a ray intersects a large bounding volume containg part of the mesh. If it doesn't, I just saved a bunch of time. Before, I would have had to test all of the primitives in that volume! If it does, I can descend into the smallest bounding volume the ray intersects, and test only the primitives in that box. </p>
             <img src="../images/p3/part_2/walle_bvh0.png" />
@@ -140,7 +140,7 @@ These are the building blocks of the scenes. Triangles are used most commonly, b
 
 
  <h2 align="middle">Part 3: Direct Illumination</h2>
-<p>Up until this part, I was only tracing camera rays. The lighting in the scenes was just based on the normal vectors from the primitive to the camera. Now I will start tracing rays from lights to the scene to determine the radiance of each pixel!</p> <p> To determine the direct lighting of the scene, I sum over all of the light sources in the scene. From each light, I take sample rays and compute the incoming radiance from those directions. Then I convert the incoming radiance to outgoing radiance using the Bidirectional Scattering Distribution Function (BSDF) of the surface. </p>
+<p>Up until this part, I was only tracing camera rays. The lighting in the scenes was just based on the normal vectors from the primitive to the camera. Now I will start tracing rays from lights to the scene to determine the radiance of each pixel!</p> <p> To determine the direct lighting of the scene, I sum over all of the light sources in the scene. From each light, I take sample rays and compute the incoming radiance from those directions. Then I convert the incoming radiance to outgoing radiance using the Bidirectional Scattering Distribution Function (BSDF) of the surface. </p> 
 
         <img src="../images/p3/part3/dragon_l1.png" />
         <figcaption align="middle">Dragon with 1 sample per Light Source <br /> The image is very noisy!</figcaption>
@@ -220,7 +220,7 @@ These are the building blocks of the scenes. Triangles are used most commonly, b
 
 
 <h2 align="middle"> Sick Renders! </h2>
-<figcaption align="middle"> Here are my favorite renders! All with 1024 Samples/Pixel.</figcaption>
+<figcaption align="middle"> Here are my faves! All with 1024 Samples/Pixel.</figcaption>
             <img src="../images/p3/fun/dragon_hd.png" />
             <figcaption align="middle"> Mirror Dragon </figcaption>
             <img src="../images/p3/fun/CBgems_hd.png" />
@@ -320,8 +320,6 @@ These are the building blocks of the scenes. Triangles are used most commonly, b
                     <a href="/blogIndex/">KD at S.E.A.</a>
                 </li>
                 
-            
-        
             
         
             
