@@ -3,7 +3,7 @@ layout: post
 title: "Raytracer"
 date: 2016-03-31
 backgrounds: 
-thumb: ../images/p3/fun/dragon_hd.png
+thumb: ../images/p3/part4/CBbunny_hd.png
 category: Project
 tags: 
 ---
@@ -12,6 +12,7 @@ tags:
 
 <div>
         <p> In this project, I wrote a ray tracer! Ray tracing involves tracing the path of light rays to generate images. By tracing the path of many many rays, I can determine how objects in a scene interact with eachother. For example, I can trace a bunch of rays from a light source, to an object, to the camera, determine how the object appears in the scene, and render or "draw" it to the screen accordingly.</p>
+        <img src="../images/p3/fun/dragon_hd.png">
 
     <h2 align="middle">Part 1: Ray Generation and Scene Intersection </h2>
         <p>The first thing I did was implement a raytrace_pixel() method. The method integrates the irradiance of the pixel.  </p>
