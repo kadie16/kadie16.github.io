@@ -83,7 +83,7 @@
 
 <p>Next I worked on loading actual objects. To do this, I needed to read information from a user selected .obj file. These files are lists of the vertices (lines beginning with v), and faces (lines beginning with f). Each face is a triangle, made up of three of the vertices.</p>
 
-<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">v</span>  <span class="mf">0.0</span>  <span class="mf">0.0</span>  <span class="mf">0.0</span>  
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">v</span>  <span class="mf">0.0</span>  <span class="mf">0.0</span>  <span class="mf">0.0</span>  
 <span class="n">v</span>  <span class="mf">0.0</span>  <span class="mf">0.0</span>  <span class="mf">1.0</span> 
 <span class="n">v</span>  <span class="mf">0.0</span>  <span class="mf">1.0</span>  <span class="mf">0.0</span>  
 <span class="n">v</span>  <span class="mf">0.0</span>  <span class="mf">1.0</span>  <span class="mf">1.0</span> 
@@ -94,13 +94,13 @@
 <span class="n">f</span>  <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>  <span class="mi">3</span><span class="o">/</span><span class="mi">2</span>  <span class="mi">7</span><span class="o">/</span><span class="mi">2</span> 
 <span class="n">f</span>  <span class="mi">1</span><span class="o">/</span><span class="mi">6</span>  <span class="mi">4</span><span class="o">/</span><span class="mi">6</span>  <span class="mi">3</span><span class="o">/</span><span class="mi">6</span> 
 
-<span class="p">...</span> <span class="n">etc</span> <span class="p">...</span></code></pre></div>
+<span class="p">...</span> <span class="n">etc</span> <span class="p">...</span> </code></pre></figure>
 
 <p><em><center>Part of the .obj file for a cube. The first face is using vertices 1, 7, and 5 (which I deleted to make this example smaller).</center></em></p>
 
 <p>Once I have all of the information from the file stored, I have to iterate through each face and ask OpenGL to draw the respective triangle. I’ve been using some models from the <a href="http://graphics.berkeley.edu/resources/GarmentLibrary/">Berkeley Garment Library</a> as test files.</p>
 
-<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="cm">/* So OpenGL knows I want it to draw triangles */</span>
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="cm">/* So OpenGL knows I want it to draw triangles */</span>
 <span class="n">glBegin</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">);</span>
 	<span class="cm">/* For every Face : */</span>
         <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">faces</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
@@ -112,19 +112,19 @@
                 <span class="n">v3</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">getVertex</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
 
                 <span class="cm">/* Rendering, aka Drawing, the Face (OpenGL Stuff) */</span>
-                <span class="n">glColor4f</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// Color it Cyan for Fun  </span>
-                <span class="n">glVertex3f</span><span class="p">(</span><span class="n">v1</span><span class="p">.</span><span class="n">getX</span><span class="p">(),</span> <span class="n">v1</span><span class="p">.</span><span class="n">getY</span><span class="p">(),</span> <span class="n">v1</span><span class="p">.</span><span class="n">getZ</span><span class="p">());</span>
+                <span class="n">glColor4f</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// Color it Cyan for Fun  
+</span>                <span class="n">glVertex3f</span><span class="p">(</span><span class="n">v1</span><span class="p">.</span><span class="n">getX</span><span class="p">(),</span> <span class="n">v1</span><span class="p">.</span><span class="n">getY</span><span class="p">(),</span> <span class="n">v1</span><span class="p">.</span><span class="n">getZ</span><span class="p">());</span>
                 <span class="n">glVertex3f</span><span class="p">(</span><span class="n">v2</span><span class="p">.</span><span class="n">getX</span><span class="p">(),</span> <span class="n">v2</span><span class="p">.</span><span class="n">getY</span><span class="p">(),</span> <span class="n">v2</span><span class="p">.</span><span class="n">getZ</span><span class="p">());</span>
                 <span class="n">glVertex3f</span><span class="p">(</span><span class="n">v3</span><span class="p">.</span><span class="n">getX</span><span class="p">(),</span> <span class="n">v3</span><span class="p">.</span><span class="n">getY</span><span class="p">(),</span> <span class="n">v3</span><span class="p">.</span><span class="n">getZ</span><span class="p">());</span>
             <span class="p">}</span>
     <span class="p">}</span>
-<span class="n">glEnd</span><span class="p">();</span></code></pre></div>
+<span class="n">glEnd</span><span class="p">();</span></code></pre></figure>
 
 <p><img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/1robe.png" alt="Robe1" /> <em><center>Yeah, pink and cyan. I'll change to neutral colors later, OK?</center></em></p>
 
 <p>Yay!! I’ve rendered a model! But it isn’t very exciting looking. It’s supposed to look 3D. It looks flat because it hasn’t been lit yet. If you draw a sphere on a piece of paper, and paint it all one color, it looks like a circle. You need to add lighting and shading to make it look like a sphere, right? Same idea. Cool, I’ll enable lighting.</p>
 
-<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">glEnable</span><span class="p">(</span><span class="n">GL_LIGHTING</span><span class="p">);</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++">    <span class="n">glEnable</span><span class="p">(</span><span class="n">GL_LIGHTING</span><span class="p">);</span></code></pre></figure>
 
 <p><img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/2robe.png" alt="Robe2" /></p>
 
@@ -209,7 +209,7 @@
     </main>
 
     <a href="#" class="sb-toggle-left">Menu
-    <span class="nav-icon"></span>
+    <span class="nav-icon"><br><font color="white"><b>Menu</b></font></span>
 </a>
 
 <div class="sb-slidebar sb-left sb-style-push">
@@ -219,13 +219,15 @@
         
         
             
+        
+            
                 
             
         
             
                 
                 <li class="sb-close ">
-                    <a href="/Projects.html">Projects</a>
+                    <a href="/Projects/">Projects</a>
                 </li>
                 
             
@@ -243,19 +245,9 @@
             
                 
                 <li class="sb-close ">
-                    <a href="/blogIndex.html">KD at S.E.A.</a>
+                    <a href="/blogIndex/">KD at S.E.A.</a>
                 </li>
                 
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
             
         
             
