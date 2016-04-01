@@ -3,7 +3,7 @@ layout: post
 title: "Raytracer"
 date: 2016-03-31
 backgrounds: 
-thumb: ../images/p3/part4/CBbunny_hd.png
+thumb: ../images/p3/fun/dragon_hd.png
 category: Project
 tags: 
 ---
@@ -12,7 +12,8 @@ tags:
 
 <div>
         <p> In this project, I wrote a ray tracer! Ray tracing involves tracing the path of light rays to generate images. By tracing the path of many many rays, I can determine how objects in a scene interact with eachother. For example, I can trace a bunch of rays from a light source, to an object, to the camera, determine how the object appears in the scene, and render or "draw" it to the screen accordingly.</p>
-        <img src="../images/p3/fun/dragon_hd.png">
+        <img src="../images/p3/part4/CBbunny_hd.png">
+        <figcaption align="middle">You have to read the whole thing to appreciate how much effort went into rendering this bunny :)!</figcaption>
 
     <h2 align="middle">Part 1: Ray Generation and Scene Intersection </h2>
         <p>The first thing I did was implement a raytrace_pixel() method. The method integrates the irradiance of the pixel.  </p>
@@ -31,7 +32,7 @@ A line with a start point, but no end point. <br>
 > **Primitive:** <br> 
 These are the building blocks of the scenes. Triangles are used most commonly, but all kinds of shapes can be used! <br>
 
-<p> Next, I used the Moller Trumbore algorithm to implement a method, Triangle::intersect(), that lets me know if a given Ray intersects that particular triangle. The Moller Trumbore algorithm gives a way to move the origin of the ray and change the base of it to get a vector: [t, u, v] where t represents the distance from the ray's original origin to the plane the triangle is on, and u and v are the Barycentric coordinates within the triangle that the ray intersects. (See part 5 of my <a href="/rasterizester"> rasterizester </a> project for more on Barycentric coordinates) 
+<p> Next, I used the Moller Trumbore algorithm to implement a method, Triangle::intersect(), that lets me know if a given Ray intersects that particular triangle. The Moller Trumbore algorithm gives a way to move the origin of the ray and change the base of it to get a vector: [t, u, v] where t represents the distance from the ray's original origin to the plane the triangle is on, and u and v are the Barycentric coordinates within the triangle that the ray intersects. (See part 5 of my <a href="/rasterizester"> rasterizester </a> project for more on Barycentric coordinates). 
 
 <p> Since most of the scenes I will be rendering are made up of triangles, it is super important to be able to tell whether the Rays I trace are intersecting them. If I trace a ray from a light's position out in some direction and it intersects a triangle, T1, I can tell exactly which point on that triangle T1 is lit up by that particular ray... almost. What if there is another, larger triangle T2 in between the light and T1?? Then the point I found on T1 wouldn't be lit up at all, since it would be obstructed by T2.</p>
 
@@ -155,7 +156,7 @@ These are the building blocks of the scenes. Triangles are used most commonly, b
 
 
 <h2 align="middle"> Sick Renders! </h2>
-<figcaption align="middle"> Here are my favorite renders! All with 1024 Samples/Pixel.</figcaption>
+<figcaption align="middle"> Here are my faves! All with 1024 Samples/Pixel.</figcaption>
             <img src="../images/p3/fun/dragon_hd.png" />
             <figcaption align="middle"> Mirror Dragon </figcaption>
             <img src="../images/p3/fun/CBgems_hd.png" />

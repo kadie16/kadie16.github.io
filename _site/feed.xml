@@ -6,152 +6,178 @@
     <description></description>
     <link>http://kadie16.github.io/</link>
     <atom:link href="http://kadie16.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 31 Mar 2016 22:50:42 -0700</pubDate>
-    <lastBuildDate>Thu, 31 Mar 2016 22:50:42 -0700</lastBuildDate>
+    <pubDate>Thu, 31 Mar 2016 23:45:56 -0700</pubDate>
+    <lastBuildDate>Thu, 31 Mar 2016 23:45:56 -0700</lastBuildDate>
     <generator>Jekyll v3.1.2</generator>
     
       <item>
-        <title>Mesh Editing and GLSL</title>
+        <title>Raytracer</title>
         <description>&lt;div&gt;
-        &lt;p&gt;In this project, I first learned to tesselate bezier patches to generate triangular meshes from bezier curves. Then, I implemented the ability to modify those meshes by flipping and splitting edges, or &quot;upsampling&quot; to increase the amount of triangle faces that represent the mesh. Finally, I wrote some cool GLSL shaders. My favorite was the reflection shader, which maps each pixel on the surface to a place on a reflection texture. &lt;/p&gt;
+        &lt;p&gt; In this project, I wrote a ray tracer! Ray tracing involves tracing the path of light rays to generate images. By tracing the path of many many rays, I can determine how objects in a scene interact with eachother. For example, I can trace a bunch of rays from a light source, to an object, to the camera, determine how the object appears in the scene, and render or &quot;draw&quot; it to the screen accordingly.&lt;/p&gt;
+        &lt;img src=&quot;../images/p3/part4/CBbunny_hd.png&quot; /&gt;
+        &lt;figcaption align=&quot;middle&quot;&gt;You have to read the whole thing to appreciate how much effort went into rendering this bunny :)!&lt;/figcaption&gt;
 
-    &lt;h2 align=&quot;middle&quot;&gt;Part 1: Fun with Bezier Patches&lt;/h2&gt;
-        &lt;p&gt;The first thing I needed to do was generate a triangle mesh from an input Bezier Surface. A Bezier surface is specified by control points (16, in this case). The control points specify curves, and the convex hull of the control points contains a surface. That surface is the mesh I am trying to represent. &lt;/p&gt;
-        &lt;p&gt;In order to represent the surface as a triangular mesh, I need to tesselate the Bezier surface specified by the control points into triangles. I accomplished this using the Bernstein Polynomials.I wrote some helper functions to help me evaluate the Bernstein Polynomials, used them to evaluate each control point. Once I determined which triangles I needed, I added them to a halfedge data structure to represent the mesh. &lt;/p&gt;
-                    &lt;img src=&quot;../images/part1.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;My Rendering of the teapot.bez Mesh&lt;/figcaption&gt;
-        &lt;h2 align=&quot;middle&quot;&gt;Part 2: Average normals for half-edge meshes&lt;/h2&gt;
-        &lt;p&gt;Next, I computed per vertex normals that were an average of the normals of their faces. This results in a nicer, smoother shading effect than when normal vectors are just computer per face. To accomplish this, I traversed the faces that the vertex belonged to in the half edge data structure, computing the normal for each face along the way. First I got the half edge that the vertex was attached to. Then, I saved it as h_original so I could keep track of where I started. Then I got the halfedge&#39;s twin and next half edge, and computed the vectors those half edges represented. I computed the normal of that face by crossing those two vectors before advancing to the next face. Once I reached h_original again, indicating I had tranversed all of the faces of that vertex, I returned the unit vector of the sum of all of the normal vectors as the normal vector for that particular vertex. &lt;/p&gt;
-                    &lt;img src=&quot;../images/part2/facenormals.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Each vertex is shaded uniformly according to the normal vector of one face.&lt;/figcaption&gt;
+    &lt;h2 align=&quot;middle&quot;&gt;Part 1: Ray Generation and Scene Intersection &lt;/h2&gt;
+        &lt;p&gt;The first thing I did was implement a raytrace_pixel() method. The method integrates the irradiance of the pixel.  &lt;/p&gt;
+        &lt;/div&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Irradiance:&lt;/strong&gt; &lt;br /&gt; 
+The flux of radiant energy per unit area (normal to the direction of flow of radiant energy through a medium)&lt;/p&gt;
+&lt;/blockquote&gt;
 
-                    &lt;img src=&quot;../images/part2/avgnormals.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;This shows the teapot shaded according to per vertex normal vectors.&lt;/figcaption&gt;
+&lt;p&gt;In other words, I implemented raytrace_pixel() to find the amount of light energy in the given pixel, which tells me how bright the pixel should be. I did this by generating a given number of &quot;rays&quot; through the pixel. &lt;/p&gt;
 
-                    &lt;img src=&quot;../images/part2/bug.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Initially I was calculating the vectors for the first face incorectly, which gave this cool swirly effect. &lt;/figcaption&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Ray:&lt;/strong&gt; &lt;br /&gt; 
+A line with a start point, but no end point. &lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 
-         &lt;h2 align=&quot;middle&quot;&gt;Part 3: Edge Flip&lt;/h2&gt;
-        &lt;p&gt;Next, I implemented the abillity to flip edges in the mesh. As I mentioned before, the mesh is represented as a half edge data structure. A half edge data structure is mostly a few key components: vertices, halfedges, edges, and faces. Vertices, edges, and faces each keep track of a single half edge. Halfedges each keep track of a twin halfedge (the one on the other side of the edge), a next halfedge (the next one on the face), an edge (made up of the half edge and its&#39; twin), and a face. &lt;/p&gt;
-        &lt;p&gt;In order to accomplish the edge flip, I just needed to reassign the pointers of all of the elements involving the edge before and after the flip.&lt;/p&gt;
-                    &lt;img src=&quot;../images/part3/bug.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Bug: Every edge I tried to flip poked a hole in my mesh!&lt;/figcaption&gt;
-        &lt;p&gt; Initially I was only reassigning pointers for the elements on the &lt;i&gt;inside&lt;/i&gt; of the two faces between the edge I was trying to flip. Can you imagine why this would poke holes in my mesh? I was neglecting to reassign pointers for the halfedges on the outside of the borders of the faces. So while the edge may have been flipped correctly, the halfedges in the rest of the mesh weren&#39;t informed of the changes, and lost track of (could no longer traverse) that part of the mesh!&lt;/p&gt; 
-        &lt;p&gt; Once I assigned the pointers to the outside half edges too, I got the desired result.  &lt;/p&gt;
-                    &lt;img src=&quot;../images/part3/preflip.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;A Torus mesh before any edges are flipped.&lt;/figcaption&gt;
-                    &lt;img src=&quot;../images/part3/postflip.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Torus mesh after flipping some edges.&lt;/figcaption&gt;
-         &lt;h2 align=&quot;middle&quot;&gt;Part 4: Edge Split&lt;/h2&gt;
-        &lt;p&gt;Next, I implemented the ability to split edges of the mesh. This was somewhat similar to flipping edges in that it involved a lot of reassigning of pointers. However, splitting became a little more complicated because it involved adding some new edges, faces, and a new vertex to the mesh. &lt;/p&gt;
-                    &lt;img src=&quot;../images/part4/bug2.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Bug: Whenever I attempted an edge split, I punched a huge dent in my teapot! This shows a bunch of split-attempts near eachother, resulting in one giant heart dent. &lt;/figcaption&gt;
-        &lt;p&gt; This initial error was caused by an error calculating the position of my new vertex. In fact, I wasn&#39;t calculating the position of the vertex at all. So everytime I split an edge, I was adding a new vertex at the origin. That&#39;s why when I split, all of these dents were getting punched toward the same spot! &lt;/p&gt; 
-        &lt;p&gt; Once I updated the position of the new vertex to be the midpoint between the other corner vertices, I achieved the desired result. &lt;/p&gt;
-                    &lt;td align=&quot;left&quot;&gt;
-                    &lt;img src=&quot;../images/part4/pre_split.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Bean mesh before edges are split.&lt;/figcaption&gt;
+&lt;p&gt; In my program, a ray is given an origin (it&#39;s start point), a vector which dictates it&#39;s direction, a depth, and a &quot;min_t&quot; and &quot;max_t&quot;. The &quot;min_t&quot; and &quot;max_t&quot; allow me to treat the ray as a segment, if I wish. So I can cut it off at the minimum time and maximum time I set. This becomes important later! &lt;/p&gt;
+&lt;p&gt; In this case, all of the rays I generate have the &quot;camera&quot;&#39;s position as their origin and a vector towards the pixel as their direction. You can think of the camera as where your eye is in the scene. So basically I am drawing a bunch of lines from my eyeball to a point in space and summing up all of the radiant energy, or irradiance, that my eyeball is detecting at that point in space.&lt;/p&gt;
+&lt;h3&gt; Primitive Intersections &lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Primitive:&lt;/strong&gt; &lt;br /&gt; 
+These are the building blocks of the scenes. Triangles are used most commonly, but all kinds of shapes can be used! &lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 
-                    &lt;td align=&quot;right&quot;&gt;
-                    &lt;img src=&quot;../images/part4/post_split.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Bean mesh with some split edges in the middle.&lt;/figcaption&gt;
+&lt;p&gt; Next, I used the Moller Trumbore algorithm to implement a method, Triangle::intersect(), that lets me know if a given Ray intersects that particular triangle. The Moller Trumbore algorithm gives a way to move the origin of the ray and change the base of it to get a vector: [t, u, v] where t represents the distance from the ray&#39;s original origin to the plane the triangle is on, and u and v are the Barycentric coordinates within the triangle that the ray intersects. (See part 5 of my &lt;a href=&quot;/rasterizester&quot;&gt; rasterizester &lt;/a&gt; project for more on Barycentric coordinates). 
 
-        &lt;h2 align=&quot;middle&quot;&gt;Part 5: Upsampling via Loop Subdivision&lt;/h2&gt;
-        &lt;p&gt;Upsampling was the most challenging part of the project for me. There were quite a few issues to be debugged, but at a high level the approach is pretty straight forward.&lt;/p&gt;
-        &lt;li&gt; 
-            First I marked all of the existing vertices as &quot;old&quot;, indicating they were part of the mesh before it was upsampled. 
-            &lt;li&gt; 
-            Next I calculated new positions for all of the old vertices according to the vertex subdivision rule.
-        &lt;/li&gt; 
-            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;n = vertex degree&lt;/pre&gt;&lt;/p&gt; 
-            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;u = 3/(8*n)&lt;/pre&gt;&lt;/p&gt;
-            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;(1 - 3/8) * original_position + u * neighbor_position_sum&lt;/pre&gt;&lt;/p&gt;
-        &lt;li&gt; 
-            Then I calculated positions for all of the new (to be added) vertices according to: 
-        &lt;/li&gt; 
-            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;3/8 * (A + B) + 1/8 * (C + D)&lt;/pre&gt;&lt;/p&gt;
-            &lt;p&gt; where A and B are the vertex positions on the edge that the new vertex will lie, and C and D are the vertex positons on the adjacent edges of the faces on either side of the edge that the new vertex will lie. &lt;/p&gt;
-        &lt;li&gt; Next, I split every &quot;old&quot; or prexisting edge in the mesh.
-        &lt;li&gt;Finally, I flipped any edge that connected a new vertex and an existing vertex, and then updated all of the vertex positions. 
-        &lt;/li&gt; 
-                    &lt;td align=&quot;left&quot;&gt;
-                    &lt;img src=&quot;../images/part1.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Teapot mesh before upsample&lt;/figcaption&gt;
+&lt;p&gt; Since most of the scenes I will be rendering are made up of triangles, it is super important to be able to tell whether the Rays I trace are intersecting them. If I trace a ray from a light&#39;s position out in some direction and it intersects a triangle, T1, I can tell exactly which point on that triangle T1 is lit up by that particular ray... almost. What if there is another, larger triangle T2 in between the light and T1?? Then the point I found on T1 wouldn&#39;t be lit up at all, since it would be obstructed by T2.&lt;/p&gt;
 
-                    &lt;td align=&quot;right&quot;&gt;
-                    &lt;img src=&quot;../images/part5/up_teapot.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Teapot mesh after upsample&lt;/figcaption&gt;
+&lt;p&gt; Here is where &quot;min_t&quot; and &quot;max_t&quot; come in. When I trace a ray from a light and use the Moller Trumbore algorithm to test whether it is intersecting the primitives triangles, T1 and T2, in my scene, I will find out it intersects both of them and the &quot;t&#39;s&quot; (distances) the triangles were from the origin of the ray. However, I am only interested in the closest intersection since that is the one which is lit! So, once the ray intersects T2, I set the ray&#39;s &quot;max_t&quot; to the distance T2 is from the origin of the ray. That way, when I test T1, I will be able to tell it isn&#39;t the closest intersection, since it&#39;s t value will be greater than the ray&#39;s &quot;max_t&quot;. &lt;/p&gt;
 
-        &lt;p&gt; Some times a little pre processing before upsampling a mesh can help significantly. A good example of this is the simple cube mesh. The way the edges are oriented can cause some irregularity when then mesh is upsampled. The upsampling behavior can be improved significantly if the edges that cross the faces of the cube are split prior to upsampling. This gives a more symmetrical mesh, which helps the upsampling give a symmetrical result. &lt;/p&gt;
-        &lt;p&gt;Here you can see a side by side comparison of the upsampling of two cubes. The &lt;b&gt; left cube &lt;/b&gt; is the original mesh being upsampled. The &lt;b&gt; right cube &lt;/b&gt; had each of the face crossing edges split before it is upsampled.  
+&lt;p&gt; I implemented a similar method for intersecting spheres, and then I was able to render my first images! &lt;/p&gt;
 
-                    &lt;td align=&quot;left&quot;&gt;
-                    &lt;img src=&quot;../images/part5/cube.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Regular cube mesh before upsample&lt;/figcaption&gt;
+&lt;div&gt;
+            &lt;img src=&quot;../images/p3/part_1/spheres.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Cornell Box Spheres&lt;/figcaption&gt;
 
-                    &lt;td align=&quot;right&quot;&gt;
-                    &lt;img src=&quot;../images/part5/split_cube.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Cube mesh with each face of cube split before upsample&lt;/figcaption&gt;
-                    &lt;td align=&quot;left&quot;&gt;
-                    &lt;img src=&quot;../images/part5/up_cube.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Regular cube after upsample (1X). Note the irregularity&lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part_1/coil.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Cornell Box Coil&lt;/figcaption&gt;
 
-                    &lt;td align=&quot;right&quot;&gt;
-                    &lt;img src=&quot;../images/part5/up_split_cube.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Pre-split cube mesh after upsample (1X).&lt;/figcaption&gt;
-                    &lt;td align=&quot;left&quot;&gt;
-                    &lt;img src=&quot;../images/part5/up_cube_2.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Regular cube after multiple upsamples. The irregularity has propagated.&lt;/figcaption&gt;
-
-                    &lt;td align=&quot;right&quot;&gt;
-                    &lt;img src=&quot;../images/part5/up_split_cube_3.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Pre-split cube mesh after multiple upsamples. Looks like a nice smooth cube!&lt;/figcaption&gt;
-         &lt;h2 align=&quot;middle&quot;&gt;Part 6: Fun with Shaders&lt;/h2&gt;
-        &lt;p&gt;Part 6 was my favorite! I wrote GLSL shaders which specify how OpenGL should light the scene. I implemented a simple Blinn Phong shader, and a really cool reflection environment map shader. &lt;/p&gt;
-                    &lt;img src=&quot;../images/part6/phongcow.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Cow With Pink Phong Shader&lt;/figcaption&gt;
-        &lt;p&gt;For the Phong shader, I followed the following procedue:
-            &lt;li&gt; Calculate the light vector, l 
-            &lt;li&gt; Calculate the vector to my &quot;eye position&quot;, v
-            &lt;li&gt; Normalize the sum of the vectors l and v
-            &lt;li&gt; Return a linear combination of the ambient, diffuse, and specular lights: 
-            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;LightVec = ambient_light + diffuse_light*max(dot(normal_vector, l), 0) + specular_light*(max(dot(n,normalize(l+v)), 0)^shininess_factor&lt;/pre&gt;&lt;/p&gt;
-            
-                    &lt;td align=&quot;left&quot;&gt;
-                    &lt;img src=&quot;../images/part6/defaultcow.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Cow With Default Shader&lt;/figcaption&gt;
-             
-                    &lt;td align=&quot;right&quot;&gt;
-                    &lt;img src=&quot;../images/part6/greyphongcow.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Cow With Grey Phong Shader&lt;/figcaption&gt;
-                &lt;br /&gt;
-                    &lt;td align=&quot;left&quot;&gt;
-                    &lt;img src=&quot;../images/part6/defaultbug.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Beetle With Default Shader&lt;/figcaption&gt;
-                    &lt;td align=&quot;right&quot;&gt;
-                    &lt;img src=&quot;../images/part6/phongbug.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Beetle With Phong Shader&lt;/figcaption&gt;
-
-        &lt;p&gt; I liked the environment map reflection shader the best. This is what I did to accomplish this effect: 
-            &lt;li&gt; Calculate the vector to my &quot;eye position&quot;, v
-            &lt;li&gt; Calculate the reflection vector using v and the normal vector of the vertex 
-            &lt;li&gt; Convert the reflection vector into polar coordinates
-            &lt;li&gt; Convert the polar coordinates into uv coordinates 
-            &lt;li&gt; Retrieve the colors for the vertex from the environment map using the uv coordinates. 
-         
-                    &lt;img src=&quot;../images/part6/reflectcow.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Cow With Reflection Map Shader&lt;/figcaption&gt;
-                    &lt;img src=&quot;../images/part6/reflectbug.png&quot; /&gt;
-                    &lt;figcaption align=&quot;middle&quot;&gt;Beetle With Reflection Map Shader&lt;/figcaption&gt;
+&lt;h2 align=&quot;middle&quot;&gt;Part 2: Bounding Volume Hierarchy (BVH)&lt;/h2&gt;
+&lt;p&gt; So, remember that all of the scenes I am rendering are made up of a bunch of &quot;primitives&quot;, usually triangles. As you can imagine, really complicated scenes require A LOT of triangles. We could be talking on the scale of hundreds of thousands of triangles, or even more. &lt;/p&gt;
+            &lt;img src=&quot;../images/p3/part_2/wall-e_tri.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Look at all of those triangles!&lt;/figcaption&gt;
+&lt;p&gt; With that in mind, it isn&#39;t efficient to loop through every single triangle of the mesh for every ray I need to trace. I am tracing potentially thousands of rays per primative per scene. For simple meshes like those in part one, that will suffice, but for more complicated meshes like Wall-E I need a better solution. This is where bounding volume heirarchys come in. &lt;/p&gt;
+&lt;p&gt; By subdividing my mesh into bounding volumes, I can first test if a ray intersects a large bounding volume containg part of the mesh. If it doesn&#39;t, I just saved a bunch of time. Before, I would have had to test all of the primitives in that volume! If it does, I can descend into the smallest bounding volume the ray intersects, and test only the primitives in that box. &lt;/p&gt;
+            &lt;img src=&quot;../images/p3/part_2/walle_bvh0.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;The boxes are the bounding volumes that divide the different pieces of Wall-E &lt;/figcaption&gt;
+&lt;h3&gt; Constructing the BVH &lt;/h3&gt;
+&lt;p&gt; To construct the BVH, I find a bounding box that contains all of the primitives in the scene. Then, I create an empty BVH node. If the amount of primitives in the box are under a specified max_leaf_size, then I am done. Otherwise, I need to divide that bounding box into smaller ones. &lt;/p&gt; 
+&lt;p&gt; To accomplish this, I split the current bounding box in half. It is a 3D bounding volume, so I split it along it&#39;s longest dimension. Then, I put each of the primitives into either the left or right box. If their centroid in the chosen axis is less than the split point, they go in the left box, and vice versa. This continues recursively until all of the primitives are contained in boxes with &amp;lt;= max_leaf_size total primitives. &lt;/p&gt;
+            &lt;img src=&quot;../images/p3/part_2/walle_bvh2.png&quot; /&gt;
+            &lt;img src=&quot;../images/p3/part_2/walle_bvh1.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Showing some smaller bounding volumes in Wall-E&#39;s BVH tree&lt;/figcaption&gt;
+&lt;p&gt; Now if I am testing a ray which intersects a primitive Wall-E&#39;s hand, I save myself a bunch of work, since I don&#39;t have to loop through any of the primitives outside of the little bounding volume that contains his hand. Again, this is super important, because sometimes I am tracing thousands of rays per pixel!&lt;/p&gt;
+&lt;h3&gt; Intersecting a Bounding Volume &lt;/h3&gt;
+&lt;p&gt; To find intersections in my bounding volume, I start with the ray and the root node of my bvh tree (the giant box that holds all of the primitives). &lt;/p&gt;
+    &lt;li&gt; If the ray doesn&#39;t intersect the root node, I&#39;m done. I know it can&#39;t intersect any of the triangles inside the box if it doesn&#39;t even intersect the box itself! 
+    &lt;li&gt; If the node is a leaf (it contains less than max_leaf_size primitives), then I test if the ray intersects all of the primitives inside the leaf.
+    &lt;li&gt; Otherwise, I recursively check the node&#39;s children left and right boxes. 
+    &lt;/li&gt;
+&lt;p&gt; This continues until I reach a bounding volume the ray doesn&#39;t intersect, or until I reach the leaf node and test the primitives inside. &lt;/p&gt;
+        &lt;img src=&quot;../images/p3/part_2/walle.png&quot; /&gt;
+        &lt;figcaption align=&quot;middle&quot;&gt;Now I can render super big meshes like Wall-E!&lt;/figcaption&gt;
+        &lt;img src=&quot;../images/p3/part_2/max.png&quot; /&gt;
+        &lt;figcaption align=&quot;middle&quot;&gt;And Max Planck!&lt;/figcaption&gt;
 
 
+ &lt;h2 align=&quot;middle&quot;&gt;Part 3: Direct Illumination&lt;/h2&gt;
+&lt;p&gt;Up until this part, I was only tracing camera rays. The lighting in the scenes was just based on the normal vectors from the primitive to the camera. Now I will start tracing rays from lights to the scene to determine the radiance of each pixel!&lt;/p&gt; &lt;p&gt; To determine the direct lighting of the scene, I sum over all of the light sources in the scene. From each light, I take sample rays and compute the incoming radiance from those directions. Then I convert the incoming radiance to outgoing radiance using the Bidirectional Scattering Distribution Function (BSDF) of the surface. &lt;/p&gt;
+
+        &lt;img src=&quot;../images/p3/part3/dragon_l1.png&quot; /&gt;
+        &lt;figcaption align=&quot;middle&quot;&gt;Dragon with 1 sample per Light Source &lt;br /&gt; The image is very noisy!&lt;/figcaption&gt;
+        &lt;img src=&quot;../images/p3/part3/dragon_l16.png&quot; /&gt;
+        &lt;figcaption align=&quot;middle&quot;&gt;Dragon with 16 samples per Light Source &lt;br /&gt; Notice the shadows on the dragon&#39;s neck and tail are much more distinct! &lt;/figcaption&gt; 
+&lt;br /&gt;
+
+ &lt;h2 align=&quot;middle&quot;&gt;Part 4: Indirect Illumination&lt;/h2&gt;
+&lt;p&gt;Now, instead of just considering light rays directly from the light to the surface, I let the rays &quot;bounce&quot;. This lets me detect radiance that is coming not only directly from the light, but from light bouncing off the other objects! &lt;/p&gt;
+            &lt;img src=&quot;../images/p3/part4/bunny_indirect.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Cornell Box Bunny with only Indirect Lighting ... &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part4/bunny_direct.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Cornell Box Bunny with only Direct Lighting &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part4/CBbunny_hd.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Cornell Box Bunny with Global Lighting (Indirect and Direct) &lt;br /&gt; Notice the colors visible in the shadows!&lt;/figcaption&gt; 
+            &lt;br /&gt; 
+&lt;p&gt; To accomplish this, first I take a sample from the surface BSDF at the point where the ray hits. Using the illumination from that sample, I determine whether to stop there or let the ray bounce again. I can&#39;t just let the rays bounce forever (too expensive!), but fortunately I can achieve a pretty realistic result using &quot;Russian Roulette&quot; to decide how whether or not to terminate the ray. I flip a biased coin with probability proportional to illumination of returning true. If the illumination is already very low, I am more likely to terminate the ray. If it is very high, I am more likely to let it keep bouncing. This way even though I am sampling &quot;randomly&quot;, I am making sure the brightest rays are being represented. &lt;/p&gt;
+&lt;p&gt; If the coinflip returns true, I recursively trace the ray again, offsetting it&#39;s origin slightly and sending it off in the direction of the incoming radiance converted to world coordinates. The light from the ray is accumulated in the scene until the russian roulette terminates it. &lt;/p&gt; 
+&lt;h3&gt; Global Illumination at varying Sample Rates &lt;/h3&gt;
+            &lt;img src=&quot;../images/p3/part4/spheres_s1.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Lambertian Spheres with 1 Sample per Pixel &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part4/spheres_s4.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Lambertian Spheres with 4 Samples per Pixel &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part4/spheres_s16.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Lambertian Spheres with 16 Samples per Pixel &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part4/spheres_s64.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Lambertian Spheres with 64 Samples per Pixel &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part4/spheres_s1024.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Lambertian Spheres with 1024 Samples per Pixel &lt;/figcaption&gt;
+            &lt;br /&gt;
+&lt;p&gt; As you can see, it takes a lot of samples per pixel to completely eliminate the noise in the image! Images with only one sample per pixel take seconds to render, while images with 1024 samples take hours! &lt;/p&gt;
+&lt;h3&gt; Varying Camera Ray Depths &lt;/h3&gt;
+&lt;p&gt; This is skipping ahead a little, but once I add the glass and metallic materials, you can clearly see the effects of increasing the max ray depth. &lt;/p&gt;
+            &lt;img src=&quot;../images/p3/part4/spheres2_m1.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; Spheres with max_ray_depth = 1. &lt;br /&gt; Rays enter the glass sphere but they never leave! &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part4/spheres2_m2.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; Spheres with max_ray_depth = 2. &lt;br /&gt; Now the rays bounce inside the glass! &lt;br /&gt; You can tell they are still trapped inside because the mirror ball still shows a dark glass sphere. &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part4/spheres2_m3.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; Spheres with max_ray_depth = 3. &lt;br /&gt; Finally the rays are making it outside of the glass. &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part4/spheres2_m4.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; Spheres with max_ray_depth = 4. &lt;br /&gt; Now the rays are showing up on the right wall too! &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part4/spheres2_m100.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; Spheres with max_ray_depth = 100. &lt;/figcaption&gt; &lt;br /&gt; 
 
 
-&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/p&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/p&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/p&gt;&lt;/td&gt;&lt;/td&gt;&lt;/li&gt;&lt;/li&gt;&lt;/td&gt;&lt;/td&gt;&lt;/div&gt;
+&lt;h2 align=&quot;middle&quot;&gt;Part 5: Materials&lt;/h2&gt;
+&lt;img src=&quot;../images/p3/part5/spheres2_100_1024.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; Mirror and Glass Ball &lt;/figcaption&gt;
+&lt;p&gt; Remember the Bidirectional Scattering Distribution Functions I mentioned earlier? They take convert the incoming radiance of a ray to outgoing radiance. Different materials have different BSDFs, since light reacts differently to them. I implemented glass and mirror BSDFs to generate the image you see above.&lt;/p&gt;  
+&lt;h3&gt; Mirror and Glass BSDF &lt;/h3&gt;
+&lt;p&gt; The mirror ball (left) requires a mirror BSDF. This was relatively simple to implement, since the ray just reflects off of the mirror. The glass ball (right) is much more complicated. Sometimes light reflects off glass, and sometimes it refracts inside! To simulate this, I used another biased coin flip based off of the Schlick&#39;s Approximation. If the coin returned true, I reflected the incoming radiance as I did with the mirror BSDF, except with the Schlick coefficient as the probability density function (for mirror the probability density function was 1). Otherwise, I refracted the incoming radiance. &lt;/p&gt;
+
+            &lt;img src=&quot;../images/p3/part5/spheres2_1_1024.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; Spheres with max_ray_depth = 1. &lt;br /&gt; Rays enter the glass sphere but they never leave! &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part5/spheres2_2_1024.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; Spheres with max_ray_depth = 2. &lt;br /&gt; Now the rays bounce inside the glass! &lt;br /&gt; You can tell they are still trapped inside because the mirror ball still shows a dark glass sphere. &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part5/spheres2_3_1024.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; Spheres with max_ray_depth = 3. &lt;br /&gt; Finally the rays are making it outside of the glass. &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part5/spheres2_4_1024.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; Spheres with max_ray_depth = 4. &lt;br /&gt; Now the rays are showing up on the right wall, and bouncing back onto the glass! &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part5/spheres2_100_1024.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; Spheres with max_ray_depth = 100. &lt;/figcaption&gt; &lt;br /&gt; 
+
+&lt;h3&gt; Increasing Samples per Pixel &lt;/h3&gt;
+&lt;figcaption align=&quot;middle&quot;&gt; One Sample per Light and max_ray_depth = 100 &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part5/spheres2_s1_m100.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; 1 sample per pixel &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part5/spheres2_s4_m100.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; 4 samples per pixel &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part5/spheres2_s16_m100.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; 16 samples per pixel &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part5/spheres2_s64_m100.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; 64 samples per pixel &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/part5/spheres2_s1024_m100.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; 1024 samples per pixel &lt;/figcaption&gt; &lt;br /&gt; 
+
+
+
+&lt;h2 align=&quot;middle&quot;&gt; Sick Renders! &lt;/h2&gt;
+&lt;figcaption align=&quot;middle&quot;&gt; Here are my favorite renders! All with 1024 Samples/Pixel.&lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/fun/dragon_hd.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; Mirror Dragon &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p3/fun/CBgems_hd.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt; Gems &lt;/figcaption&gt;
+
+
+
+
+&lt;/li&gt;&lt;/li&gt;&lt;/div&gt;&lt;/p&gt;
 </description>
-        <pubDate>Tue, 01 Mar 2016 00:00:00 -0800</pubDate>
-        <link>http://kadie16.github.io/mesh-editing-and-glsl/</link>
-        <guid isPermaLink="true">http://kadie16.github.io/mesh-editing-and-glsl/</guid>
+        <pubDate>Thu, 31 Mar 2016 00:00:00 -0700</pubDate>
+        <link>http://kadie16.github.io/raytracer/</link>
+        <guid isPermaLink="true">http://kadie16.github.io/raytracer/</guid>
         
         
         <category>projects</category>
@@ -323,12 +349,162 @@ These are the building blocks of the scenes. Triangles are used most commonly, b
 
 &lt;/li&gt;&lt;/li&gt;&lt;/div&gt;&lt;/p&gt;
 </description>
-        <pubDate>Tue, 01 Mar 2016 00:00:00 -0800</pubDate>
+        <pubDate>Thu, 31 Mar 2016 00:00:00 -0700</pubDate>
         <link>http://kadie16.github.io/raytracer/</link>
         <guid isPermaLink="true">http://kadie16.github.io/raytracer/</guid>
         
         
         <category>featured</category>
+        
+        <category>Project</category>
+        
+      </item>
+    
+      <item>
+        <title>Mesh Editing and GLSL</title>
+        <description>&lt;div&gt;
+        &lt;p&gt;In this project, I first learned to tesselate bezier patches to generate triangular meshes from bezier curves. Then, I implemented the ability to modify those meshes by flipping and splitting edges, or &quot;upsampling&quot; to increase the amount of triangle faces that represent the mesh. Finally, I wrote some cool GLSL shaders. My favorite was the reflection shader, which maps each pixel on the surface to a place on a reflection texture. &lt;/p&gt;
+
+    &lt;h2 align=&quot;middle&quot;&gt;Part 1: Fun with Bezier Patches&lt;/h2&gt;
+        &lt;p&gt;The first thing I needed to do was generate a triangle mesh from an input Bezier Surface. A Bezier surface is specified by control points (16, in this case). The control points specify curves, and the convex hull of the control points contains a surface. That surface is the mesh I am trying to represent. &lt;/p&gt;
+        &lt;p&gt;In order to represent the surface as a triangular mesh, I need to tesselate the Bezier surface specified by the control points into triangles. I accomplished this using the Bernstein Polynomials.I wrote some helper functions to help me evaluate the Bernstein Polynomials, used them to evaluate each control point. Once I determined which triangles I needed, I added them to a halfedge data structure to represent the mesh. &lt;/p&gt;
+                    &lt;img src=&quot;../images/part1.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;My Rendering of the teapot.bez Mesh&lt;/figcaption&gt;
+        &lt;h2 align=&quot;middle&quot;&gt;Part 2: Average normals for half-edge meshes&lt;/h2&gt;
+        &lt;p&gt;Next, I computed per vertex normals that were an average of the normals of their faces. This results in a nicer, smoother shading effect than when normal vectors are just computer per face. To accomplish this, I traversed the faces that the vertex belonged to in the half edge data structure, computing the normal for each face along the way. First I got the half edge that the vertex was attached to. Then, I saved it as h_original so I could keep track of where I started. Then I got the halfedge&#39;s twin and next half edge, and computed the vectors those half edges represented. I computed the normal of that face by crossing those two vectors before advancing to the next face. Once I reached h_original again, indicating I had tranversed all of the faces of that vertex, I returned the unit vector of the sum of all of the normal vectors as the normal vector for that particular vertex. &lt;/p&gt;
+                    &lt;img src=&quot;../images/part2/facenormals.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Each vertex is shaded uniformly according to the normal vector of one face.&lt;/figcaption&gt;
+
+                    &lt;img src=&quot;../images/part2/avgnormals.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;This shows the teapot shaded according to per vertex normal vectors.&lt;/figcaption&gt;
+
+                    &lt;img src=&quot;../images/part2/bug.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Initially I was calculating the vectors for the first face incorectly, which gave this cool swirly effect. &lt;/figcaption&gt;
+
+         &lt;h2 align=&quot;middle&quot;&gt;Part 3: Edge Flip&lt;/h2&gt;
+        &lt;p&gt;Next, I implemented the abillity to flip edges in the mesh. As I mentioned before, the mesh is represented as a half edge data structure. A half edge data structure is mostly a few key components: vertices, halfedges, edges, and faces. Vertices, edges, and faces each keep track of a single half edge. Halfedges each keep track of a twin halfedge (the one on the other side of the edge), a next halfedge (the next one on the face), an edge (made up of the half edge and its&#39; twin), and a face. &lt;/p&gt;
+        &lt;p&gt;In order to accomplish the edge flip, I just needed to reassign the pointers of all of the elements involving the edge before and after the flip.&lt;/p&gt;
+                    &lt;img src=&quot;../images/part3/bug.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Bug: Every edge I tried to flip poked a hole in my mesh!&lt;/figcaption&gt;
+        &lt;p&gt; Initially I was only reassigning pointers for the elements on the &lt;i&gt;inside&lt;/i&gt; of the two faces between the edge I was trying to flip. Can you imagine why this would poke holes in my mesh? I was neglecting to reassign pointers for the halfedges on the outside of the borders of the faces. So while the edge may have been flipped correctly, the halfedges in the rest of the mesh weren&#39;t informed of the changes, and lost track of (could no longer traverse) that part of the mesh!&lt;/p&gt; 
+        &lt;p&gt; Once I assigned the pointers to the outside half edges too, I got the desired result.  &lt;/p&gt;
+                    &lt;img src=&quot;../images/part3/preflip.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;A Torus mesh before any edges are flipped.&lt;/figcaption&gt;
+                    &lt;img src=&quot;../images/part3/postflip.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Torus mesh after flipping some edges.&lt;/figcaption&gt;
+         &lt;h2 align=&quot;middle&quot;&gt;Part 4: Edge Split&lt;/h2&gt;
+        &lt;p&gt;Next, I implemented the ability to split edges of the mesh. This was somewhat similar to flipping edges in that it involved a lot of reassigning of pointers. However, splitting became a little more complicated because it involved adding some new edges, faces, and a new vertex to the mesh. &lt;/p&gt;
+                    &lt;img src=&quot;../images/part4/bug2.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Bug: Whenever I attempted an edge split, I punched a huge dent in my teapot! This shows a bunch of split-attempts near eachother, resulting in one giant heart dent. &lt;/figcaption&gt;
+        &lt;p&gt; This initial error was caused by an error calculating the position of my new vertex. In fact, I wasn&#39;t calculating the position of the vertex at all. So everytime I split an edge, I was adding a new vertex at the origin. That&#39;s why when I split, all of these dents were getting punched toward the same spot! &lt;/p&gt; 
+        &lt;p&gt; Once I updated the position of the new vertex to be the midpoint between the other corner vertices, I achieved the desired result. &lt;/p&gt;
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part4/pre_split.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Bean mesh before edges are split.&lt;/figcaption&gt;
+
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part4/post_split.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Bean mesh with some split edges in the middle.&lt;/figcaption&gt;
+
+        &lt;h2 align=&quot;middle&quot;&gt;Part 5: Upsampling via Loop Subdivision&lt;/h2&gt;
+        &lt;p&gt;Upsampling was the most challenging part of the project for me. There were quite a few issues to be debugged, but at a high level the approach is pretty straight forward.&lt;/p&gt;
+        &lt;li&gt; 
+            First I marked all of the existing vertices as &quot;old&quot;, indicating they were part of the mesh before it was upsampled. 
+            &lt;li&gt; 
+            Next I calculated new positions for all of the old vertices according to the vertex subdivision rule.
+        &lt;/li&gt; 
+            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;n = vertex degree&lt;/pre&gt;&lt;/p&gt; 
+            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;u = 3/(8*n)&lt;/pre&gt;&lt;/p&gt;
+            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;(1 - 3/8) * original_position + u * neighbor_position_sum&lt;/pre&gt;&lt;/p&gt;
+        &lt;li&gt; 
+            Then I calculated positions for all of the new (to be added) vertices according to: 
+        &lt;/li&gt; 
+            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;3/8 * (A + B) + 1/8 * (C + D)&lt;/pre&gt;&lt;/p&gt;
+            &lt;p&gt; where A and B are the vertex positions on the edge that the new vertex will lie, and C and D are the vertex positons on the adjacent edges of the faces on either side of the edge that the new vertex will lie. &lt;/p&gt;
+        &lt;li&gt; Next, I split every &quot;old&quot; or prexisting edge in the mesh.
+        &lt;li&gt;Finally, I flipped any edge that connected a new vertex and an existing vertex, and then updated all of the vertex positions. 
+        &lt;/li&gt; 
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part1.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Teapot mesh before upsample&lt;/figcaption&gt;
+
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part5/up_teapot.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Teapot mesh after upsample&lt;/figcaption&gt;
+
+        &lt;p&gt; Some times a little pre processing before upsampling a mesh can help significantly. A good example of this is the simple cube mesh. The way the edges are oriented can cause some irregularity when then mesh is upsampled. The upsampling behavior can be improved significantly if the edges that cross the faces of the cube are split prior to upsampling. This gives a more symmetrical mesh, which helps the upsampling give a symmetrical result. &lt;/p&gt;
+        &lt;p&gt;Here you can see a side by side comparison of the upsampling of two cubes. The &lt;b&gt; left cube &lt;/b&gt; is the original mesh being upsampled. The &lt;b&gt; right cube &lt;/b&gt; had each of the face crossing edges split before it is upsampled.  
+
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part5/cube.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Regular cube mesh before upsample&lt;/figcaption&gt;
+
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part5/split_cube.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Cube mesh with each face of cube split before upsample&lt;/figcaption&gt;
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part5/up_cube.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Regular cube after upsample (1X). Note the irregularity&lt;/figcaption&gt;
+
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part5/up_split_cube.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Pre-split cube mesh after upsample (1X).&lt;/figcaption&gt;
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part5/up_cube_2.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Regular cube after multiple upsamples. The irregularity has propagated.&lt;/figcaption&gt;
+
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part5/up_split_cube_3.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Pre-split cube mesh after multiple upsamples. Looks like a nice smooth cube!&lt;/figcaption&gt;
+         &lt;h2 align=&quot;middle&quot;&gt;Part 6: Fun with Shaders&lt;/h2&gt;
+        &lt;p&gt;Part 6 was my favorite! I wrote GLSL shaders which specify how OpenGL should light the scene. I implemented a simple Blinn Phong shader, and a really cool reflection environment map shader. &lt;/p&gt;
+                    &lt;img src=&quot;../images/part6/phongcow.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Cow With Pink Phong Shader&lt;/figcaption&gt;
+        &lt;p&gt;For the Phong shader, I followed the following procedue:
+            &lt;li&gt; Calculate the light vector, l 
+            &lt;li&gt; Calculate the vector to my &quot;eye position&quot;, v
+            &lt;li&gt; Normalize the sum of the vectors l and v
+            &lt;li&gt; Return a linear combination of the ambient, diffuse, and specular lights: 
+            &lt;p align=&quot;middle&quot;&gt;&lt;pre align=&quot;middle&quot;&gt;LightVec = ambient_light + diffuse_light*max(dot(normal_vector, l), 0) + specular_light*(max(dot(n,normalize(l+v)), 0)^shininess_factor&lt;/pre&gt;&lt;/p&gt;
+            
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part6/defaultcow.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Cow With Default Shader&lt;/figcaption&gt;
+             
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part6/greyphongcow.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Cow With Grey Phong Shader&lt;/figcaption&gt;
+                &lt;br /&gt;
+                    &lt;td align=&quot;left&quot;&gt;
+                    &lt;img src=&quot;../images/part6/defaultbug.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Beetle With Default Shader&lt;/figcaption&gt;
+                    &lt;td align=&quot;right&quot;&gt;
+                    &lt;img src=&quot;../images/part6/phongbug.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Beetle With Phong Shader&lt;/figcaption&gt;
+
+        &lt;p&gt; I liked the environment map reflection shader the best. This is what I did to accomplish this effect: 
+            &lt;li&gt; Calculate the vector to my &quot;eye position&quot;, v
+            &lt;li&gt; Calculate the reflection vector using v and the normal vector of the vertex 
+            &lt;li&gt; Convert the reflection vector into polar coordinates
+            &lt;li&gt; Convert the polar coordinates into uv coordinates 
+            &lt;li&gt; Retrieve the colors for the vertex from the environment map using the uv coordinates. 
+         
+                    &lt;img src=&quot;../images/part6/reflectcow.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Cow With Reflection Map Shader&lt;/figcaption&gt;
+                    &lt;img src=&quot;../images/part6/reflectbug.png&quot; /&gt;
+                    &lt;figcaption align=&quot;middle&quot;&gt;Beetle With Reflection Map Shader&lt;/figcaption&gt;
+
+
+
+
+&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/p&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/li&gt;&lt;/p&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/td&gt;&lt;/p&gt;&lt;/td&gt;&lt;/td&gt;&lt;/li&gt;&lt;/li&gt;&lt;/td&gt;&lt;/td&gt;&lt;/div&gt;
+</description>
+        <pubDate>Tue, 01 Mar 2016 00:00:00 -0800</pubDate>
+        <link>http://kadie16.github.io/mesh-editing-and-glsl/</link>
+        <guid isPermaLink="true">http://kadie16.github.io/mesh-editing-and-glsl/</guid>
+        
+        
+        <category>projects</category>
         
         <category>Project</category>
         
@@ -955,51 +1131,6 @@ Even with a high sample rate, the difference between the two methods is apparent
         
         
         <category>featured</category>
-        
-        <category>Project</category>
-        
-      </item>
-    
-      <item>
-        <title>Gitlet &amp; BearGit</title>
-        <description>&lt;h2 id=&quot;gitlet&quot;&gt;Gitlet&lt;/h2&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;My&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;own&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;control&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;system&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;which&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mimics&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;written&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Java&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;/* I implemented git commands including 
-* initialize 
-* add, commit, remove
-* log, global log
-* find, status
-* checkout
-* branch, remove branch
-* reset, merge, and rebase. */&lt;/span&gt; 
-&lt;span class=&quot;n&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;designed&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;my&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;own&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;API&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;storage&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plan&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;project&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://octodex.github.com/images/carlostocat.gif&quot; alt=&quot;gitlet&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;beargit&quot;&gt;Beargit&lt;/h2&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;Another&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mimic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;written&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;C&lt;/span&gt; 
-&lt;span class=&quot;n&quot;&gt;Every&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;commit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;must&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contain&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;THIS IS BEAR TERRITORY!&quot;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Beargit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;returns&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;an&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; 
-&lt;span class=&quot;cm&quot;&gt;/* My partner and I implemented 
-* status, log
-* rm
-* commit 
-* branch 
-* checkout
-* reset, merge. */&lt;/span&gt; 
-&lt;span class=&quot;n&quot;&gt;We&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;also&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wrote&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cunit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tests&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;check&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;our&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;program&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Octocat photos courtesy of &lt;a href=&quot;https://octodex.github.com/&quot;&gt;octodex&lt;/a&gt; :)&lt;/p&gt;
-</description>
-        <pubDate>Fri, 14 Aug 2015 00:00:00 -0700</pubDate>
-        <link>http://kadie16.github.io/gitlet/</link>
-        <guid isPermaLink="true">http://kadie16.github.io/gitlet/</guid>
-        
-        <category>Java</category>
-        
-        
-        <category>projects</category>
         
         <category>Project</category>
         
