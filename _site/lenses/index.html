@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Lens Simulator</title>
+    <meta name="description" content="%20%20%20%20%20%20%20%20%20For%20this%20project,%20I%20augmented%20my%20ray%20tracing%20program%20to%20simulate%20lenses!%20In%20the%20original%20raytracer,%20I%20was%20simulating%20a%20pinhole%20camera,%20or%20"camera%20ob...">
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Merriweather:300,300italic,400,400italic,700italic,700">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300,400,700">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,700">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/assets/css/vendors/slidebars.min.css">
+    <link rel="stylesheet" href="/assets/css/vendors/rrssb.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <link rel="apple-touch-icon-precomposed" href="/assets/images/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/assets/images/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/images/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/images/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/assets/images/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/images/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/assets/images/apple-touch-icon-152x152.png" />
+
+    <link rel="canonical" href="http://kadie16.github.io/lenses/">
+    <link rel="alternate" type="application/rss+xml" title="Kadie Jaffe" href="http://kadie16.github.io/feed.xml" />
+</head>
+
+
+<body>
+
+    <div class="loader">
+    <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32px" height="32px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+        <filter id="dropshadow" height="130%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+            <feOffset dx="0" dy="0" result="offsetblur"/>
+            <feMerge>
+                <feMergeNode/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <path d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+            <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.5s" repeatCount="indefinite"/>
+        </path><!-- style="filter:url(#dropshadow)" -->
+    </svg>
+</div>
+
+
+    <main id="sb-site">
+
+        <div class="container">
+            <div class="wrapper">
+                <div class="post">
+    
+
+    <header class="post-header">
+        
+        <img src="../images/p4/CBbunny_part1.png" alt="Lens Simulator" class="post-thumb" />
+        
+
+        <h1 class="post-title">Lens Simulator</h1>
+    </header>
+
+    <article class="post-content">
+        <div>
+        <p> For this project, I augmented my ray tracing program to simulate lenses! In the original raytracer, I was simulating a pinhole camera, or "camera obscura". I was tracing light rays through an aperture the size of one point to generate an image. Most cameras we use today are more sophisticated: they include lenses which bend the light rays and varying aperture sizes. By simulating different lenses and apertures, I can achieve a variety of effects with my raytracer. </p>
+
+    <h2 align="middle">Part 1: Tracing Rays Through Lenses </h2>
+        <p></p>
+        </div>
+
+<p> A pinhole camera is one with a point sized aperture. </p>
+<blockquote>
+  <p><strong>Aperture:</strong> <br /> 
+The space or hole light passes through in a camera.</p>
+</blockquote>
+
+<p> The pinhole camera generates images just fine, but it is limited in terms of the focus and zoom effects we can generate. Photographers choose the appropriate lens for their shot. There are wide angle lenses which can capture a large landscape with the entire scene in focus, lenses built to focus on an object in the foreground and blur the background, fisheye lenses, and more. By simulating lenses, the ray tracer can generate images with varying perspectives and focal effects, much like a photographer can by changing his lens. </p>
+<p> I simulated four different lenses: a D-GAUSS F/2 22deg HFOV, Wide-angle (38º) Nakamura, SIGLER Super Achromate Telephoto, and Muller 16mm/f4 155.9FOV Fisheye lens.</p>
+<div> 
+            <img src="../images/p4/lens1.png" />
+            <figcaption align="middle">D-GAUSS F/2 22deg HFOV </figcaption>
+            <img src="../images/p4/lens2.png" />
+            <figcaption align="middle">Wide-angle (38º) Nakamura  </figcaption>
+            <img src="../images/p4/lens3.png" />
+            <figcaption align="middle">SIGLER Super Achromate Telephoto</figcaption> 
+            <br /> 
+            <img src="../images/p4/lens4.png" />
+            <figcaption align="middle">Muller 16mm/f4 155.9FOV Fisheye  </figcaption>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Lens:</th>
+      <th style="text-align: center">D-GAUSS F/2 22deg HFOV</th>
+      <th style="text-align: center">Wide-angle (38º) Nakamura</th>
+      <th style="text-align: center">SIGLER Super Achromate Telephoto</th>
+      <th style="text-align: center">Muller 16mm/f4 155.9FOV Fisheye</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td><strong>Focal Length</strong></td>
+      <td style="text-align: center">50.3582</td>
+      <td style="text-align: center">22.0235</td>
+      <td style="text-align: center">249.567</td>
+      <td style="text-align: center">9.99142</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td><strong>Infinity Focus Sensor Depth</strong></td>
+      <td style="text-align: center">51.2609</td>
+      <td style="text-align: center">28.7635</td>
+      <td style="text-align: center">188.758</td>
+      <td style="text-align: center">28.7443</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td><strong>Close Focus Sensor Depth</strong></td>
+      <td style="text-align: center">62.7567</td>
+      <td style="text-align: center">34.5797</td>
+      <td style="text-align: center">236.875</td>
+      <td style="text-align: center">31.1818</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td><strong>Close Focus Distance</strong></td>
+      <td style="text-align: center">-264.605</td>
+      <td style="text-align: center">-109.048</td>
+      <td style="text-align: center">-1646.2</td>
+      <td style="text-align: center">-60.8527</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 align="left"> Sensor Depth vs. Conjugate Plots</h3>
+<div> 
+            <figcaption align="middle">D-GAUSS F/2 22deg HFOV </figcaption>
+            <img src="../images/p4/lens1_graph.png" />
+            <br />
+            <figcaption align="middle">Wide-angle (38º) Nakamura  </figcaption>
+            <img src="../images/p4/lens2_graph.png" />
+            <br />
+            <figcaption align="middle">SIGLER Super Achromate Telephoto</figcaption>
+            <img src="../images/p4/lens3_graph.png" />
+            <br />
+            <figcaption align="middle">Muller 16mm/f4 155.9FOV Fisheye  </figcaption>
+            <img src="../images/p4/lens4_graph.png" />
+            <br /><br />
+</div>
+<h3 align="left">Pinhole vs Lens Renders</h3>
+<div> 
+            <img src="../images/p4/CBbunny_pinhole.png" />
+            <figcaption align="middle">Pinhole Camera Bunny </figcaption>
+            <img src="../images/p4/CBbunny_part1.png" />
+            <figcaption align="middle">Bunny Rendered with D-GAUSS F/2 22deg HFOV </figcaption>  
+            <figcaption align="left">Notice the red wall in the foreground is blurred, aswell as the blue wall in the background. It looks a lot nicer, doesn't it?</figcaption>        
+</div>
+
+<h2 align="middle">Part 2: Contrast Based Autofocus</h2>
+<p> I think this was the coolest part of the project, and it was relatively simple! I implemented autofocus, so that after I render an image, I can select a small patch I want to focus on, and the program will render the image focusing in that area. Kind of like when you take a picture on your iphone, you can tap the area of the viewer that you want to focus on. </p>
+<h3 align="middle">Focus Metric and Heuristic</h3>
+<p>So, the important question is: how am I going to measure how focused an image is? To be able to autofocus, I need some kind of metric that can distinguish a better-focused image from a worse one. </p>
+<p> The answer to this is to measure the variance of the colors in the image. A really blurry image will have low variance, since all of the colors are blurred. As it gets blurrier, the colors kind of blend together, and they vary less. A sharp, focused image on the other hand will have high variance.</p>
+<p> I calculated the variance of each color in the image: red, blue, and green. First I found the mean red, blue, and green values in the image. Then, I summed the difference between each sample and the mean for that color squared. Finally I normalized this value over the number of samples to find the variance. </p>
+<p>sum(sample_i - mean^2)/num_samples</p>
+<p> By adding the red, blue and green variance, I created a heuristic to measure how focused the image was. Then, I just chose the sensor depth that corresponded with the highest value of the heuristic </p>
+
+<div>
+            <img src="../images/p4/focusmetric_graph.png" />
+            <figcaption align="left"> A plot of the focus metric vs. sensor depth for a render of Cornelle Box Spheres. <br /> In this case, you can see the image is becoming more focused as it approaches a sensor depth of ~60. Once the sensor depth increases past 60, the focus metric (a function of variance) starts decreasing. 60 is the ideal sensor depth for this render to be focused.</figcaption>
+
+            <br />
+            
+</div>
+
+<h3 align="left"> Final Renders</h3>
+<div> 
+            <figcaption align="middle">D-GAUSS F/2 22deg HFOV </figcaption>
+            <img src="../images/p4/spheres1.png" />
+            <br />
+            <figcaption align="middle">Wide-angle (38º) Nakamura  </figcaption>
+            <img src="../images/p4/spheres2.png" />
+            <br />
+            <figcaption align="middle">SIGLER Super Achromate Telephoto</figcaption>
+            <img src="../images/p4/spheres3.png" />
+            <br />
+            <figcaption align="middle">Muller 16mm/f4 155.9FOV Fisheye  </figcaption>
+            <img src="../images/p4/spheres4.png" />
+            <br /><br />
+</div>
+
+
+    </article>
+
+    
+
+     
+
+
+    <footer class="post-meta">
+        
+        <div class="meta">
+            <h3 class="meta-title">Date</h3>
+            <span class="meta-content">April 13, 2016</span>
+        </div>
+        
+        
+        
+        
+    </footer>
+
+   
+
+</div>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63774988-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+            </div>
+
+            
+
+
+
+
+            
+
+
+        </div>
+
+    </main>
+
+    <a href="#" class="sb-toggle-left">Menu
+    <span class="nav-icon"><br><font color="white"><b>Menu</b></font></span>
+</a>
+
+<div class="sb-slidebar sb-left sb-style-push">
+    <nav>
+        <a href="/"><h2 class="site-title">Kadie Jaffe</h2></a>
+        <ul class="sb-menu">
+        
+        
+            
+        
+            
+                
+            
+        
+            
+                
+                <li class="sb-close ">
+                    <a href="/Projects/">Projects</a>
+                </li>
+                
+            
+        
+            
+                
+                <li class="sb-close ">
+                    <a href="/aboutMe/">About Me</a>
+                </li>
+                
+            
+        
+            
+        
+            
+                
+                <li class="sb-close ">
+                    <a href="/blogIndex/">KD at S.E.A.</a>
+                </li>
+                
+            
+        
+            
+        
+            
+                
+            
+        
+        </ul>
+
+        <div class="site-info">
+            <p><img src="https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/KadieJaffe.jpg" alt="Kadie Jaffe" style="float:left;width:52px;height:100px;"> 
+                By Kadie Jaffe 
+                <br>
+                <a href = "https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/resume/Kadie_Jaffe_Resume_Latest.pdf"> Download Resume </a> 
+                <br>
+                <a href = "https://linkedin.com/in/kadiejaffe" > LinkedIn </a><br>
+                <a href = "https://github.com/kadie16" > GitHub </a> <br>
+                
+            </p>
+            
+            <p>
+            Copyright &copy; 2016
+            </p>
+        </div>
+    </nav>
+</div>
+
+
+
+    <script type="text/javascript" src="/assets/js/libs/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/js/libs/slidebars.min.js"></script>
+<script type="text/javascript" src="/assets/js/libs/jquery.backstretch.min.js"></script>
+<script type="text/javascript" src="/assets/js/libs/jquery.scrollstop.js"></script>
+<script type="text/javascript" src="/assets/js/libs/rrssb.min.js"></script>
+<script type="text/javascript" src="/assets/js/functions.js"></script>
+<script type="text/javascript">
+    $(function($) {
+        $.slidebars();
+
+        var steps = [];
+        var images = [
+            
+        ];
+
+        if (images.length > 0) {
+            $('.loader').addClass('loading');
+
+            steps = scrollSteps(images.length);
+
+            $.backstretch(images, {
+                fade: 1000
+            });
+
+            $.backstretch('pause');
+        }
+
+        $(document).on("backstretch.before", function (e, instance, index) {
+            $('.loader').addClass('loading');
+        });
+
+        $(document).on('scrollstop', function () {
+            if (steps.length > 0) {
+                var percentage = scrollPercentage();
+
+                for (var i = 0; i < steps.length; i++) {
+                    if (percentage < steps[i]) {
+                        if (i == $("body").data("backstretch").index) {
+                            break;
+                        }
+
+                        $.backstretch('show', i);
+                        break;
+                    }
+                }
+            }
+        });
+
+        $(document).on("backstretch.after", function (e, instance, index) {
+            $('.loader').removeClass('loading');
+        });
+    });
+</script>
+
+
+</body>
+
+</html>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63774988-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
