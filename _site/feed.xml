@@ -6,8 +6,8 @@
     <description></description>
     <link>http://kadie16.github.io/</link>
     <atom:link href="http://kadie16.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 06 May 2016 00:15:42 -0700</pubDate>
-    <lastBuildDate>Fri, 06 May 2016 00:15:42 -0700</lastBuildDate>
+    <pubDate>Fri, 06 May 2016 00:36:54 -0700</pubDate>
+    <lastBuildDate>Fri, 06 May 2016 00:36:54 -0700</lastBuildDate>
     <generator>Jekyll v3.1.2</generator>
     
       <item>
@@ -30,26 +30,24 @@
 &lt;br /&gt;
 &lt;h1 align=&quot;middle&quot;&gt;Final Project: Fluid Simulation&lt;/h1&gt;
     &lt;h2 align=&quot;middle&quot;&gt;Osam Javed &amp;amp; Kadie Jaffe&lt;/h2&gt;
-    &lt;h2 align=&quot;middle&quot;&gt;&lt;a href=&quot;http://kadie.me/Projects/&quot;&gt;Cooler Online Version on Kds website &lt;/a&gt;&lt;/h2&gt;
 
 
-&lt;div class=&quot;padded&quot;&gt;
-  &lt;h2 align=&quot;middle&quot;&gt;Abstract&lt;/h2&gt;
-        &lt;p&gt;For our final project, we implemented fluid simulation. Our implementation was based on &lt;a href=&quot;http://mmacklin.com/pbf_sig_preprint.pdf&quot;&gt; Position
+&lt;h2 align=&quot;middle&quot;&gt;Abstract&lt;/h2&gt;
+&lt;p&gt;For our final project, we implemented fluid simulation. Our implementation was based on &lt;a href=&quot;http://mmacklin.com/pbf_sig_preprint.pdf&quot;&gt; Position
   Based Fluids by Macklin and Muller &lt;/a&gt;. The approach was to simulate water, an incompressible fluid by enforcing a density constraint on each particle. We used the poly6 and spiky gradient smoothing kernels to distribute our particles throughout the simulation. For each particle we applied a gravitational force, predicted the change in position, and then calculated a correction for the change in position such that our density constraint would be satisfied (and particles wouldn&#39;t remain in the same position). This correcting position can be found by applying
   Newton&#39;s method along the constraint gradient. The project required
   a lot of parameter tuning to ensure that any external force applied
   to the particles and the pressure force from the smoothing kernel
   were in an appropriate balance. &lt;/p&gt;
 
-    &lt;h2 align=&quot;middle&quot;&gt;Technical approach&lt;/h2&gt;
+&lt;h2 align=&quot;middle&quot;&gt;Technical approach&lt;/h2&gt;
         &lt;p&gt; The entire fluid simulation can be implemented via the
         pseudocode shown below.&lt;/p&gt;
-        &lt;div align=&quot;left&quot;&gt;
+        
             &lt;table style=&quot;width=100%&quot;&gt;
                 &lt;tr&gt;
                     &lt;td align=&quot;middle&quot;&gt;
-                    &lt;img src=&quot;..images/simLoop.png&quot; width=&quot;400px&quot; /&gt;
+                    &lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/projects/images/simLoop.png&quot; width=&quot;400px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt;Simulation loop used to
         on each particle to apply force and the correcting constraint position.&lt;/figcaption&gt;
                 
@@ -88,14 +86,14 @@
         neighbors.  Initially we had our epsilon value in Equation 11 of the Macklin and Muller paper 
         set to 0.001 which was far too small and caused many errors. 
         &lt;br /&gt;
-        &lt;img src=&quot;..images/eqn11.png&quot; align=&quot;middle&quot; width=&quot;200px&quot; /&gt;
+        &lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/projects/images/eqn11.png&quot; align=&quot;middle&quot; width=&quot;200px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt;Equation 11&lt;/figcaption&gt;
                     &lt;br /&gt; We
         later set this value to 5000. When we realized the effect of gravity was being overshadowed significantly by the particles&#39; interactions with eachother, we increased the epsilon value to a whopping 150,000. Increasing the epsilon value effectively reduced the net force applied
         by our smoothing kernels. Another challenge we encountered was understanding equation 8,
         the gradient constraint function. 
                         &lt;br /&gt;
-                    &lt;img src=&quot;..images/eqn8.png&quot; align=&quot;middle&quot; width=&quot;200px&quot; /&gt;
+                    &lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/projects/images/eqn8.png&quot; align=&quot;middle&quot; width=&quot;200px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt;Equation 8&lt;/figcaption&gt;
                     &lt;br /&gt;
         We thought the gradient
@@ -104,11 +102,11 @@
         gradient of the spiky kernel, which is
 &lt;/p&gt;
 
-        &lt;div align=&quot;left&quot;&gt;
+        
             &lt;table style=&quot;width=100%&quot;&gt;
                 &lt;tr&gt;
                     &lt;td align=&quot;middle&quot;&gt;
-                    &lt;img src=&quot;..images/kernels.png&quot; width=&quot;400px&quot; /&gt;
+                    &lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/projects/images/kernels.png&quot; width=&quot;400px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt;The two kernels we used
             in our fluid simulation.&lt;/figcaption&gt;
                 
@@ -149,11 +147,11 @@
         position.  
         &lt;/p&gt;
 
-        &lt;div align=&quot;left&quot;&gt;
+        
             &lt;table style=&quot;width=100%&quot;&gt;
                 &lt;tr&gt;
                     &lt;td align=&quot;middle&quot;&gt;
-                    &lt;img src=&quot;..images/struct.png&quot; width=&quot;400px&quot; /&gt;
+                    &lt;img src=&quot;https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/projects/images/struct.png&quot; width=&quot;400px&quot; /&gt;
                     &lt;figcaption align=&quot;middle&quot;&gt;The particle struct.
             We stored the neighboring particles in a vector pointer of
             particles to save space. &lt;/figcaption&gt;
@@ -181,9 +179,9 @@
          The key takeaway from the semester was that understand the big picture before jumping into editing code is the most effective and efficient way to work. With graphics projects especially, the more we thought critically about what we were seeing, the more we understood. It is important to be deliberate with changing parameters. We achieved the best results when we changed them one at a time, predicted what we were going to see, and then analyze the result and whether it matched our expectation. 
         &lt;/p&gt;
 
-    &lt;h2 align=&quot;middle&quot;&gt;Results&lt;/h2&gt;
+&lt;h2 align=&quot;middle&quot;&gt;Results&lt;/h2&gt;
 &lt;p&gt; &lt;/p&gt;
-    &lt;div align=&quot;left&quot;&gt;
+    
             &lt;table style=&quot;width=100%&quot;&gt;
                 &lt;tr&gt;
                     &lt;td align=&quot;middle&quot;&gt;
@@ -203,7 +201,7 @@
         
 
 
-            &lt;div align=&quot;left&quot;&gt;
+            
             &lt;table style=&quot;width=100%&quot;&gt;
                 &lt;tr&gt;
                     &lt;td align=&quot;middle&quot;&gt;
@@ -263,7 +261,174 @@
 
 
 
-&lt;/h4&gt;&lt;/h4&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;
+&lt;/h4&gt;&lt;/h4&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;
+</description>
+        <pubDate>Wed, 13 Apr 2016 00:00:00 -0700</pubDate>
+        <link>http://kadie16.github.io/final/</link>
+        <guid isPermaLink="true">http://kadie16.github.io/final/</guid>
+        
+        
+        <category>projects</category>
+        
+        <category>Project</category>
+        
+      </item>
+    
+      <item>
+        <title>Lens Simulator</title>
+        <description>&lt;div&gt;
+        &lt;p&gt; For this project, I augmented my ray tracing program to simulate lenses! In the original raytracer, I was simulating a pinhole camera, or &quot;camera obscura&quot;. I was tracing light rays through an aperture the size of one point to generate an image. Most cameras we use today are more sophisticated: they include lenses which bend the light rays and varying aperture sizes. By simulating different lenses and apertures, I can achieve a variety of effects with my raytracer. &lt;/p&gt;
+
+    &lt;h2 align=&quot;middle&quot;&gt;Part 1: Tracing Rays Through Lenses &lt;/h2&gt;
+        &lt;p&gt;&lt;/p&gt;
+        &lt;/div&gt;
+
+&lt;p&gt; A pinhole camera is one with a point sized aperture. &lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Aperture:&lt;/strong&gt; &lt;br /&gt; 
+The space or hole light passes through in a camera.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt; The pinhole camera generates images just fine, but it is limited in terms of the focus and zoom effects we can generate. Photographers choose the appropriate lens for their shot. There are wide angle lenses which can capture a large landscape with the entire scene in focus, lenses built to focus on an object in the foreground and blur the background, fisheye lenses, and more. By simulating lenses, the ray tracer can generate images with varying perspectives and focal effects, much like a photographer can by changing his lens. &lt;/p&gt;
+&lt;p&gt; I simulated four different lenses: a D-GAUSS F/2 22deg HFOV, Wide-angle (38º) Nakamura, SIGLER Super Achromate Telephoto, and Muller 16mm/f4 155.9FOV Fisheye lens.&lt;/p&gt;
+&lt;div&gt; 
+            &lt;img src=&quot;../images/p4/lens1.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;D-GAUSS F/2 22deg HFOV &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p4/lens2.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Wide-angle (38º) Nakamura  &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p4/lens3.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;SIGLER Super Achromate Telephoto&lt;/figcaption&gt; 
+            &lt;br /&gt; 
+            &lt;img src=&quot;../images/p4/lens4.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Muller 16mm/f4 155.9FOV Fisheye  &lt;/figcaption&gt;
+&lt;/div&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Lens:&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;D-GAUSS F/2 22deg HFOV&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Wide-angle (38º) Nakamura&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;SIGLER Super Achromate Telephoto&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Muller 16mm/f4 155.9FOV Fisheye&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Focal Length&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;50.3582&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;22.0235&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;249.567&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;9.99142&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Infinity Focus Sensor Depth&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;51.2609&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;28.7635&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;188.758&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;28.7443&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Close Focus Sensor Depth&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;62.7567&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;34.5797&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;236.875&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;31.1818&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Close Focus Distance&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;-264.605&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;-109.048&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;-1646.2&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;-60.8527&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 align=&quot;left&quot;&gt; Sensor Depth vs. Conjugate Plots&lt;/h3&gt;
+&lt;div&gt; 
+            &lt;figcaption align=&quot;middle&quot;&gt;D-GAUSS F/2 22deg HFOV &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p4/lens1_graph.png&quot; /&gt;
+            &lt;br /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Wide-angle (38º) Nakamura  &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p4/lens2_graph.png&quot; /&gt;
+            &lt;br /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;SIGLER Super Achromate Telephoto&lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p4/lens3_graph.png&quot; /&gt;
+            &lt;br /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Muller 16mm/f4 155.9FOV Fisheye  &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p4/lens4_graph.png&quot; /&gt;
+            &lt;br /&gt;&lt;br /&gt;
+&lt;/div&gt;
+&lt;h3 align=&quot;left&quot;&gt;Pinhole vs Lens Renders&lt;/h3&gt;
+&lt;div&gt; 
+            &lt;img src=&quot;../images/p4/CBbunny_pinhole.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Pinhole Camera Bunny &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p4/CBbunny_part1.png&quot; /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Bunny Rendered with D-GAUSS F/2 22deg HFOV &lt;/figcaption&gt;  
+            &lt;figcaption align=&quot;left&quot;&gt;Notice the red wall in the foreground is blurred, aswell as the blue wall in the background. It looks a lot nicer, doesn&#39;t it?&lt;/figcaption&gt;        
+&lt;/div&gt;
+
+&lt;h2 align=&quot;middle&quot;&gt;Part 2: Contrast Based Autofocus&lt;/h2&gt;
+&lt;p&gt; I think this was the coolest part of the project, and it was relatively simple! I implemented autofocus, so that after I render an image, I can select a small patch I want to focus on, and the program will render the image focusing in that area. Kind of like when you take a picture on your iphone, you can tap the area of the viewer that you want to focus on. &lt;/p&gt;
+&lt;h3 align=&quot;middle&quot;&gt;Focus Metric and Heuristic&lt;/h3&gt;
+&lt;p&gt;So, the important question is: how am I going to measure how focused an image is? To be able to autofocus, I need some kind of metric that can distinguish a better-focused image from a worse one. &lt;/p&gt;
+&lt;p&gt; The answer to this is to measure the variance of the colors in the image. A really blurry image will have low variance, since all of the colors are blurred. As it gets blurrier, the colors kind of blend together, and they vary less. A sharp, focused image on the other hand will have high variance.&lt;/p&gt;
+&lt;p&gt; I calculated the variance of each color in the image: red, blue, and green. First I found the mean red, blue, and green values in the image. Then, I summed the difference between each sample and the mean for that color squared. Finally I normalized this value over the number of samples to find the variance. &lt;/p&gt;
+&lt;p&gt;sum(sample_i - mean^2)/num_samples&lt;/p&gt;
+&lt;p&gt; By adding the red, blue and green variance, I created a heuristic to measure how focused the image was. Then, I just chose the sensor depth that corresponded with the highest value of the heuristic &lt;/p&gt;
+
+&lt;div&gt;
+            &lt;img src=&quot;../images/p4/focusmetric_graph.png&quot; /&gt;
+            &lt;figcaption align=&quot;left&quot;&gt; A plot of the focus metric vs. sensor depth for a render of Cornelle Box Spheres. &lt;br /&gt; In this case, you can see the image is becoming more focused as it approaches a sensor depth of ~60. Once the sensor depth increases past 60, the focus metric (a function of variance) starts decreasing. 60 is the ideal sensor depth for this render to be focused.&lt;/figcaption&gt;
+
+            &lt;br /&gt;
+            
+&lt;/div&gt;
+
+&lt;h3 align=&quot;left&quot;&gt; Final Renders&lt;/h3&gt;
+&lt;div&gt; 
+            &lt;figcaption align=&quot;middle&quot;&gt;D-GAUSS F/2 22deg HFOV &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p4/spheres1.png&quot; /&gt;
+            &lt;br /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Wide-angle (38º) Nakamura  &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p4/spheres2.png&quot; /&gt;
+            &lt;br /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;SIGLER Super Achromate Telephoto&lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p4/spheres3.png&quot; /&gt;
+            &lt;br /&gt;
+            &lt;figcaption align=&quot;middle&quot;&gt;Muller 16mm/f4 155.9FOV Fisheye  &lt;/figcaption&gt;
+            &lt;img src=&quot;../images/p4/spheres4.png&quot; /&gt;
+            &lt;br /&gt;&lt;br /&gt;
+&lt;/div&gt;
 </description>
         <pubDate>Wed, 13 Apr 2016 00:00:00 -0700</pubDate>
         <link>http://kadie16.github.io/lenses/</link>
@@ -1349,31 +1514,6 @@ Even with a high sample rate, the difference between the two methods is apparent
         
         
         <category>featured</category>
-        
-        <category>Project</category>
-        
-      </item>
-    
-      <item>
-        <title>3D Viewer</title>
-        <description>&lt;center&gt;&lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/WWfwJuYsd7c&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/center&gt;
-
-&lt;p&gt;A demo of my completed 3D Viewer project, written in C++. I also used OpenGL, GLSL, CGAL, and QT. I implemented user interactions including rotation, translation, and zoom by manipulating the viewing volume. The program also supports generation of 3-D volume mesh from surface mesh data.&lt;/p&gt;
-
-&lt;p&gt;Just to clarify, my project is the viewing program itself! Not the models you see. I got the models I used to test my program from the UC Berkeley Computer Graphics group.&lt;/p&gt;
-
-&lt;p&gt;If you are interested in learning about the progression of my work on this project, check out these posts: &lt;br /&gt;
-- &lt;a href=&quot;http://kadie.me/working-I-swear/&quot;&gt;I’m working, I swear!&lt;/a&gt; &lt;br /&gt;
-- &lt;a href=&quot;http://kadie.me/project-update-short/&quot;&gt;Work in Progress&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Fri, 28 Aug 2015 00:00:00 -0700</pubDate>
-        <link>http://kadie16.github.io/3dviewer/</link>
-        <guid isPermaLink="true">http://kadie16.github.io/3dviewer/</guid>
-        
-        <category>C++</category>
-        
-        
-        <category>projects</category>
         
         <category>Project</category>
         

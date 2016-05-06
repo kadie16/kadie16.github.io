@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Final Project</title>
+    <meta name="description" content="%20Osam%20Javed%20&amp;%20Kadie%20Jaffe%20%20|%20%20CS%20184Final%20Project:%20Fluid%20Simulation%20%20%20%20Osam%20Javed%20&amp;%20Kadie%20Jaffe">
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Merriweather:300,300italic,400,400italic,700italic,700">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300,400,700">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,700">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/assets/css/vendors/slidebars.min.css">
+    <link rel="stylesheet" href="/assets/css/vendors/rrssb.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <link rel="apple-touch-icon-precomposed" href="/assets/images/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/assets/images/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/images/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/images/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/assets/images/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/images/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/assets/images/apple-touch-icon-152x152.png" />
+
+    <link rel="canonical" href="http://kadie16.github.io/final/">
+    <link rel="alternate" type="application/rss+xml" title="Kadie Jaffe" href="http://kadie16.github.io/feed.xml" />
+</head>
+
+
+<body>
+
+    <div class="loader">
+    <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32px" height="32px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+        <filter id="dropshadow" height="130%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+            <feOffset dx="0" dy="0" result="offsetblur"/>
+            <feMerge>
+                <feMergeNode/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <path d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+            <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.5s" repeatCount="indefinite"/>
+        </path><!-- style="filter:url(#dropshadow)" -->
+    </svg>
+</div>
+
+
+    <main id="sb-site">
+
+        <div class="container">
+            <div class="wrapper">
+                <div class="post">
+    
+
+    <header class="post-header">
+        
+
+        <h1 class="post-title">Final Project</h1>
+    </header>
+
+    <article class="post-content">
+        <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>  
+    div.padded {  
+      padding-top: 0px;  
+      padding-right: 100px;  
+      padding-bottom: 0.25in;  
+      padding-left: 100px;  
+    }  
+  </style> 
+<title>Osam Javed &amp; Kadie Jaffe  |  CS 184</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+</head>
+<body>
+<br />
+<h1 align="middle">Final Project: Fluid Simulation</h1>
+    <h2 align="middle">Osam Javed &amp; Kadie Jaffe</h2>
+
+
+<h2 align="middle">Abstract</h2>
+<p>For our final project, we implemented fluid simulation. Our implementation was based on <a href="http://mmacklin.com/pbf_sig_preprint.pdf"> Position
+  Based Fluids by Macklin and Muller </a>. The approach was to simulate water, an incompressible fluid by enforcing a density constraint on each particle. We used the poly6 and spiky gradient smoothing kernels to distribute our particles throughout the simulation. For each particle we applied a gravitational force, predicted the change in position, and then calculated a correction for the change in position such that our density constraint would be satisfied (and particles wouldn't remain in the same position). This correcting position can be found by applying
+  Newton's method along the constraint gradient. The project required
+  a lot of parameter tuning to ensure that any external force applied
+  to the particles and the pressure force from the smoothing kernel
+  were in an appropriate balance. </p>
+
+<h2 align="middle">Technical approach</h2>
+        <p> The entire fluid simulation can be implemented via the
+        pseudocode shown below.</p>
+        
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/projects/images/simLoop.png" width="400px" />
+                    <figcaption align="middle">Simulation loop used to
+        on each particle to apply force and the correcting constraint position.</figcaption>
+                
+            
+        
+        <p>
+        The accuracy of the fluid simulation relies on the position
+        of each particle, hence the name of the paper 'Position Based
+        Fluids'. We use a particle and it's
+        'neighboring' particles as input into the smoothing kernel functions 
+        we used to distribute our particles and maintain consistent density in our closed system.  
+        Water, the fluid we chose to simulate, is incompressible by nature.
+        In order to have our simulation appear accurate, we needed to enforce incompressibility.
+        Each particle relies on surrounding
+        particles to be part of it's neighboring set. The accuracy of the particle's positions and predicted positions was critical to not only the appearance of a frame of the simulation, but also to the next frame since the positions of each particle's neighbors were used to calcuate future positions. Should a particle's neighboring set be empty, we
+        would be calculating the density constraint independent of
+        other particles. For most cases that leads to an unrealistic output, as we wanted all of
+        our particles working together to create a smooth visual
+        simulation.  </p>
+        <p>
+        Initially, we had all of our particles offset from the
+        y-axis so that we could see the effect of gravity as the simulation started.  
+        We applied a Vector3D force (0, -9.8, 0) on
+        our particles as the gravitational force. The
+        time step we chose for our simulation was dt = 0.001.
+      The predicted position of each particle would reflect where
+        it's next position would be as a result of it's previous
+        position plus the velocity direction and magnitude.  One of
+        the errors we had with gravity was with the way we were
+        calculating our time step. We were using our total time elapsed in the kinematic position equation for gravity, as opposed to one time step. This made our gravitational force too powerful. Once we had a constant change in time, our gravity looked much more realistic.  
+
+
+        Next, we 
+        calculated the scaling factor, which determines the density
+        constraint of a particle given the gradient of all it's
+        neighbors.  Initially we had our epsilon value in Equation 11 of the Macklin and Muller paper 
+        set to 0.001 which was far too small and caused many errors. 
+        <br />
+        <img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/projects/images/eqn11.png" align="middle" width="200px" />
+                    <figcaption align="middle">Equation 11</figcaption>
+                    <br /> We
+        later set this value to 5000. When we realized the effect of gravity was being overshadowed significantly by the particles' interactions with eachother, we increased the epsilon value to a whopping 150,000. Increasing the epsilon value effectively reduced the net force applied
+        by our smoothing kernels. Another challenge we encountered was understanding equation 8,
+        the gradient constraint function. 
+                        <br />
+                    <img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/projects/images/eqn8.png" align="middle" width="200px" />
+                    <figcaption align="middle">Equation 8</figcaption>
+                    <br />
+        We thought the gradient
+        constraint function was multipying the spiky kernel by the
+        poly6 kernel. It turns out that we were supposed to take the
+        gradient of the spiky kernel, which is
+</p>
+
+        
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/projects/images/kernels.png" width="400px" />
+                    <figcaption align="middle">The two kernels we used
+            in our fluid simulation.</figcaption>
+                
+            
+        
+
+        <p>
+        Once we started using the spiky gradient kernel for
+        calculating our scaling factor and our correcting position
+        update, we got much better results in
+        the density distribution of our particles.  
+        </p>
+
+        <p>
+        When calculating change in position, we had some particles
+        clustering in the middle of our simulation.  We reduced this
+        effect by introducing an artifical pressure term as
+        suggested by Muller. This alleviated the problem of when
+        particles had few neighboring particles since the kernel
+        functions would assume very little density. The premise of
+        the whole paper is finding the correct change in position such
+        that we satisfy our density constraint and have a plausible
+        simulation.  It was difficult to debug the change in position since it relied on getting the scaling factor
+        correct and calculating the gradient constraint function
+        accurately.  At times we thought we were having issues with our implementation when in reality we just needed to tune our parameters. 
+        </p>
+
+        <p>
+        As for the collision detection and response, we simply
+        put a particle back inside the boundary of the container if it ended up outside.  However,
+        we found a huge bug the night before our presentation.  When
+        a particle would hit the floor, the particle's velocity in
+        the y-component would continue to decrease.  Resetting this
+        component to zero allowed the smoothing kernels to make more
+        reasonable calculations when determining how much to move a
+        particle.  And finally once we have the predicted position
+        and delta position, we can update the particle's actual
+        position.  
+        </p>
+
+        
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/projects/images/struct.png" width="400px" />
+                    <figcaption align="middle">The particle struct.
+            We stored the neighboring particles in a vector pointer of
+            particles to save space. </figcaption>
+                
+            
+        
+
+        <p>
+        Debugging this fluid simulation project was an enormous
+        challenge. The problem with fluid simulation projects in
+        general is that they require a lot of parameter tuning.  We found that implementing the paper and
+        using the suggested constants did not work for us.  We had
+        to fine tune our parameters such that the output simulation
+        looked plausible.  In addition, we found ourselves to be
+        wasting a lot of time by quickly changing code and then
+        running the simulation, hoping to get a better result.  The
+        reason why this approach doesn't work for us is because we
+        had no clear expectation of what to expect as a result of
+        changing a specific parameter.  Towards the end of the
+        project, we found printing the Particle member variables,
+        and adjusting our parameter values to satisfy the density
+        constraint to be zero, led in great improvements.  
+        </p>
+        <p>
+         The key takeaway from the semester was that understand the big picture before jumping into editing code is the most effective and efficient way to work. With graphics projects especially, the more we thought critically about what we were seeing, the more we understood. It is important to be deliberate with changing parameters. We achieved the best results when we changed them one at a time, predicted what we were going to see, and then analyze the result and whether it matched our expectation. 
+        </p>
+
+<h2 align="middle">Results</h2>
+<p> </p>
+    
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/64egf1NeYX0" frameborder="0" allowfullscreen=""></iframe>
+                    <figcaption align="middle">Our smoothing kernels
+                  did a nice job of spreading our the
+                  particles. However, the kernels come into effect
+                  expanding our particles before particles even
+                  hit the ground.  This requires additional
+                  parameter tuning to ensure balance between
+                  external forces and the pressure applied from
+                  our kernel.  The clustering in the middle is a
+                  result of not using artifical pressure in delta position.  </figcaption>
+                
+            
+        
+
+
+            
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+
+                
+            
+        
+
+
+        <h4 align="left">Resources
+        <ul>
+          <li>  <a href="http://mmacklin.com/pbf_sig_preprint.pdf"> [Position Based Fluids Paper] </a>
+           </li>
+          <li><a href="http://www.wikihow.com/Make-a-Cube-in-OpenGL"> [Create Cube OpenGL] </a>  </li>
+          <li><a href="http://users.csc.calpoly.edu/~zwood/teaching/csc572/final15/awang/index.html"> [SPH Equation Explanations] </a>  </li>
+
+        </ul>
+
+        <h4 align="left">Contributions
+        Great team effort. Were were responsible in writing the following functions.  
+        <ul>
+          Osam Javed
+          <li> Particle struct.</li>
+          <li> Simulation Loop (outline) </li>
+          <li> Collision Detection </li>
+          <li> Poly6 Kernel</li>
+          <li> Artificial Pressure</li>
+          <li> Vector Magnitude</li>
+          <li> Neighbor Search </li>
+          <li> Gradient Constraint</li>
+          <li> Particle struct.</li>
+
+          <br /><br />
+          
+          Kadie Jaffe
+          <li> Particle struct.</li>
+          <li> Time Step </li>
+          <li> Scaling Factor </li>
+          <li> Delta position </li>
+          <li> Apply Gravity</li>
+          <li> Spiky Gradient Kernel</li>
+          <li> Parameters: waterRestDensity, Epsilon </li>
+          <li> Gradient Constraint</li>
+          <li> Purple wireframe design</li>
+          <li> Fixing Sammy's C++ Pointer bugs </li>
+            </ul>
+        
+        <!-- Implement edge rule for barycentric coordinates-->
+
+  
+       
+   
+
+
+
+
+
+
+
+</h4></h4></td></tr></table></td></tr></table></td></tr></table></td></tr></table></td></tr></table></body></html>
+
+    </article>
+
+    
+
+     
+
+
+    <footer class="post-meta">
+        
+        <div class="meta">
+            <h3 class="meta-title">Date</h3>
+            <span class="meta-content">April 13, 2016</span>
+        </div>
+        
+        
+        
+        
+    </footer>
+
+   
+
+</div>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63774988-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+            </div>
+
+            
+
+
+
+
+            
+
+
+        </div>
+
+    </main>
+
+    <a href="#" class="sb-toggle-left">Menu
+    <span class="nav-icon"><br><font color="white"><b>Menu</b></font></span>
+</a>
+
+<div class="sb-slidebar sb-left sb-style-push">
+    <nav>
+        <a href="/"><h2 class="site-title">Kadie Jaffe</h2></a>
+        <ul class="sb-menu">
+        
+        
+            
+        
+            
+                
+            
+        
+            
+                
+                <li class="sb-close ">
+                    <a href="/Projects/">Projects</a>
+                </li>
+                
+            
+        
+            
+                
+                <li class="sb-close ">
+                    <a href="/aboutMe/">About Me</a>
+                </li>
+                
+            
+        
+            
+        
+            
+                
+                <li class="sb-close ">
+                    <a href="/blogIndex/">KD at S.E.A.</a>
+                </li>
+                
+            
+        
+            
+        
+            
+                
+            
+        
+        </ul>
+
+        <div class="site-info">
+            <p><img src="https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/KadieJaffe.jpg" alt="Kadie Jaffe" style="float:left;width:52px;height:100px;"> 
+                By Kadie Jaffe 
+                <br>
+                <a href = "https://github.com/kadie16/kadie16.github.io/raw/master/assets/images/resume/Kadie_Jaffe_Resume_Latest.pdf"> Download Resume </a> 
+                <br>
+                <a href = "https://linkedin.com/in/kadiejaffe" > LinkedIn </a><br>
+                <a href = "https://github.com/kadie16" > GitHub </a> <br>
+                
+            </p>
+            
+            <p>
+            Copyright &copy; 2016
+            </p>
+        </div>
+    </nav>
+</div>
+
+
+
+    <script type="text/javascript" src="/assets/js/libs/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/js/libs/slidebars.min.js"></script>
+<script type="text/javascript" src="/assets/js/libs/jquery.backstretch.min.js"></script>
+<script type="text/javascript" src="/assets/js/libs/jquery.scrollstop.js"></script>
+<script type="text/javascript" src="/assets/js/libs/rrssb.min.js"></script>
+<script type="text/javascript" src="/assets/js/functions.js"></script>
+<script type="text/javascript">
+    $(function($) {
+        $.slidebars();
+
+        var steps = [];
+        var images = [
+            
+        ];
+
+        if (images.length > 0) {
+            $('.loader').addClass('loading');
+
+            steps = scrollSteps(images.length);
+
+            $.backstretch(images, {
+                fade: 1000
+            });
+
+            $.backstretch('pause');
+        }
+
+        $(document).on("backstretch.before", function (e, instance, index) {
+            $('.loader').addClass('loading');
+        });
+
+        $(document).on('scrollstop', function () {
+            if (steps.length > 0) {
+                var percentage = scrollPercentage();
+
+                for (var i = 0; i < steps.length; i++) {
+                    if (percentage < steps[i]) {
+                        if (i == $("body").data("backstretch").index) {
+                            break;
+                        }
+
+                        $.backstretch('show', i);
+                        break;
+                    }
+                }
+            }
+        });
+
+        $(document).on("backstretch.after", function (e, instance, index) {
+            $('.loader').removeClass('loading');
+        });
+    });
+</script>
+
+
+</body>
+
+</html>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63774988-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
