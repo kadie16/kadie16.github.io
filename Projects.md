@@ -5,9 +5,8 @@ backgrounds:
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/backgrounds/368266-colorful-flower-field.jpg
 
 ---
-
+<center> <a href="https://www.icloud.com/sharedalbum/#B0g5yeZFhGZWmvT"> Art Projects and Works in Progress </a> </center>
 <div class="home">
-
     <ul class="post-list">
         {% if site.pagination %}
         {% assign source = site.categories.projects %}
