@@ -1,0 +1,229 @@
+<!doctype html>
+<html>
+  <script type='text/javascript'>
+    var canvas = null;
+    var img = null;
+    var ctx = null;
+    var imageReady = false;
+    /* ANIMATION VARIABLES */ 
+    var frame = 0;
+    var tLastUpdate = 0; 
+    var dt = 0; 
+    const MS_PER_FRAME = 200; 
+    const FRAMES_PER_S = 1000/60;  
+    /* SPRITE VARIABLES */ 
+    var ariel = {
+      lateral_speed: 20, 
+      longitudinal_speed: 8,
+      x: 0, 
+      y: 0, 
+      moving_lateral: false,
+    }
+    var prize = {
+        x: 0, 
+        y: 0, 
+    }
+    var prizesCaught = 0; 
+    var swimmerSprite = {
+        height: 42, 
+        width: 63, 
+        halfWidth: 63/2, 
+        nFrames: 8, 
+        img: null, 
+        leftim: null, 
+        rightim: null, 
+        imageReady: false, 
+        ms_per_frame: 100, 
+        currentFrame: 1, 
+    }
+    var stillSprite = {
+        height: 58, 
+        width: 36.0, 
+        halfWidth: 18, 
+        nFrames: 8, 
+        img: null, 
+        imageReady: false, 
+        ms_per_frame: 160, 
+        currentFrame: 1, 
+    }
+    var titleSprite = {
+      height: 315, 
+      width: 781, 
+      halfWidth: 781/2,
+      img: null, 
+      imageReady: false,
+      nFrames: 1, 
+      currentFrame: 0, 
+    }
+
+    var topTitleSprite = {
+      height: 315, 
+      width: 781, 
+      halfWidth: 781/2,
+      img: null, 
+      imageReady: false,
+      nFrames: 1, 
+      currentFrame: 0, 
+    }
+
+    var bubblesSprite = {
+      height: 35, 
+      width: 17, 
+      halfWidth: 17/2,
+      img: null, 
+      nFrames: 4,
+      imageReady: false,
+      currentFrame: 1, 
+    }
+    var currentSprite = stillSprite; 
+    /* SETTING UP PLAYER INPUT */ 
+    const upKey = 38; 
+    const downKey = 40; 
+    const leftKey = 37; 
+    const rightKey = 39; 
+    var keysDown = {}; 
+    addEventListener("keydown", function(e) {
+      keysDown[e.keyCode] = true; 
+    }, false); 
+    addEventListener("keyup", function(e) {
+      if (e.keyCode == leftKey || e.keyCode == rightKey) 
+        ariel.moving = false; 
+      delete keysDown[e.keyCode];  
+    }, false); 
+    /* RESET THE GAME */ 
+    var reset = function() {
+      prize.x = 32 + (Math.random() * (canvas.width - 64)); 
+      prize.y = 32 + (Math.random() * (canvas.height - 64)); 
+    }
+    /* SCRIPT FUNCTIONS */ 
+    function onload() {
+      canvas = document.getElementById('spriteCanvas');
+      ctx = canvas.getContext("2d");
+      ariel.x = canvas.width/2; 
+      ariel.y = canvas.height/2; 
+      initializeAllSprites();
+      ocean = ctx.createLinearGradient(0,0,0,500); 
+      ocean.addColorStop(0, "#13F6E5"); 
+      ocean.addColorStop(1, "#16124D"); 
+      loaded();
+      resize();
+      reset(); 
+    }
+
+    function initializeAllSprites() {
+      swimmerSprite.leftim = new Image();
+      swimmerSprite.leftim.src = 'arielAssets/arielSwimLft.png';
+      swimmerSprite.rightim = new Image(); 
+      swimmerSprite.rightim.src = 'arielAssets/arielSwimRt.png';
+      swimmerSprite.rightim.onload = spriteLoaded(swimmerSprite);
+      initializeSprite(stillSprite, 'arielAssets/arielStill.png');
+      initializeSprite(bubblesSprite, 'arielAssets/bubbles.png'); 
+      initializeSprite(titleSprite, 'arielAssets/Little_Mermaid_Title.png'); 
+      initializeSprite(topTitleSprite, 'arielAssets/Little_Mermaid_Title_Top.png');
+    }
+    function initializeSprite(sprite, imagePath) {
+      sprite.img = new Image(); 
+      sprite.img.src = imagePath; 
+      sprite.img.onload = spriteLoaded(sprite); 
+    }
+    function spriteLoaded(sprite) {
+      sprite.imageReady = true; 
+    }
+    function loaded() {
+        setTimeout(animate, FRAMES_PER_S);
+    }
+    function resize() {
+      var w0 = canvas.width; 
+      var h0 = canvas.height; 
+      canvas.width = canvas.parentNode.clientWidth;
+      canvas.height = canvas.parentNode.clientHeight;
+      ariel.x = (canvas.width/w0) * ariel.x; 
+      ariel.y = (canvas.height/h0) * ariel.y; 
+      redraw();
+    }
+    function redraw() {
+        ctx.fillStyle = ocean;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        if (ariel.moving) currentSprite = swimmerSprite; 
+        else currentSprite = stillSprite; 
+        drawSprite(titleSprite, canvas.width/2, titleSprite.halfWidth + 50);
+        drawSprite(currentSprite, ariel.x, ariel.y); 
+        drawSprite(topTitleSprite, canvas.width/2, titleSprite.halfWidth + 50);
+        drawSprite(bubblesSprite, prize.x, prize.y); 
+        drawScore(); 
+    }
+
+    function drawScore() {
+      ctx.fillStyle = "rgb(249, 240, 191)";
+      ctx.font = "24px Georgia";
+      ctx.textAlign = "left";
+      ctx.textBaseline = "top";
+      ctx.fillText("Score: " + prizesCaught, 32, 32);
+    }
+
+    function drawSprite(sprite, x, y) {
+      if (sprite.imageReady) {
+          ctx.drawImage(sprite.img, sprite.currentFrame*sprite.width, 0, sprite.width, sprite.height,
+                          x - sprite.halfWidth, y - sprite.halfWidth, sprite.width, sprite.height);
+      }
+    }
+    var update = function(modifier) {
+      if (upKey in keysDown) {
+        ariel.y -= ariel.longitudinal_speed * modifier;
+      }
+      if (downKey in keysDown) {
+        ariel.y += ariel.longitudinal_speed * modifier; 
+      }
+      if (leftKey in keysDown) {
+        ariel.x -= ariel.lateral_speed * modifier;
+        ariel.moving = true; 
+        swimmerSprite.img = swimmerSprite.leftim; 
+      }
+      if (rightKey in keysDown) {
+        ariel.x += ariel.lateral_speed * modifier;
+        ariel.moving = true; 
+        swimmerSprite.img = swimmerSprite.rightim; 
+      }
+      checkForCollision(); 
+    }
+
+    function checkForCollision() {
+      if (
+        ariel.x <= (prize.x + 32)
+        && prize.x <= (ariel.x + 32)
+        && ariel.y <= (prize.y + 32)
+        && prize.y <= (ariel.y + 32)
+        ){
+            ++ prizesCaught; 
+            reset(); 
+          }
+    } 
+    function animate() {
+        requestAnimationFrame(animate); 
+        update(dt/1000); 
+        if (dt > currentSprite.ms_per_frame) {
+          redraw(); 
+          incrementFrame(bubblesSprite); 
+          incrementFrame(currentSprite); 
+          dt = 0; 
+        } else 
+        {
+          dt += Date.now() - tLastUpdate; 
+        }
+        tLastUpdate = Date.now(); 
+    }
+
+    function incrementFrame(sprite) {
+      sprite.currentFrame ++; 
+      if (sprite.currentFrame >= sprite.nFrames) sprite.currentFrame = 0; 
+    }
+ 
+  </script>
+  </head>
+
+<body onresize='onresize()' onload='onload()' style='position: absolute; padding:0; margin:0; height: 100%; width:100%'>
+
+<canvas id="spriteCanvas"></canvas>
+
+</body>
+</html>
