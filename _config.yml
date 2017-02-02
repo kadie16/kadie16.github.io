@@ -14,7 +14,7 @@ markdown:            kramdown
 relative_permalinks: false
 permalink:           :title/
 
-pagination:          false
+pagination:          true
 paginate:            6
 paginate_path:       page/:num/
 
