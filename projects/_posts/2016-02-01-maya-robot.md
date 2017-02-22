@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "My First Maya Project"
+title: "My First Maya Model"
 date: 2016-02-01
 backgrounds:
 thumb: https://j.gifs.com/Dk0kN6.gif

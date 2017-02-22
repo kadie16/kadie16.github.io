@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Mesh Editing and GLSL"
+title: "C++ Mesh Editing + GLSL Shaders"
 date: 2016-03-01
 backgrounds: 
     - ../images/part5/up_teapot.png

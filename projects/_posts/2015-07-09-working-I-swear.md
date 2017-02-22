@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "I'm working, I swear!"
+title: "C++ 3D Viewer: First Update!"
 date: 2015-07-03
 backgrounds:
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/background3.png   

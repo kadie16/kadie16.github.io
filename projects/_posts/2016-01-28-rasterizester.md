@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Rasterizester Project"
+title: "C++ Rasterizester"
 date: 2016-01-28
 backgrounds: 
     -../images/part1.png

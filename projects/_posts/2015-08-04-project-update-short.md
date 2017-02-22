@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Work in Progress"
+title: "C++ 3D Viewer: Work in Progress"
 date: 2015-08-01
 backgrounds: 
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/posts/i-swear/background3.png  

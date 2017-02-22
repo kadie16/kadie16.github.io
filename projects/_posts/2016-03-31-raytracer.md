@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Raytracer"
+title: "C++ Raytracer"
 date: 2016-03-31
 backgrounds: 
 thumb: ../images/p3/fun/dragon_hd.png
