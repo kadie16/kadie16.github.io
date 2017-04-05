@@ -15,7 +15,7 @@ relative_permalinks: false
 permalink:           :title/
 
 pagination:          true
-paginate:            4
+paginate:            10000000000
 paginate_path:       page/:num/
 
 sass:
