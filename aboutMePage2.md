@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About Me  
-permalink: /page/2
+permalink: /page/3
 backgrounds: 
     - https://raw.githubusercontent.com/kadie16/kadie16.github.io/master/assets/images/backgrounds/368266-colorful-flower-field.jpg
 ---
