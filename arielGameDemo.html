@@ -151,6 +151,7 @@
         drawSprite(topTitleSprite, canvas.width/2, titleSprite.halfWidth + 50);
         drawSprite(bubblesSprite, prize.x, prize.y); 
         drawScore(); 
+        drawDisclaimer(); 
     }
 
     function drawScore() {
@@ -159,6 +160,14 @@
       ctx.textAlign = "left";
       ctx.textBaseline = "top";
       ctx.fillText("Score: " + prizesCaught, 32, 32);
+    }
+
+    function drawDisclaimer() {
+      ctx.fillStyle = "rgb(249, 240, 191)";
+      ctx.font = "10px Georgia";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "bottom";
+      ctx.fillText("HTML5 Canvas Project by Kadie Jaffe. Sprites and title image created by Disney", 32, 32);
     }
 
     function drawSprite(sprite, x, y) {
