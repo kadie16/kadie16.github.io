@@ -11,7 +11,7 @@ tags:
 
 ## Ariel Game 
 
-I made this quick, simple game as an exercise to help me learn HTML5 Canvas. 
+I made this quick, simple game as an exercise to help me learn HTML5 Canvas. <a href="http://kadie.me/arielGameDemo"> Click here to see it! </a>
 
 
 
